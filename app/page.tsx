@@ -131,12 +131,13 @@ export default function TruephaseDashboard() {
   const [section, setSection] = useState<"overview" | "voice" | "reviews" | "automation" | "ai">(
     "overview"
   );
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   /** Sections */
   const Overview = () => (
     <div className="space-y-6">
       {/* KPI row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <KPI label="Calls Answered by AI" value="1,064" sub="+18% vs last week" />
         <KPI label="Hours Saved" value="142 hrs" sub="Admin & scheduling" />
         <KPI label="Avg Rating" value="4.7★" sub="Google/Facebook/Trustpilot" />
@@ -144,7 +145,7 @@ export default function TruephaseDashboard() {
       </div>
 
       {/* Charts */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card title="Voice Volume & Bookings">
           <div style={{ height: 260 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -294,7 +295,7 @@ export default function TruephaseDashboard() {
                 <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
                 <XAxis dataKey="m" stroke={MUTED} />
                 <YAxis stroke={MUTED} domain={[4, 5]} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
+                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a3231ff", color: TEXT }} />
                 <Area type="monotone" dataKey="avg" stroke={ACCENT_2} fill="url(#grad2)" />
               </AreaChart>
             </ResponsiveContainer>
@@ -317,7 +318,7 @@ export default function TruephaseDashboard() {
                     <Cell key={i} fill={s.color} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
+                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2f32ff", color: TEXT }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -448,38 +449,71 @@ export default function TruephaseDashboard() {
     <>
       {/* 🔹 Top Navbar */}
       <header
-        className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 border-b border-[#1e1e24]"
+        className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-8 py-4 border-b border-[#1e1e24]"
         style={{
           background: BG,
           boxShadow: "0 4px 20px rgba(0,0,0,.5)",
         }}
       >
         <div className="flex items-center gap-3">
+          <button
+            className="md:hidden mr-2 p-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            style={{ color: TEXT }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"}
+              />
+            </svg>
+          </button>
           {/* Change the src if your file is not this name */}
           <img src="/truephase-logo.jpg" alt="Truephase Logo" className="h-8" />
-          <h1 className="text-lg font-semibold" style={{ color: TEXT }}>
+          <h1 className="text-lg font-semibold hidden sm:block" style={{ color: TEXT }}>
             Truephase Ai Dashboard
           </h1>
         </div>
 
        <button
-  onClick={() => window.open("https://truephase.co.uk/#contact", "_blank")}
-  className="tp-cta px-5 py-2 rounded-lg font-medium text-black"
-  style={{
-    background: ACCENT,
-    boxShadow: "0 0 16px rgba(34,197,94,.6)",
-    textShadow: "0 0 4px rgba(0,0,0,.5)",
-  }}
->
-  Book a Demo
-</button>
+         onClick={() => window.open("https://truephase.co.uk/#contact", "_blank")}
+         className="tp-cta px-3 sm:px-5 py-2 rounded-lg font-medium text-black text-sm sm:text-base"
+         style={{
+           background: ACCENT,
+           boxShadow: "0 0 16px rgba(34,197,94,.6)",
+           textShadow: "0 0 4px rgba(0,0,0,.5)",
+         }}
+       >
+         Book a Demo
+       </button>
 
       </header>
 
       {/* 🔹 Dashboard Layout */}
       <div className="min-h-screen flex" style={{ background: BG, color: TEXT }}>
+        {/* Backdrop */}
+        {isMobileMenuOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity duration-300"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+        
         {/* Sidebar */}
-        <aside className="w-64 flex flex-col border-r border-[#1e1e24]">
+        <aside className={`
+          fixed md:relative md:flex w-64 flex-col border-r border-[#1e1e24]
+          transition-all duration-300 ease-in-out transform
+          ${isMobileMenuOpen ? 'translate-x-0 z-50' : '-translate-x-full md:translate-x-0'}
+          top-0 bottom-0 left-0 bg-[#0B0B0D]
+        `}>
           <style jsx>{`
   .tp-sideHead {
     background: linear-gradient(
@@ -517,7 +551,10 @@ export default function TruephaseDashboard() {
               return (
                 <button
                   key={key}
-                  onClick={() => setSection(key as any)}
+                  onClick={() => {
+                    setSection(key as any);
+                    setIsMobileMenuOpen(false);
+                  }}
                   className="w-full text-left px-4 py-2 rounded-xl transition"
                   style={{
                     background: active ? ACCENT_2 : "transparent",
@@ -533,9 +570,9 @@ export default function TruephaseDashboard() {
         </aside>
 
         {/* Main */}
-        <main className="flex-1 p-6 md:p-8">
+        <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-x-hidden">
           <div className="mb-6">
-            <h2 className="text-2xl md:text-3xl font-semibold" style={{ color: TEXT }}>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold" style={{ color: TEXT }}>
               {section === "overview"
                 ? "Overview"
                 : section === "voice"
@@ -546,12 +583,14 @@ export default function TruephaseDashboard() {
                 ? "Business Automation Workflows"
                 : "AI Performance & Continuous Improvement"}
             </h2>
-            <p className="text-sm mt-1" style={{ color: MUTED }}>
+            <p className="text-xs sm:text-sm mt-1" style={{ color: MUTED }}>
               Live demo with sample data • Dark UI • Interactive charts
             </p>
           </div>
 
-          {renderSection()}
+          <div className="w-full">
+            {renderSection()}
+          </div>
         </main>
       </div>
     </>
