@@ -1,598 +1,419 @@
-"use client";
+import Link from "next/link";
+import { SiteNav, SiteFooter } from "./_components/chrome";
 
-import React, { useState } from "react";
-import {
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  AreaChart,
-  Area,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-} from "recharts";
+/* ── content ─────────────────────────────────────────────── */
 
-/** ---- Brand palette ---- */
-// 🎨 Theme Colors
-const BG       = "#0B0B0D";    // page background
-const CARD     = "#131316";    // card background
-const TEXT     = "#EAEAEA";    // primary text
-const MUTED    = "#9CA3AF";    // secondary text
-const ACCENT   = "#34D399";    // Truephase green
-const ACCENT_2 = "#22C55E";    // darker hover green
-const GRID     = "#2A2A2E";    // chart grid lines
+const SERVICES = [
+  {
+    tag: "Voice",
+    title: "AI Receptionist",
+    body: "Answers the phone on the first ring, day or night. Takes the caller’s name and number, understands what they want, books them in or passes them to you.",
+    detail: ["Inbound and outbound", "Full transcript of every call", "Out-of-hours cover"],
+  },
+  {
+    tag: "Booking",
+    title: "Appointment Scheduler",
+    body: "Turns a phone call into a booking without anyone typing it in. Confirmations and reminders go out on their own.",
+    detail: ["Books during the call", "Reminders by text", "Cancellations handled"],
+  },
+  {
+    tag: "Reputation",
+    title: "Review Management",
+    body: "Sends the review request at the right moment, tracks who opened it, and drafts a reply to every review that lands.",
+    detail: ["Request after the visit", "Open and click tracking", "Drafted replies"],
+  },
+  {
+    tag: "Back office",
+    title: "Task Automation",
+    body: "The repetitive work behind the front desk — chasing, filing, following up, writing the day up — handled without you.",
+    detail: ["Daily written report", "Follow-up sequences", "Built to your process"],
+  },
+];
 
+const STEPS = [
+  {
+    n: "01",
+    title: "We listen to how you work",
+    body: "A call, then a look at how your front desk actually runs today — what gets asked, what gets missed, what you would rather never do again.",
+    who: "About an hour of your time",
+  },
+  {
+    n: "02",
+    title: "We build and test it",
+    body: "We configure the voice agent, connect it to your number and your diary, and test it against real situations until it handles them the way you would.",
+    who: "Truephase does this, not you",
+  },
+  {
+    n: "03",
+    title: "It goes live and you watch it work",
+    body: "Your number starts being answered. You get a login to the portal where every call, transcript, booking and review sits, and a written report each day.",
+    who: "You keep the login",
+  },
+];
 
-/** Simple card for consistent dark styling */
-function Card({
-  title,
-  children,
-  right,
-}: {
-  title?: string;
-  children: React.ReactNode;
-  right?: React.ReactNode;
-}) {
+const SECTORS = [
+  { name: "Dental practices", note: "New patient enquiries, recalls, cancellations that need refilling the same day." },
+  { name: "Physiotherapy clinics", note: "Self-pay enquiries that go cold if nobody rings back within the hour." },
+  { name: "Care homes", note: "Family enquiries at any hour, handled calmly and written up in full." },
+  { name: "Salons & clinics", note: "A chair sitting empty because the phone rang while you had your hands full." },
+];
+
+const QUESTIONS = [
+  {
+    q: "Will callers know it’s not a person?",
+    a: "Most people work it out, and in practice they mind far less than you would expect — what they actually want is to be answered and dealt with. We tell you exactly what your agent says and you sign it off before it ever picks up.",
+  },
+  {
+    q: "What happens when it can’t help?",
+    a: "It stops trying. The call transfers to whoever you nominate, or it takes a message and flags it. An agent that guesses is worse than no agent, so ours is built to hand over early.",
+  },
+  {
+    q: "Do I have to change my phone system?",
+    a: "No. Your existing number stays exactly as it is — calls are forwarded to the agent, and you can turn that forwarding off whenever you like.",
+  },
+  {
+    q: "Who can see the call transcripts?",
+    a: "You and the people you give logins to. Truephase staff can access your account to support and configure it. Calls involve other people’s personal information, so if you want the detail of how that is handled, ask us and we will put it in writing.",
+  },
+  {
+    q: "What do I get on day one?",
+    a: "A working agent on your number, a login to the portal, and a named person at Truephase. Not a trial you configure yourself.",
+  },
+];
+
+/* ── page ────────────────────────────────────────────────── */
+
+export default function Home() {
   return (
-    <div
-      className="tp-card rounded-2xl p-5"
-      style={{ background: CARD }}
-    >
-      {(title || right) && (
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm md:text-base font-medium" style={{ color: TEXT }}>
-            {title}
-          </h3>
-          {right}
-        </div>
-      )}
-      {children}
-    </div>
-  );
-}
+    <div className="tp-site">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
 
+      <SiteNav />
 
-/** Compact KPI pill */
-function KPI({
-  label,
-  value,
-  sub,
-}: {
-  label: string;
-  value: string;
-  sub?: string;
-}) {
-  return (
-    <div
-      className="rounded-2xl px-5 py-4"
-      style={{ background: CARD, boxShadow: "inset 0 0 0 1px rgba(255,255,255,.04)" }}
-    >
-      <div className="text-xs uppercase tracking-wide" style={{ color: MUTED }}>
-        {label}
-      </div>
-      <div className="mt-1 text-2xl md:text-3xl font-semibold" style={{ color: TEXT }}>
-        {value}
-      </div>
-      {sub && (
-        <div className="mt-1 text-xs" style={{ color: MUTED }}>
-          {sub}
-        </div>
-      )}
-    </div>
-  );
-}
+      <main id="main">
+        {/* ── HERO ───────────────────────────────────────── */}
+        <section className="wrap hero-grid">
+          <div className="stack-24">
+            <span className="mono muted">UK · Clinics, care homes & salons</span>
 
-/** ---------- Demo Data (edit to tell your story) ---------- */
-const voiceSeries = [
-  { day: "Mon", calls: 210, answered: 182, bookings: 42 },
-  { day: "Tue", calls: 240, answered: 201, bookings: 55 },
-  { day: "Wed", calls: 198, answered: 171, bookings: 39 },
-  { day: "Thu", calls: 312, answered: 281, bookings: 68 },
-  { day: "Fri", calls: 260, answered: 229, bookings: 57 },
-];
+            <h1 className="display-xl">
+              Nobody
+              <br />
+              puts your
+              <br />
+              callers
+              <br />
+              on hold
+            </h1>
 
-const reviewsSeries = [
-  { m: "Jan", google: 14, fb: 8, tp: 5, avg: 4.3 },
-  { m: "Feb", google: 20, fb: 10, tp: 7, avg: 4.4 },
-  { m: "Mar", google: 31, fb: 15, tp: 10, avg: 4.6 },
-  { m: "Apr", google: 45, fb: 20, tp: 14, avg: 4.7 },
-  { m: "May", google: 70, fb: 33, tp: 21, avg: 4.8 },
-];
+            <p className="subheading-lg muted prose">
+              Truephase answers your phone, books the appointment, chases the review and
+              writes the day up. You get the login, the transcripts and the evidence.
+            </p>
 
-const automationSeries = [
-  { w: "W1", tasks: 120, errorsBefore: 18, errorsAfter: 6 },
-  { w: "W2", tasks: 160, errorsBefore: 20, errorsAfter: 7 },
-  { w: "W3", tasks: 210, errorsBefore: 22, errorsAfter: 8 },
-  { w: "W4", tasks: 250, errorsBefore: 25, errorsAfter: 9 },
-];
-
-const aiSeries = [
-  { w: "W1", accuracy: 86, confidence: 0.78, errors: 4 },
-  { w: "W2", accuracy: 89, confidence: 0.81, errors: 3 },
-  { w: "W3", accuracy: 92, confidence: 0.84, errors: 2 },
-  { w: "W4", accuracy: 94, confidence: 0.86, errors: 1 },
-];
-
-/** Sentiment pie */
-const sentiment = [
-  { name: "Positive", value: 72, color: ACCENT },
-  { name: "Neutral", value: 18, color: "#8B8B94" },
-  { name: "Negative", value: 10, color: "#EF4444" },
-];
-
-/** ---------- Page Component ---------- */
-export default function TruephaseDashboard() {
-  const [section, setSection] = useState<"overview" | "voice" | "reviews" | "automation" | "ai">(
-    "overview"
-  );
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  /** Sections */
-  const Overview = () => (
-    <div className="space-y-6">
-      {/* KPI row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        <KPI label="Calls Answered by AI" value="1,064" sub="+18% vs last week" />
-        <KPI label="Hours Saved" value="142 hrs" sub="Admin & scheduling" />
-        <KPI label="Avg Rating" value="4.7★" sub="Google/Facebook/Trustpilot" />
-        <KPI label="Model Accuracy" value="94%" sub="Past 7 days" />
-      </div>
-
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card title="Voice Volume & Bookings">
-          <div style={{ height: 260 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={voiceSeries}>
-                <defs>
-                  <linearGradient id="grad1" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={ACCENT} stopOpacity={0.4} />
-                    <stop offset="100%" stopColor={ACCENT} stopOpacity={0.05} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="day" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Area type="monotone" dataKey="calls" stroke={ACCENT} fill="url(#grad1)" />
-                <Line type="monotone" dataKey="bookings" stroke={ACCENT_2} strokeWidth={2} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="Reviews Collected by Platform">
-          <div style={{ height: 260 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={reviewsSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="m" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Line type="monotone" dataKey="google" stroke={ACCENT} strokeWidth={2} />
-                <Line type="monotone" dataKey="fb" stroke="#38BDF8" strokeWidth={2} />
-                <Line type="monotone" dataKey="tp" stroke="#F59E0B" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="Automation: Tasks & Error Reduction">
-          <div style={{ height: 260 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={automationSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="w" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Bar dataKey="tasks" fill={ACCENT} />
-                <Bar dataKey="errorsAfter" fill="#EF4444" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-      </div>
-    </div>
-  );
-
-  const Voice = () => (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <KPI label="Response Rate" value="86%" sub="Answered ÷ Total" />
-        <KPI label="Avg Response Time" value="8.2s" sub="to pick up" />
-        <KPI label="Missed Calls Prevented" value="260" sub="this week" />
-        <KPI label="Conversions / Bookings" value="56" sub="from AI-led calls" />
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <Card title="Total Calls Handled">
-          <div style={{ height: 280 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={voiceSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="day" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Line type="monotone" dataKey="calls" stroke={ACCENT} strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="Missed Calls Prevented (Before vs After)">
-          <div style={{ height: 280 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={voiceSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="day" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Bar dataKey="answered" fill={ACCENT} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="Bookings Made">
-          <div style={{ height: 280 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={voiceSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="day" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Bar dataKey="bookings" fill={ACCENT_2} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-      </div>
-    </div>
-  );
-
-  const Reviews = () => (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <KPI label="Response Rate to Reviews" value="86%" sub="AI replies" />
-        <KPI label="Reviews this Month" value="124" sub="+41% vs last month" />
-        <KPI label="Avg Rating Trend" value="4.8★" sub="up from 4.3★" />
-        <KPI label="Top Keyword" value="quick booking" sub="AI NLP extraction" />
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <Card title="Reviews Collected by Platform">
-          <div style={{ height: 260 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={reviewsSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="m" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Line type="monotone" dataKey="google" stroke={ACCENT} strokeWidth={2} />
-                <Line type="monotone" dataKey="fb" stroke="#38BDF8" strokeWidth={2} />
-                <Line type="monotone" dataKey="tp" stroke="#F59E0B" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="Average Rating Trend">
-          <div style={{ height: 260 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={reviewsSeries}>
-                <defs>
-                  <linearGradient id="grad2" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={ACCENT_2} stopOpacity={0.35} />
-                    <stop offset="100%" stopColor={ACCENT_2} stopOpacity={0.05} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="m" stroke={MUTED} />
-                <YAxis stroke={MUTED} domain={[4, 5]} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a3231ff", color: TEXT }} />
-                <Area type="monotone" dataKey="avg" stroke={ACCENT_2} fill="url(#grad2)" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="Sentiment Breakdown">
-          <div style={{ height: 260 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={sentiment}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={90}
-                  dataKey="value"
-                  label={({ name }) => name}
-                >
-                  {sentiment.map((s, i) => (
-                    <Cell key={i} fill={s.color} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2f32ff", color: TEXT }} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-      </div>
-    </div>
-  );
-
-  const Automation = () => (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <KPI label="Tasks Automated" value="740" sub="this month" />
-        <KPI label="Hours Saved" value="140 hrs" sub="£8.8k cost saved est." />
-        <KPI label="Error Reduction" value="−62%" sub="before vs after" />
-        <KPI label="Success Rate" value="95%" sub="execution success" />
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <Card title="Tasks Automated">
-          <div style={{ height: 280 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={automationSeries}>
-                <defs>
-                  <linearGradient id="grad3" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={ACCENT} stopOpacity={0.45} />
-                    <stop offset="100%" stopColor={ACCENT} stopOpacity={0.05} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="w" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Area type="monotone" dataKey="tasks" stroke={ACCENT} fill="url(#grad3)" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="Error Reduction (%) — Before vs After">
-          <div style={{ height: 280 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={automationSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="w" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Bar dataKey="errorsBefore" fill="#EF4444" />
-                <Bar dataKey="errorsAfter" fill={ACCENT} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card
-          title="Automation ROI Calculator (demo)"
-          right={<span className="text-xs" style={{ color: MUTED }}>Assumes £25/hr</span>}
-        >
-          <div className="flex items-center gap-6">
-            <div className="text-4xl font-semibold" style={{ color: TEXT }}>
-              £833<span className="text-base" style={{ color: MUTED }}>/month</span>
+            <div className="row" style={{ gap: 8, paddingTop: 8 }}>
+              <a href="#talk" className="btn btn-filled">
+                Book a call
+              </a>
+              <a href="#what" className="btn btn-ghost">
+                See what it does
+              </a>
             </div>
           </div>
-        </Card>
-      </div>
-    </div>
-  );
 
-  const AI = () => (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <KPI label="Model Accuracy" value="94%" sub="weekly" />
-        <KPI label="Avg Confidence" value="0.86" sub="0–1" />
-        <KPI label="Retrains" value="4" sub="past month" />
-        <KPI label="Incidents" value="1" sub="downtime/error logs" />
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <Card title="Model Accuracy Trend">
-          <div style={{ height: 260 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={aiSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="w" stroke={MUTED} />
-                <YAxis stroke={MUTED} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Line type="monotone" dataKey="accuracy" stroke={ACCENT} strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="Prediction Confidence">
-          <div style={{ height: 260 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={aiSeries}>
-                <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
-                <XAxis dataKey="w" stroke={MUTED} />
-                <YAxis stroke={MUTED} domain={[0, 1]} />
-                <Tooltip contentStyle={{ background: CARD, border: "1px solid #2a2a32", color: TEXT }} />
-                <Area type="monotone" dataKey="confidence" stroke={ACCENT_2} fillOpacity={0.15} fill={ACCENT_2} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
-
-        <Card title="AI Downtime / Errors">
-          <div className="text-4xl font-semibold" style={{ color: ACCENT }}>
-            ↓ 92%
-          </div>
-          <div className="text-xs mt-2" style={{ color: MUTED }}>
-            vs. baseline month
-          </div>
-        </Card>
-      </div>
-    </div>
-  );
-
-  /** Section renderer */
-  const renderSection = () => {
-    if (section === "overview") return <Overview />;
-    if (section === "voice") return <Voice />;
-    if (section === "reviews") return <Reviews />;
-    if (section === "automation") return <Automation />;
-    return <AI />;
-  };
-
-  return (
-    <>
-      {/* 🔹 Top Navbar */}
-      <header
-        className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-8 py-4 border-b border-[#1e1e24]"
-        style={{
-          background: BG,
-          boxShadow: "0 4px 20px rgba(0,0,0,.5)",
-        }}
-      >
-        <div className="flex items-center gap-3">
-          <button
-            className="md:hidden mr-2 p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            style={{ color: TEXT }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"}
-              />
+          {/*
+            Reserved slot for the hero 3D product render.
+            Art direction and the generation prompt: public/hero-asset-prompt.txt
+            Deliberately NOT a CSS imitation of a photoreal render.
+          */}
+          <figure className="asset-slot" aria-label="Hero product render — pending">
+            <svg viewBox="0 0 100 100" fill="none" stroke="#979797" strokeWidth="1.5" aria-hidden="true">
+              <path d="M50 8 L88 28 L88 72 L50 92 L12 72 L12 28 Z" />
+              <path d="M50 8 L50 50 M50 50 L88 28 M50 50 L12 28 M50 50 L50 92" />
+              <circle cx="88" cy="28" r="5" fill="#d1ffca" stroke="none" />
+              <circle cx="12" cy="72" r="4" fill="#fff100" stroke="none" />
             </svg>
-          </button>
-          {/* Change the src if your file is not this name */}
-          <img src="/truephase-logo.jpg" alt="Truephase Logo" className="h-8" />
-          <h1 className="text-lg font-semibold hidden sm:block" style={{ color: TEXT }}>
-            Truephase Ai Dashboard
-          </h1>
-        </div>
+            <figcaption className="mono quiet">
+              Hero render · 1:1 · pending generation
+            </figcaption>
+          </figure>
+        </section>
 
-       <button
-         onClick={() => window.open("https://truephase.co.uk/#contact", "_blank")}
-         className="tp-cta px-3 sm:px-5 py-2 rounded-lg font-medium text-black text-sm sm:text-base"
-         style={{
-           background: ACCENT,
-           boxShadow: "0 0 16px rgba(34,197,94,.6)",
-           textShadow: "0 0 4px rgba(0,0,0,.5)",
-         }}
-       >
-         Book a Demo
-       </button>
+        {/* ── PROOF: a real call, in the brutalist voice ──── */}
+        <section className="band-inverted" id="proof">
+          <div className="wrap stack-40">
+            <div className="split" style={{ alignItems: "end" }}>
+              <h2 className="display">
+                This is
+                <br />
+                a Tuesday
+                <br />
+                at 7:42pm
+              </h2>
+              <p className="subheading quiet prose">
+                Your practice closed at six. The agent picked up on the first ring, and
+                this is what your portal showed you the next morning — every word of it,
+                alongside the booking it made.
+              </p>
+            </div>
 
-      </header>
+            <div className="card-inverted" style={{ padding: 0 }}>
+              <div
+                className="row"
+                style={{
+                  justifyContent: "space-between",
+                  padding: "24px 0",
+                  borderBottom: "1px solid var(--color-graphite)",
+                }}
+              >
+                <span className="mono quiet">Inbound · 19:42 · 1m 48s</span>
+                <span className="tag">Booked</span>
+              </div>
 
-      {/* 🔹 Dashboard Layout */}
-      <div className="min-h-screen flex" style={{ background: BG, color: TEXT }}>
-        {/* Backdrop */}
-        {isMobileMenuOpen && (
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity duration-300"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-        
-        {/* Sidebar */}
-        <aside className={`
-          fixed md:relative md:flex w-64 flex-col border-r border-[#1e1e24]
-          transition-all duration-300 ease-in-out transform
-          ${isMobileMenuOpen ? 'translate-x-0 z-50' : '-translate-x-full md:translate-x-0'}
-          top-0 bottom-0 left-0 bg-[#0B0B0D]
-        `}>
-          <style jsx>{`
-  .tp-sideHead {
-    background: linear-gradient(
-      135deg,
-      rgba(34,197,94,.15) 0%,
-      rgba(107,47,255,.16) 100%
-    );
-    border-bottom: 1px solid #1e1e24;
-  }
-`}</style>
+              <div>
+                <div className="record-line">
+                  <span className="mono who">Caller</span>
+                  <p className="said">
+                    Hi — I know you’re shut, I just wanted to see about getting in this
+                    week. I’ve cracked a filling.
+                  </p>
+                </div>
+                <div className="record-line">
+                  <span className="mono who">Agent</span>
+                  <p className="said">
+                    That sounds uncomfortable — let’s get you seen. I can do Thursday at
+                    8:20 in the morning, or there’s a cancellation slot tomorrow at 2:15.
+                  </p>
+                </div>
+                <div className="record-line">
+                  <span className="mono who">Caller</span>
+                  <p className="said">Tomorrow at quarter past two would be brilliant.</p>
+                </div>
+                <div className="record-line">
+                  <span className="mono who">Agent</span>
+                  <p className="said">
+                    Booked. I’ll text you the confirmation now, and I’ve made a note for
+                    the practice that it’s a cracked filling so they’ll have the time set
+                    aside.
+                  </p>
+                </div>
+              </div>
 
-          <div
-            className="p-6 rounded-br-2xl"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(34,197,94,.15), rgba(107,47,255,.15))",
-              borderBottom: "1px solid #1e1e24",
-            }}
-          >
-            <img src="/truephase-logo.jpg" alt="Truephase Logo" className="h-10 mb-2" />
-            <p className="text-xs" style={{ color: MUTED }}>
-              AI Automation Suite
+              <div
+                className="row"
+                style={{
+                  gap: 8,
+                  padding: "24px 0 0",
+                  borderTop: "1px solid var(--color-graphite)",
+                }}
+              >
+                <span className="tag tag-dark">Appointment created</span>
+                <span className="tag tag-dark">Confirmation sent</span>
+                <span className="tag tag-dark">Note passed to practice</span>
+              </div>
+            </div>
+
+            <p className="body-sm quiet">
+              Illustrative of a typical out-of-hours call. Real transcripts sit in your
+              own portal.
             </p>
           </div>
+        </section>
 
-          <nav className="flex-1 p-4 space-y-2">
-            {[
-              ["Overview", "overview"],
-              ["Voice Agent", "voice"],
-              ["Reviews", "reviews"],
-              ["Automation", "automation"],
-              ["AI Performance", "ai"],
-            ].map(([label, key]) => {
-              const active = section === (key as any);
-              return (
-                <button
-                  key={key}
-                  onClick={() => {
-                    setSection(key as any);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full text-left px-4 py-2 rounded-xl transition"
+        {/* ── WHAT IT DOES ───────────────────────────────── */}
+        <section className="wrap section" id="what">
+          <div className="stack-40">
+            <div className="split" style={{ alignItems: "end" }}>
+              <h2 className="heading-lg">Four jobs,
+                <br />
+                off your desk</h2>
+              <p className="subheading muted prose">
+                Take one or take all four. Most practices start with the phone, because
+                that is where the money is being lost, and add the rest once they trust it.
+              </p>
+            </div>
+
+            <div className="grid-2">
+              {SERVICES.map((s) => (
+                <article key={s.title} className="card stack-16">
+                  <span className="tag">{s.tag}</span>
+                  <h3 className="heading-sm">{s.title}</h3>
+                  <p className="body muted">{s.body}</p>
+                  <hr className="rule" />
+                  <ul className="stack-8">
+                    {s.detail.map((d) => (
+                      <li key={d} className="body-sm muted">
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── HOW IT WORKS ───────────────────────────────── */}
+        <section className="wrap section" id="how">
+          <div className="stack-40">
+            <div className="stack-16">
+              <span className="mono muted">Three steps · about two weeks</span>
+              <h2 className="heading-lg">We set it up.
+                <br />
+                You don’t configure anything.</h2>
+            </div>
+
+            <div className="grid-3" style={{ gap: 16, alignItems: "stretch" }}>
+              {STEPS.map((s, i) => (
+                <article
+                  key={s.n}
+                  className={`card-arc stack-16 ${i === 1 ? "card-arc-dark" : ""}`}
+                >
+                  <span className="step-num">{s.n}</span>
+                  <h3 className="heading-sm">{s.title}</h3>
+                  <p className="body" style={{ color: i === 1 ? "var(--color-smoke)" : "var(--color-slate)" }}>
+                    {s.body}
+                  </p>
+                  <span className="mono" style={{ color: i === 1 ? "var(--color-mint-chip)" : "var(--color-slate)" }}>
+                    {s.who}
+                  </span>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── WHO IT'S FOR ───────────────────────────────── */}
+        <section className="wrap section" id="who">
+          <div className="stack-40">
+            <div className="split" style={{ alignItems: "end" }}>
+              <h2 className="heading-lg">Built for places
+                <br />
+                where the phone
+                <br />
+                is the business</h2>
+              <p className="subheading muted prose">
+                We work with a small number of UK practices at a time, because setting one
+                up properly takes us longer than selling one does.
+              </p>
+            </div>
+
+            <div className="grid-4">
+              {SECTORS.map((s) => (
+                <article key={s.name} className="card stack-16" style={{ borderRadius: 24 }}>
+                  <h3 className="subheading-lg">{s.name}</h3>
+                  <p className="body-sm muted">{s.note}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── PORTAL ─────────────────────────────────────── */}
+        <section className="wrap section">
+          <div className="card-lg split" style={{ alignItems: "center", gap: 40 }}>
+            <div className="stack-16">
+              <span className="tag">Included</span>
+              <h2 className="heading">Your own portal, not a monthly PDF</h2>
+              <p className="body muted prose">
+                Every client gets a login. Calls, transcripts, outcomes, reviews and the
+                daily report all sit in one place, updating as they happen — so you can
+                check what your AI did last night without asking us.
+              </p>
+              <div className="row" style={{ gap: 8, paddingTop: 8 }}>
+                <Link href="/dashboard" className="btn btn-filled">
+                  Look inside the portal
+                </Link>
+              </div>
+            </div>
+
+            <ul className="stack-8">
+              {[
+                "Every call, with the transcript",
+                "Bookings the agent made",
+                "Reviews, requests and replies",
+                "A written report each morning",
+                "Logins for your team",
+              ].map((line) => (
+                <li
+                  key={line}
+                  className="subheading"
                   style={{
-                    background: active ? ACCENT_2 : "transparent",
-                    color: active ? "#fff" : MUTED,
-                    border: active ? "none" : "1px solid #1f1f26",
+                    padding: "16px 0",
+                    borderBottom: "1px solid var(--color-ash)",
                   }}
                 >
-                  {label}
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
-        {/* Main */}
-        <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-x-hidden">
-          <div className="mb-6">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold" style={{ color: TEXT }}>
-              {section === "overview"
-                ? "Overview"
-                : section === "voice"
-                ? "Voice Agent Analytics"
-                : section === "reviews"
-                ? "Review Management"
-                : section === "automation"
-                ? "Business Automation Workflows"
-                : "AI Performance & Continuous Improvement"}
+        {/* ── QUESTIONS ──────────────────────────────────── */}
+        <section className="wrap section" id="questions">
+          <div className="stack-40">
+            <h2 className="heading-lg">The questions
+              <br />
+              we actually get asked</h2>
+
+            <div className="stack-16">
+              {QUESTIONS.map((item) => (
+                <details key={item.q} className="card" style={{ borderRadius: 24 }}>
+                  <summary
+                    className="subheading-lg"
+                    style={{ cursor: "pointer", listStyle: "none" }}
+                  >
+                    {item.q}
+                  </summary>
+                  <p className="body muted prose" style={{ paddingTop: 16 }}>
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── TALK ───────────────────────────────────────── */}
+        <section className="band-inverted" id="talk">
+          <div className="wrap stack-40">
+            <h2 className="display">
+              Tell us what
+              <br />
+              your phone
+              <br />
+              costs you
             </h2>
-            <p className="text-xs sm:text-sm mt-1" style={{ color: MUTED }}>
-              Live demo with sample data • Dark UI • Interactive charts
-            </p>
-          </div>
 
-          <div className="w-full">
-            {renderSection()}
+            <div className="split" style={{ alignItems: "end" }}>
+              <p className="subheading quiet prose">
+                One call, no deck. We will ask how many enquiries you think you miss in a
+                week and tell you honestly whether we can help — and if we can’t, we’ll
+                say so.
+              </p>
+
+              <div className="stack-16">
+                <span className="mono quiet">Email us directly</span>
+                <a
+                  href="mailto:support@truephase.co.uk"
+                  className="heading email-link"
+                  style={{ width: "fit-content" }}
+                >
+                  <span className="voltage">support@truephase.co.uk</span>
+                </a>
+                <a href="mailto:support@truephase.co.uk" className="btn btn-inverted" style={{ width: "fit-content" }}>
+                  Book a call
+                </a>
+              </div>
+            </div>
           </div>
-        </main>
-      </div>
-    </>
+        </section>
+      </main>
+
+      <SiteFooter />
+    </div>
   );
 }
