@@ -8,6 +8,13 @@ const NAV = [
   { href: "/#questions", label: "Questions" },
 ];
 
+/* The client portal is its own application, not a route in this site, so this
+   is a real link out rather than a next/link route. Set NEXT_PUBLIC_PORTAL_URL
+   to wherever it is hosted; it falls back to the local dev server, so the link
+   works today and does not ship a localhost address once the portal has a
+   public home. */
+const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://localhost:4173";
+
 export function SiteNav() {
   return (
     <header className="nav-bar">
@@ -25,9 +32,9 @@ export function SiteNav() {
         </nav>
 
         <div className="nav-actions">
-          <Link href="/dashboard" className="btn btn-ghost">
+          <a href={PORTAL_URL} className="btn btn-ghost">
             <HoverLoop>Client login</HoverLoop>
-          </Link>
+          </a>
           <Magnetic>
             <a href="#talk" className="btn btn-filled">
               <HoverLoop>Book a call</HoverLoop>
@@ -57,7 +64,7 @@ export function SiteFooter() {
               <span className="mono quiet">Product</span>
               <Link href="/#what">What it does</Link>
               <Link href="/#how">How it works</Link>
-              <Link href="/dashboard">Client portal</Link>
+              <a href={PORTAL_URL}>Client portal</a>
             </div>
             <div className="stack-8">
               <span className="mono quiet">Company</span>
