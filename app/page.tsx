@@ -1,32 +1,101 @@
 import Link from "next/link";
 import { SiteNav, SiteFooter } from "./_components/chrome";
+import { Transcript } from "./_components/motion";
+import { MotionProvider, HeroSequence, HoverLoop, Tilt, Magnetic } from "./_components/motion/index";
+import { HeroLoop } from "./_components/motion/HeroLoop";
 
 /* ── content ─────────────────────────────────────────────── */
+
+const TRANSCRIPT = [
+  {
+    who: "Caller",
+    said: "Hi — I know you’re shut, I just wanted to see about getting in this week. I’ve cracked a filling.",
+  },
+  {
+    who: "Agent",
+    said: "That sounds uncomfortable — let’s get you seen. I can do Thursday at 8:20 in the morning, or there’s a cancellation slot tomorrow at 2:15.",
+  },
+  { who: "Caller", said: "Tomorrow at quarter past two would be brilliant." },
+  {
+    who: "Agent",
+    said: "Booked. I’ll text you the confirmation now, and I’ve made a note for the practice that it’s a cracked filling so they’ll have the time set aside.",
+  },
+];
+
+const DAY = [
+  {
+    time: "07:12",
+    when: "Before you opened",
+    title: "A patient moves Thursday",
+    body: "They ring to shift an appointment. The agent finds the next slot that works, moves it, and sends the confirmation. Nobody had unlocked the door yet.",
+    tag: "AI Receptionist",
+  },
+  {
+    time: "09:58",
+    when: "During the first surgery",
+    title: "The enquiry that rings three practices",
+    body: "A new patient, shopping around, booking with whoever picks up. Answered on the first ring and booked in before they got to the next number.",
+    tag: "Appointment Scheduler",
+  },
+  {
+    time: "12:40",
+    when: "When it would have gone to voicemail",
+    title: "A question it can’t answer",
+    body: "So it stops trying. It takes the caller’s name and number, writes down what they wanted, and flags it. You rang back at two, knowing exactly what you were ringing about.",
+    tag: "AI Receptionist",
+  },
+];
+
+const DAY_LATE = [
+  {
+    time: "23:05",
+    when: "Long after everyone went home",
+    title: "Yesterday’s patient leaves five stars",
+    body: "They open the review request on the sofa and write two lines. A reply is drafted and waiting for you to approve in the morning.",
+    tag: "Review Management",
+  },
+  {
+    time: "09:05",
+    when: "Next morning, before you arrive",
+    title: "The day is already written up",
+    body: "Calls taken, appointments made, what needed a human and what didn’t. In your inbox and in your portal, every morning, without anyone compiling it.",
+    tag: "Reports",
+  },
+];
 
 const SERVICES = [
   {
     tag: "Voice",
     title: "AI Receptionist",
-    body: "Answers the phone on the first ring, day or night. Takes the caller’s name and number, understands what they want, books them in or passes them to you.",
-    detail: ["Inbound and outbound", "Full transcript of every call", "Out-of-hours cover"],
+    body: "Answers on the first ring, day or night. Takes the name and number, understands what they want, books them or passes them to you.",
   },
   {
     tag: "Booking",
     title: "Appointment Scheduler",
     body: "Turns a phone call into a booking without anyone typing it in. Confirmations and reminders go out on their own.",
-    detail: ["Books during the call", "Reminders by text", "Cancellations handled"],
   },
   {
     tag: "Reputation",
     title: "Review Management",
-    body: "Sends the review request at the right moment, tracks who opened it, and drafts a reply to every review that lands.",
-    detail: ["Request after the visit", "Open and click tracking", "Drafted replies"],
+    body: "Sends the request at the right moment, tracks who opened it, drafts a reply to every review that lands.",
   },
   {
     tag: "Back office",
     title: "Task Automation",
     body: "The repetitive work behind the front desk — chasing, filing, following up, writing the day up — handled without you.",
-    detail: ["Daily written report", "Follow-up sequences", "Built to your process"],
+  },
+];
+
+const BEYOND = [
+  {
+    title: "Web design & brand identity",
+    body: "We design and build the site people land on after they hang up, and the brand it carries \u2014 worth having when the calls are being answered but the website is quietly undoing the work.",
+    lines: ["Website design and build", "Brand identity and logo", "Copy that sounds like you"],
+  },
+  {
+    title: "AI video for social",
+    body: "Short-form video for your socials, made from your own footage and brand. Reels that keep you visible between appointments, without booking a videographer every month.",
+    lines: ["Reels and short-form video", "Made from your own clips", "A steady run, not a one-off"],
   },
 ];
 
@@ -34,46 +103,58 @@ const STEPS = [
   {
     n: "01",
     title: "We listen to how you work",
-    body: "A call, then a look at how your front desk actually runs today — what gets asked, what gets missed, what you would rather never do again.",
+    body: "A call, then a look at how your front desk actually runs — what gets asked, what gets missed, what you would rather never do again.",
     who: "About an hour of your time",
   },
   {
     n: "02",
     title: "We build and test it",
-    body: "We configure the voice agent, connect it to your number and your diary, and test it against real situations until it handles them the way you would.",
+    body: "We configure the agent, connect it to your number and your diary, and test it against real situations until it handles them the way you would.",
     who: "Truephase does this, not you",
   },
   {
     n: "03",
-    title: "It goes live and you watch it work",
-    body: "Your number starts being answered. You get a login to the portal where every call, transcript, booking and review sits, and a written report each day.",
+    title: "It goes live",
+    body: "Your number starts being answered. You get a login where every call, transcript, booking and review sits, and a written report each day.",
     who: "You keep the login",
   },
 ];
 
 const SECTORS = [
-  { name: "Dental practices", note: "New patient enquiries, recalls, cancellations that need refilling the same day." },
-  { name: "Physiotherapy clinics", note: "Self-pay enquiries that go cold if nobody rings back within the hour." },
-  { name: "Care homes", note: "Family enquiries at any hour, handled calmly and written up in full." },
-  { name: "Salons & clinics", note: "A chair sitting empty because the phone rang while you had your hands full." },
+  {
+    name: "Dental practices",
+    note: "New patient enquiries, recalls, and cancellations that need refilling the same day.",
+  },
+  {
+    name: "Physiotherapy clinics",
+    note: "Self-pay enquiries that go cold if nobody rings back within the hour.",
+  },
+  {
+    name: "Care homes",
+    note: "Family enquiries at any hour, handled calmly and written up in full.",
+  },
+  {
+    name: "Salons & clinics",
+    note: "A chair sitting empty because the phone rang while you had your hands full.",
+  },
 ];
 
 const QUESTIONS = [
   {
     q: "Will callers know it’s not a person?",
-    a: "Most people work it out, and in practice they mind far less than you would expect — what they actually want is to be answered and dealt with. We tell you exactly what your agent says and you sign it off before it ever picks up.",
+    a: "Most work it out, and they mind far less than you would expect — what they want is to be answered and dealt with. We tell you exactly what your agent says and you sign it off before it ever picks up.",
   },
   {
     q: "What happens when it can’t help?",
-    a: "It stops trying. The call transfers to whoever you nominate, or it takes a message and flags it. An agent that guesses is worse than no agent, so ours is built to hand over early.",
+    a: "It stops trying. The call transfers to whoever you nominate, or it takes a message and flags it. An agent that guesses is worse than no agent, so ours hands over early.",
   },
   {
     q: "Do I have to change my phone system?",
-    a: "No. Your existing number stays exactly as it is — calls are forwarded to the agent, and you can turn that forwarding off whenever you like.",
+    a: "No. Your existing number stays as it is — calls are forwarded to the agent, and you can turn that forwarding off whenever you like.",
   },
   {
     q: "Who can see the call transcripts?",
-    a: "You and the people you give logins to. Truephase staff can access your account to support and configure it. Calls involve other people’s personal information, so if you want the detail of how that is handled, ask us and we will put it in writing.",
+    a: "You and the people you give logins to. Truephase staff can access your account to support and configure it. Calls involve other people’s personal information, so if you want the detail of how that is handled, ask and we will put it in writing.",
   },
   {
     q: "What do I get on day one?",
@@ -90,15 +171,25 @@ export default function Home() {
         Skip to content
       </a>
 
+      <MotionProvider />
+      <HeroSequence />
       <SiteNav />
 
       <main id="main">
-        {/* ── HERO ───────────────────────────────────────── */}
-        <section className="wrap hero-grid">
-          <div className="stack-24">
-            <span className="mono muted">UK · Clinics, care homes & salons</span>
+        {/* ── HERO ─────────────────────────────────────────
+            Two columns: the headline holds the left half, the object sits in
+            the right half with clear air between them. The object is not in a
+            card, a panel or any clipping container — it is a hero visual in
+            its own grid cell. */}
+        <section className="hero" data-hero>
+          <div className="hero-copy">
+            <span className="mono muted" data-hero-copy>
+              UK · Clinics, care homes &amp; salons
+            </span>
 
-            <h1 className="display-xl">
+            {/* Breaks are explicit so SplitText masks the lines we designed,
+                not whatever the viewport happens to wrap to. */}
+            <h1 className="display-xl" data-hero-heading>
               Nobody
               <br />
               puts your
@@ -108,127 +199,138 @@ export default function Home() {
               on hold
             </h1>
 
-            <p className="subheading-lg muted prose">
-              Truephase answers your phone, books the appointment, chases the review and
-              writes the day up. You get the login, the transcripts and the evidence.
+            <p className="hero-sub muted" data-hero-copy>
+              Truephase answers your phone, books the appointment and writes the day up.
+              Below is one Tuesday, hour by hour.
             </p>
 
-            <div className="row" style={{ gap: 8, paddingTop: 8 }}>
-              <a href="#talk" className="btn btn-filled">
-                Book a call
-              </a>
-              <a href="#what" className="btn btn-ghost">
-                See what it does
-              </a>
+            <div className="row hero-cta" style={{ gap: 8 }} data-hero-copy>
+              <Magnetic>
+                <a href="#talk" className="btn btn-filled">
+                  <HoverLoop>Book a call</HoverLoop>
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a href="#day" className="btn btn-ghost">
+                  <HoverLoop>Read the day</HoverLoop>
+                </a>
+              </Magnetic>
             </div>
           </div>
 
-          {/*
-            Reserved slot for the hero 3D product render.
-            Art direction and the generation prompt: public/hero-asset-prompt.txt
-            Deliberately NOT a CSS imitation of a photoreal render.
-          */}
-          <figure className="asset-slot" aria-label="Hero product render — pending">
-            <svg viewBox="0 0 100 100" fill="none" stroke="#979797" strokeWidth="1.5" aria-hidden="true">
-              <path d="M50 8 L88 28 L88 72 L50 92 L12 72 L12 28 Z" />
-              <path d="M50 8 L50 50 M50 50 L88 28 M50 50 L12 28 M50 50 L50 92" />
-              <circle cx="88" cy="28" r="5" fill="#d1ffca" stroke="none" />
-              <circle cx="12" cy="72" r="4" fill="#fff100" stroke="none" />
-            </svg>
-            <figcaption className="mono quiet">
-              Hero render · 1:1 · pending generation
-            </figcaption>
-          </figure>
+          <div className="hero-media" data-hero-media>
+            <HeroLoop
+              webm="/hero-tower.webm"
+              mp4="/hero-tower.mp4"
+              still="/hero-tower-still.webp"
+              width={1000}
+              height={1000}
+              label="A tower of cast blocks, one layer per Truephase service, each layer a different colour with a label set into its blocks: VOICE AI for the AI receptionist, BOOKING for the appointment scheduler, REVIEW MANAGEMENT, AUTOMATION for task automation, WEB DESIGN, AI VIDEO for video for social, and CHATBOT. In turn a layer slides out of the base, tips open like petals, rises up the outside of the stack and closes onto the top, while the layers above settle down one place."
+            />
+          </div>
         </section>
 
-        {/* ── PROOF: a real call, in the brutalist voice ──── */}
-        <section className="band-inverted" id="proof">
+        {/* The scroll-driven cube section sat here and is out for now. Nothing
+            about it was deleted: motion/CubeScroll.tsx, its styles, the frames
+            in public/cube and the Blender source all remain, so putting it
+            back is this element on its own. */}
+
+        {/* ── THE DAY ────────────────────────────────────── */}
+        <section className="wrap section" id="day">
+          <div className="stack-16" style={{ marginBottom: 40 }} data-reveal>
+            <span className="mono muted">One Tuesday · illustrative</span>
+            <h2 className="heading-lg">
+              Nothing here
+              <br />
+              needed you
+            </h2>
+          </div>
+
+          <ol className="timeline">
+            {DAY.map((item) => (
+              <li className="tl-item" key={item.time} data-reveal>
+                <div className="tl-time">
+                  <span className="tl-clock">{item.time}</span>
+                  <span className="mono tl-when">{item.when}</span>
+                </div>
+                <div className="tl-body">
+                  <h3 className="heading-sm">{item.title}</h3>
+                  <p className="body muted prose">{item.body}</p>
+                  <span className="tag">{item.tag}</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* ── 19:42 — the climax, full bleed ─────────────── */}
+        <section className="band-inverted" id="evening" data-scrub>
           <div className="wrap stack-40">
             <div className="split" style={{ alignItems: "end" }}>
-              <h2 className="display">
-                This is
-                <br />
-                a Tuesday
-                <br />
-                at 7:42pm
-              </h2>
+              <div className="stack-16">
+                <span className="mono quiet">19:42 · three hours after you closed</span>
+                <h2 className="display">
+                  The call
+                  <br />
+                  you never
+                  <br />
+                  knew about
+                </h2>
+              </div>
               <p className="subheading quiet prose">
-                Your practice closed at six. The agent picked up on the first ring, and
-                this is what your portal showed you the next morning — every word of it,
-                alongside the booking it made.
+                Your practice shut at six. The agent picked up on the first ring. This is
+                every word of it, alongside the booking it made — exactly as it appeared in
+                the portal next morning.
               </p>
             </div>
 
             <div className="card-inverted" style={{ padding: 0 }}>
-              <div
-                className="row"
-                style={{
-                  justifyContent: "space-between",
-                  padding: "24px 0",
-                  borderBottom: "1px solid var(--color-graphite)",
-                }}
-              >
+              <div className="record-head">
                 <span className="mono quiet">Inbound · 19:42 · 1m 48s</span>
                 <span className="tag">Booked</span>
               </div>
 
-              <div>
-                <div className="record-line">
-                  <span className="mono who">Caller</span>
-                  <p className="said">
-                    Hi — I know you’re shut, I just wanted to see about getting in this
-                    week. I’ve cracked a filling.
-                  </p>
-                </div>
-                <div className="record-line">
-                  <span className="mono who">Agent</span>
-                  <p className="said">
-                    That sounds uncomfortable — let’s get you seen. I can do Thursday at
-                    8:20 in the morning, or there’s a cancellation slot tomorrow at 2:15.
-                  </p>
-                </div>
-                <div className="record-line">
-                  <span className="mono who">Caller</span>
-                  <p className="said">Tomorrow at quarter past two would be brilliant.</p>
-                </div>
-                <div className="record-line">
-                  <span className="mono who">Agent</span>
-                  <p className="said">
-                    Booked. I’ll text you the confirmation now, and I’ve made a note for
-                    the practice that it’s a cracked filling so they’ll have the time set
-                    aside.
-                  </p>
-                </div>
-              </div>
+              <Transcript lines={TRANSCRIPT} />
 
-              <div
-                className="row"
-                style={{
-                  gap: 8,
-                  padding: "24px 0 0",
-                  borderTop: "1px solid var(--color-graphite)",
-                }}
-              >
+              <div className="record-foot">
                 <span className="tag tag-dark">Appointment created</span>
                 <span className="tag tag-dark">Confirmation sent</span>
                 <span className="tag tag-dark">Note passed to practice</span>
               </div>
             </div>
-
-            <p className="body-sm quiet">
-              Illustrative of a typical out-of-hours call. Real transcripts sit in your
-              own portal.
-            </p>
           </div>
         </section>
 
-        {/* ── WHAT IT DOES ───────────────────────────────── */}
+        {/* ── THE DAY, LATE ──────────────────────────────── */}
+        <section className="wrap section">
+          <ol className="timeline">
+            {DAY_LATE.map((item) => (
+              <li className="tl-item" key={item.time} data-reveal>
+                <div className="tl-time">
+                  <span className="tl-clock">{item.time}</span>
+                  <span className="mono tl-when">{item.when}</span>
+                </div>
+                <div className="tl-body">
+                  <h3 className="heading-sm">{item.title}</h3>
+                  <p className="body muted prose">{item.body}</p>
+                  <span className="tag">{item.tag}</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* ── WHAT RAN THAT DAY ──────────────────────────── */}
         <section className="wrap section" id="what">
           <div className="stack-40">
-            <div className="split" style={{ alignItems: "end" }}>
-              <h2 className="heading-lg">Four jobs,
+            <div className="split" style={{ alignItems: "end" }} data-reveal>
+              <h2 className="heading-lg">
+                Four things
                 <br />
-                off your desk</h2>
+                running behind
+                <br />
+                that day
+              </h2>
               <p className="subheading muted prose">
                 Take one or take all four. Most practices start with the phone, because
                 that is where the money is being lost, and add the rest once they trust it.
@@ -237,49 +339,72 @@ export default function Home() {
 
             <div className="grid-2">
               {SERVICES.map((s) => (
-                <article key={s.title} className="card stack-16">
-                  <span className="tag">{s.tag}</span>
-                  <h3 className="heading-sm">{s.title}</h3>
-                  <p className="body muted">{s.body}</p>
-                  <hr className="rule" />
-                  <ul className="stack-8">
-                    {s.detail.map((d) => (
-                      <li key={d} className="body-sm muted">
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
+                <Tilt key={s.title} amount={5} className="tilt-cell" data-reveal>
+                  <article className="card stack-16">
+                    <span className="tag">{s.tag}</span>
+                    <h3 className="heading-sm">{s.title}</h3>
+                    <p className="body muted">{s.body}</p>
+                  </article>
+                </Tilt>
               ))}
+            </div>
+
+            {/* Projects, not daily automations — grouped away from the four above. */}
+            <div className="beyond" data-reveal>
+              <div className="stack-16">
+                <span className="tag">Beyond the phone</span>
+                <h3 className="heading">Things we make for you</h3>
+                <p className="body prose">
+                  The phone is only half of it. These are projects rather than
+                  automations — booked in, built, handed over.
+                </p>
+              </div>
+
+              <div className="beyond-grid">
+                {BEYOND.map((b) => (
+                  <Tilt key={b.title} amount={4} className="tilt-cell">
+                  <article className="beyond-item">
+                    <h4 className="heading-sm">{b.title}</h4>
+                    <p className="body">{b.body}</p>
+                    <ul>
+                      {b.lines.map((line) => (
+                        <li key={line} className="beyond-line">
+                          {line}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                  </Tilt>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ── HOW IT WORKS ───────────────────────────────── */}
+        {/* ── SETUP ──────────────────────────────────────── */}
         <section className="wrap section" id="how">
           <div className="stack-40">
-            <div className="stack-16">
+            <div className="stack-16" data-reveal>
               <span className="mono muted">Three steps · about two weeks</span>
-              <h2 className="heading-lg">We set it up.
+              <h2 className="heading-lg">
+                We set it up.
                 <br />
-                You don’t configure anything.</h2>
+                You don’t configure anything.
+              </h2>
             </div>
 
-            <div className="grid-3" style={{ gap: 16, alignItems: "stretch" }}>
+            <div className="grid-3" style={{ alignItems: "stretch" }}>
               {STEPS.map((s, i) => (
+                <Tilt key={s.n} amount={5} className="tilt-cell" data-reveal>
                 <article
-                  key={s.n}
                   className={`card-arc stack-16 ${i === 1 ? "card-arc-dark" : ""}`}
                 >
                   <span className="step-num">{s.n}</span>
                   <h3 className="heading-sm">{s.title}</h3>
-                  <p className="body" style={{ color: i === 1 ? "var(--color-smoke)" : "var(--color-slate)" }}>
-                    {s.body}
-                  </p>
-                  <span className="mono" style={{ color: i === 1 ? "var(--color-mint-chip)" : "var(--color-slate)" }}>
-                    {s.who}
-                  </span>
+                  <p className="body muted">{s.body}</p>
+                  <span className="mono step-who">{s.who}</span>
                 </article>
+                </Tilt>
               ))}
             </div>
           </div>
@@ -288,12 +413,14 @@ export default function Home() {
         {/* ── WHO IT'S FOR ───────────────────────────────── */}
         <section className="wrap section" id="who">
           <div className="stack-40">
-            <div className="split" style={{ alignItems: "end" }}>
-              <h2 className="heading-lg">Built for places
+            <div className="split" style={{ alignItems: "end" }} data-reveal>
+              <h2 className="heading-lg">
+                Built for places
                 <br />
                 where the phone
                 <br />
-                is the business</h2>
+                is the business
+              </h2>
               <p className="subheading muted prose">
                 We work with a small number of UK practices at a time, because setting one
                 up properly takes us longer than selling one does.
@@ -302,10 +429,12 @@ export default function Home() {
 
             <div className="grid-4">
               {SECTORS.map((s) => (
-                <article key={s.name} className="card stack-16" style={{ borderRadius: 24 }}>
-                  <h3 className="subheading-lg">{s.name}</h3>
-                  <p className="body-sm muted">{s.note}</p>
-                </article>
+                <Tilt key={s.name} amount={6} className="tilt-cell" data-reveal>
+                  <article className="card stack-16" style={{ borderRadius: 24 }}>
+                    <h3 className="subheading-lg">{s.name}</h3>
+                    <p className="body-sm muted">{s.note}</p>
+                  </article>
+                </Tilt>
               ))}
             </div>
           </div>
@@ -313,19 +442,22 @@ export default function Home() {
 
         {/* ── PORTAL ─────────────────────────────────────── */}
         <section className="wrap section">
+          <Tilt amount={3} data-reveal>
           <div className="card-lg split" style={{ alignItems: "center", gap: 40 }}>
             <div className="stack-16">
               <span className="tag">Included</span>
-              <h2 className="heading">Your own portal, not a monthly PDF</h2>
+              <h2 className="heading">Where that day is waiting for you</h2>
               <p className="body muted prose">
                 Every client gets a login. Calls, transcripts, outcomes, reviews and the
-                daily report all sit in one place, updating as they happen — so you can
-                check what your AI did last night without asking us.
+                daily report in one place, updating as they happen — so you can check what
+                your AI did last night without asking us.
               </p>
               <div className="row" style={{ gap: 8, paddingTop: 8 }}>
-                <Link href="/dashboard" className="btn btn-filled">
-                  Look inside the portal
-                </Link>
+                <Magnetic>
+                  <Link href="/dashboard" className="btn btn-filled">
+                    <HoverLoop>Look inside the portal</HoverLoop>
+                  </Link>
+                </Magnetic>
               </div>
             </div>
 
@@ -337,50 +469,43 @@ export default function Home() {
                 "A written report each morning",
                 "Logins for your team",
               ].map((line) => (
-                <li
-                  key={line}
-                  className="subheading"
-                  style={{
-                    padding: "16px 0",
-                    borderBottom: "1px solid var(--color-ash)",
-                  }}
-                >
+                <li key={line} className="subheading portal-line">
                   {line}
                 </li>
               ))}
             </ul>
           </div>
+          </Tilt>
         </section>
 
         {/* ── QUESTIONS ──────────────────────────────────── */}
         <section className="wrap section" id="questions">
           <div className="stack-40">
-            <h2 className="heading-lg">The questions
+            <h2 className="heading-lg" data-reveal>
+              The questions
               <br />
-              we actually get asked</h2>
+              we actually get asked
+            </h2>
 
             <div className="stack-16">
               {QUESTIONS.map((item) => (
-                <details key={item.q} className="card" style={{ borderRadius: 24 }}>
-                  <summary
-                    className="subheading-lg"
-                    style={{ cursor: "pointer", listStyle: "none" }}
-                  >
-                    {item.q}
-                  </summary>
-                  <p className="body muted prose" style={{ paddingTop: 16 }}>
-                    {item.a}
-                  </p>
-                </details>
+                <Tilt key={item.q} amount={3} data-reveal>
+                  <details className="card" style={{ borderRadius: 24 }}>
+                    <summary className="subheading-lg">{item.q}</summary>
+                    <p className="body muted prose" style={{ paddingTop: 16 }}>
+                      {item.a}
+                    </p>
+                  </details>
+                </Tilt>
               ))}
             </div>
           </div>
         </section>
 
         {/* ── TALK ───────────────────────────────────────── */}
-        <section className="band-inverted" id="talk">
+        <section className="band-inverted" id="talk" data-scrub>
           <div className="wrap stack-40">
-            <h2 className="display">
+            <h2 className="display" data-reveal>
               Tell us what
               <br />
               your phone
@@ -391,8 +516,8 @@ export default function Home() {
             <div className="split" style={{ alignItems: "end" }}>
               <p className="subheading quiet prose">
                 One call, no deck. We will ask how many enquiries you think you miss in a
-                week and tell you honestly whether we can help — and if we can’t, we’ll
-                say so.
+                week and tell you honestly whether we can help — and if we can’t, we’ll say
+                so.
               </p>
 
               <div className="stack-16">
@@ -404,9 +529,15 @@ export default function Home() {
                 >
                   <span className="voltage">support@truephase.co.uk</span>
                 </a>
-                <a href="mailto:support@truephase.co.uk" className="btn btn-inverted" style={{ width: "fit-content" }}>
-                  Book a call
-                </a>
+                <Magnetic>
+                  <a
+                    href="mailto:support@truephase.co.uk"
+                    className="btn btn-inverted"
+                    style={{ width: "fit-content" }}
+                  >
+                    <HoverLoop>Book a call</HoverLoop>
+                  </a>
+                </Magnetic>
               </div>
             </div>
           </div>

@@ -2,38 +2,52 @@
 
 /* ═══════════════════════════════════════════════════════════
    TRUEPHASE — brutalist editorial system on warm gray
-   Locked style reference: Dayos. Light theme, flat, zero shadows.
-   Depth comes from surface contrast (canvas → white → black),
-   never from elevation.
+   Light theme, flat, zero shadows. Depth comes from surface
+   contrast (canvas → white → near-black), never from elevation.
    ═══════════════════════════════════════════════════════════ */
 
 @theme {
-  --color-carbon-black: #000000;
-  --color-paper-white: #ffffff;
-  --color-warm-canvas: #e5e5e5;
-  --color-mist-gray: #f3f3f3;
-  --color-ash: #c6c6c6;
-  --color-smoke: #979797;
-  --color-slate: #444444;
-  --color-graphite: #2f2f2f;
+  --fg: #0a0a0a;
+  --on-fg: #f7f7f4;
+  --bg-page: #efefed;
+  --bg-card: #ffffff;
+  --color-ash: #dcdcd5;
+  --color-smoke: #6b6b63;
+  --color-slate: #4a4a44;
+  --color-graphite: #1c1c1a;
   --color-mint-chip: #d1ffca;
   --color-voltage-yellow: #fff100;
+  /* text on a mint or yellow chip - the accents are light in either theme,
+     so this one never flips */
+  --ink-on-accent: #0a0a0a;
+  /* muted text, named for the surface it sits on rather than for a colour,
+     so a theme flip moves the values and leaves every call site alone */
+  --muted-on-page: #5c5c55;
+  --muted-on-inverted: #b8b8b0;
+  /* a hairline that survives on the near-black inverted surfaces */
+  --line-on-inverted: #33332f;
 }
 
 :root {
-  --color-carbon-black: #000000;
-  --color-paper-white: #ffffff;
-  --color-warm-canvas: #e5e5e5;
-  --color-mist-gray: #f3f3f3;
-  --color-ash: #c6c6c6;
-  --color-smoke: #979797;
-  --color-slate: #444444;
-  --color-graphite: #2f2f2f;
+  --fg: #0a0a0a;
+  --on-fg: #f7f7f4;
+  --bg-page: #efefed;
+  --bg-card: #ffffff;
+  --color-ash: #dcdcd5;
+  --color-smoke: #6b6b63;
+  --color-slate: #4a4a44;
+  --color-graphite: #1c1c1a;
   --color-mint-chip: #d1ffca;
   --color-voltage-yellow: #fff100;
 
   --page-max-width: 1200px;
   --section-gap: 80px;
+
+  /* The open, full-bleed measure the nav and hero share. --edge is the gutter
+     the reference composition starts its content at: ~5.5% of a 1440 screen,
+     floored for phones and capped so it stops growing on very wide displays. */
+  --hero-max: 1680px;
+  --edge: clamp(24px, 5.5vw, 92px);
 
   --spacing-8: 8px;
   --spacing-16: 16px;
@@ -58,8 +72,8 @@ body {
 /* ── site shell ─────────────────────────────────────────── */
 
 .tp-site {
-  background: var(--color-warm-canvas);
-  color: var(--color-carbon-black);
+  background: var(--bg-page);
+  color: var(--fg);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.25;
@@ -91,11 +105,11 @@ body {
   font-family: var(--font-display);
   font-weight: 400; /* Anton ships a single weight; it reads as 700 */
   text-transform: uppercase;
-  line-height: 0.9;
+  line-height: 0.94;
   text-wrap: balance;
-  color: var(--color-carbon-black);
+  color: var(--fg);
 }
-.display-xl { font-size: clamp(56px, 9.2vw, 130px); letter-spacing: -0.03em; }
+.display-xl { font-size: clamp(48px, 8.4vw, 126px); letter-spacing: -0.035em; }
 .display    { font-size: clamp(40px, 6.4vw, 80px);  letter-spacing: -0.03em; }
 .heading-lg { font-size: clamp(34px, 4.6vw, 48px);  letter-spacing: -0.03em; }
 
@@ -129,21 +143,21 @@ body {
   text-transform: uppercase;
 }
 
-.muted  { color: var(--color-slate); }
+.muted  { color: var(--muted-on-page); }
 .quiet  { color: var(--color-smoke); }
 .prose  { max-width: 56ch; }
 
 /* ── surfaces ───────────────────────────────────────────── */
 
 .card {
-  background: var(--color-paper-white);
+  background: var(--bg-card);
   border-radius: 32px;
   padding: 24px;
 }
-.card-lg { border-radius: 64px; padding: 40px; }
+.card-lg { border-radius: 64px; padding: 40px; background: var(--bg-card); }
 .card-inverted {
-  background: var(--color-carbon-black);
-  color: var(--color-paper-white);
+  background: var(--fg);
+  color: var(--on-fg);
   border-radius: 32px;
   padding: 24px;
 }
@@ -153,23 +167,31 @@ body {
 .band-inverted :is(.display-xl, .display, .heading-lg, .heading, .heading-sm),
 .card-arc-dark :is(.display-xl, .display, .heading-lg, .heading, .heading-sm),
 .footer :is(.display-xl, .display, .heading-lg, .heading, .heading-sm) {
-  color: var(--color-paper-white);
+  color: var(--on-fg);
 }
 
 /* Top-arc card — dome that emerges from below */
 .card-arc {
   border-radius: 64px 64px 0 0;
   padding: 40px 32px;
-  background: var(--color-paper-white);
+  background: var(--bg-card);
 }
-.card-arc-dark { background: var(--color-carbon-black); color: var(--color-paper-white); }
+.card-arc-dark { background: var(--fg); color: var(--on-fg); }
 
 .band-inverted {
-  background: var(--color-carbon-black);
-  color: var(--color-paper-white);
+  background: var(--fg);
+  color: var(--on-fg);
   padding-block: 80px;
 }
-.band-inverted .quiet { color: var(--color-smoke); }
+.band-inverted .quiet,
+.card-inverted .quiet,
+.band-inverted .muted,
+.card-inverted .muted,
+.card-arc-dark .muted,
+.band-inverted .who,
+.card-inverted .who { color: var(--muted-on-inverted); }
+/* the ledger is a dark panel, so its quiet text goes the other way */
+.ledger .quiet, .ledger-head, .ledger-foot, .ledger-time { color: var(--color-smoke); }
 
 /* ── tags & accents ─────────────────────────────────────── */
 
@@ -179,7 +201,7 @@ body {
      container, without disturbing tags that sit in a row */
   width: fit-content;
   background: var(--color-mint-chip);
-  color: var(--color-carbon-black);
+  color: var(--ink-on-accent);
   border-radius: 64px;
   padding: 8px 16px;
   font-family: var(--font-mono);
@@ -193,7 +215,7 @@ body {
   border: 1.5px solid var(--color-ash);
   color: var(--color-slate);
 }
-.tag-dark { background: var(--color-graphite); color: var(--color-paper-white); }
+.tag-dark { background: var(--color-graphite); color: var(--on-fg); }
 
 /* An email address is one unbreakable token — at display size it will push the
    page sideways on a phone unless it is allowed to size down and break. */
@@ -204,7 +226,7 @@ body {
 
 .voltage {
   background: var(--color-voltage-yellow);
-  color: var(--color-carbon-black);
+  color: var(--ink-on-accent);
   padding: 0 6px;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -227,7 +249,7 @@ body {
   cursor: pointer;
   transition: opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease;
 }
-.btn-filled { background: var(--color-carbon-black); color: var(--color-paper-white); }
+.btn-filled { background: var(--fg); color: var(--on-fg); }
 .btn-filled:hover { opacity: 0.82; }
 .btn-ghost {
   background: transparent;
@@ -236,14 +258,14 @@ body {
   border-radius: 4px;
   padding: 16px;
 }
-.btn-ghost:hover { border-color: var(--color-carbon-black); color: var(--color-carbon-black); }
-.btn-inverted { background: var(--color-paper-white); color: var(--color-carbon-black); }
+.btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
+.btn-inverted { background: var(--on-fg); color: var(--fg); }
 .btn-inverted:hover { opacity: 0.86; }
 .btn-text {
   background: none;
   border: none;
   padding: 0;
-  color: var(--color-carbon-black);
+  color: var(--fg);
   border-radius: 0;
 }
 .btn-text:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -251,38 +273,90 @@ body {
 /* ── navigation ─────────────────────────────────────────── */
 
 .nav-bar {
-  height: 8rem;
+  height: 80px;
   display: flex;
   align-items: center;
-  background: var(--color-warm-canvas);
+  background: var(--bg-page);
+  position: relative;
+  z-index: 20;
 }
+/* Three tracks with the middle one auto-sized: the pill is centred on the
+   PAGE, not on whatever is left over between the wordmark and the actions,
+   which is what keeps it centred as those two change width. */
 .nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
   width: 100%;
+  max-width: var(--hero-max);
+  margin: 0 auto;
+  padding-inline: var(--edge);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
 }
 .nav-pill {
+  grid-column: 2;
+  justify-self: center;
   display: flex;
   align-items: center;
-  gap: 24px;
-  background: var(--color-paper-white);
+  gap: 2px;
+  background: var(--bg-card);
   border-radius: 48px;
-  padding: 14px 28px;
+  padding: 5px 6px;
   min-width: 0;
 }
-.nav-actions { display: flex; align-items: center; gap: 8px; flex: none; }
+.nav-actions {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: none;
+}
 .nav-pill a {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--color-slate);
   letter-spacing: -0.011em;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 40px;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
-.nav-pill a:hover { color: var(--color-carbon-black); }
+.nav-pill a:hover { color: var(--fg); background: var(--bg-page); }
+
+/* one dark action on the right, and a quiet link beside it */
+.nav-actions .btn-filled {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 40px;
+  font-size: 15px;
+}
+.nav-actions .btn-ghost {
+  border: 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-slate);
+  background: none;
+}
+.nav-actions .btn-ghost:hover { color: var(--fg); }
+
+/* On the light canvas voltage yellow as ink would be all but invisible, so
+   the accent moves behind the letter instead of into it. Same brand note,
+   and the letterform keeps full contrast. */
+.wm-t {
+  background: var(--color-voltage-yellow);
+  color: var(--ink-on-accent);
+  padding: 0 0.08em;
+  border-radius: 3px;
+}
 
 .wordmark {
+  grid-column: 1;
+  justify-self: start;
   font-family: var(--font-display);
   flex: none;
   font-size: 28px;
@@ -293,29 +367,80 @@ body {
 
 /* ── hero ───────────────────────────────────────────────── */
 
-.hero-grid {
+/* The hero runs wider than .wrap. Content starts about 5.5% in from the page
+   edge rather than at the 1200px measure, which is what opens the composition
+   out at 1440 and up instead of boxing it into the middle. */
+.hero {
+  width: 100%;
+  max-width: var(--hero-max);
+  margin: 0 auto;
+  padding-inline: var(--edge);
+  padding-block: 40px 96px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
-  gap: 40px;
-  align-items: end;
-  padding-bottom: 80px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 32px;
+  align-items: center;
+  /* NOTHING clips here. The object's frame is sized below to finish exactly on
+     the viewport edge, so there is no overflow to hide - and an overflow rule
+     would be the one thing able to cut a block out of the loop. */
 }
-
-/* Reserved slot for the 3D product render. Intentional placeholder —
-   see public/hero-asset-prompt.txt. Not a CSS imitation of the render. */
-.asset-slot {
-  aspect-ratio: 1 / 1;
-  background: var(--color-mist-gray);
-  border-radius: 64px;
+.hero-copy {
+  grid-column: 1 / 8;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding: 40px;
-  text-align: center;
+  gap: 28px;
+  min-width: 0;
 }
-.asset-slot svg { width: 96px; height: 96px; }
+/* The media track deliberately starts inside the copy track. The headline is
+   set in a condensed face and its longest line stops far short of its column,
+   so the two BOXES overlap while the ink and the object never do — which is
+   the only way to get a ~50% copy column and the object centred at ~70% in
+   the same 12-column grid. Verified by measuring painted rects. */
+.hero-media {
+  /* Starts a track earlier than the copy's 1/8 so the object has room to be
+     large. The tracks overlap; the INK does not - the headline's longest line
+     stops around x=515 on a 1440 screen and the object starts at 626. */
+  grid-column: 6 / 13;
+  grid-row: 1;
+  /* Anchored to the RIGHT of its track now, and allowed a little past the
+     content gutter, so it sits deliberately in the right half instead of
+     floating mid-page. -36px leaves ~43px of viewport beyond it: shifted, not
+     clipped. */
+  justify-self: end;
+  align-self: end;
+  /* THE WHOLE FRAME STAYS ON SCREEN.
+     The loop throws blocks right out to the edges of its square: measured
+     across all 252 frames, the painted content reaches 1.2% from the left
+     edge and 1.7% from the right. So the frame has no spare margin to lose —
+     bleeding it past the viewport (which is what the reference does) removed
+     a petal at the extreme of its swing, and so did a mask.
+     It therefore ends exactly ON the viewport's right edge, and takes the
+     width the copy leaves it: the sub-heading's 470px measure sitting on the
+     page gutter, plus 44px of air. */
+  --media-w: min(1000px, calc(100vw - var(--edge) - 514px));
+  width: var(--media-w);
+  margin-right: calc(-1 * var(--edge));
+  /* The base dissolves INSIDE the frame, so the overhang below the hero is a
+     share of the frame rather than a fixed drop — it has to rescale with it. */
+  margin-bottom: calc(var(--media-w) * -0.2);
+  position: relative;
+  /* purely decorative, and it now overlaps the section beneath */
+  pointer-events: none;
+}
+.hero-sub {
+  /* The reference sets the supporting line a clear beat below the headline.
+     padding, not margin: `.tp-site p` (0,1,1) resets every paragraph margin
+     and outranks this class, so a margin here would silently do nothing. */
+  padding-top: 28px;
+  font-size: clamp(18px, 1.6vw, 25px);
+  line-height: 1.34;
+  font-weight: 400;
+  max-width: 470px;
+  letter-spacing: -0.012em;
+}
+.hero-cta { padding-top: 12px; }
+
 
 /* ── layout helpers ─────────────────────────────────────── */
 
@@ -331,7 +456,7 @@ body {
 .split  { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
 
 .rule { height: 1px; background: var(--color-ash); border: 0; }
-.rule-dark { height: 1px; background: var(--color-graphite); border: 0; }
+.rule-dark { height: 1px; background: var(--line-on-inverted); border: 0; }
 
 /* ── call record (the proof block) ──────────────────────── */
 
@@ -340,17 +465,19 @@ body {
   grid-template-columns: 64px minmax(0, 1fr);
   gap: 24px;
   padding-block: 16px;
-  border-bottom: 1px solid var(--color-graphite);
+  border-bottom: 1px solid var(--line-on-inverted);
   align-items: start;
 }
 .record-line:last-child { border-bottom: 0; }
-.record-line .who { color: var(--color-smoke); }
+/* the transcript always sits on a light contrast band */
+.record-line .who { color: var(--muted-on-inverted); }
 .record-line .said { font-size: 18px; line-height: 1.33; letter-spacing: -0.01em; }
 
 /* ── numbered steps ─────────────────────────────────────── */
 
 .step-num {
   font-family: var(--font-display);
+  font-weight: 400; /* Anton ships a single weight; it reads as 700 */
   font-size: 80px;
   line-height: 0.9;
   letter-spacing: -0.03em;
@@ -358,19 +485,22 @@ body {
 
 /* ── footer ─────────────────────────────────────────────── */
 
+/* The page closes on the inverted surface, so the light canvas has a foot to
+   land on rather than running out at the bottom of the last section. */
 .footer {
-  background: var(--color-carbon-black);
-  color: var(--color-paper-white);
+  background: var(--fg);
+  color: var(--on-fg);
   padding-block: 64px 40px;
 }
-.footer a { color: var(--color-smoke); font-size: 14px; }
-.footer a:hover { color: var(--color-paper-white); }
+.footer a { color: var(--muted-on-inverted); font-size: 14px; }
+.footer a:hover { color: var(--on-fg); }
+.footer .quiet, .footer .muted { color: var(--muted-on-inverted); }
 
 /* ── accessibility & motion ─────────────────────────────── */
 
 .tp-site a:focus-visible,
 .tp-site button:focus-visible {
-  outline: 2px solid var(--color-carbon-black);
+  outline: 2px solid var(--fg);
   outline-offset: 3px;
 }
 .band-inverted a:focus-visible,
@@ -382,8 +512,8 @@ body {
   position: absolute;
   left: -9999px;
   top: 0;
-  background: var(--color-carbon-black);
-  color: var(--color-paper-white);
+  background: var(--fg);
+  color: var(--on-fg);
   padding: 16px 24px;
   z-index: 50;
 }
@@ -399,15 +529,16 @@ body {
 /* ── responsive ─────────────────────────────────────────── */
 
 @media (max-width: 1000px) {
-  .hero-grid { grid-template-columns: minmax(0, 1fr); align-items: start; }
-  .asset-slot { max-width: 520px; }
   .split { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* with the pill gone the middle track collapses and the bar reads as a
+     plain wordmark-and-action row */
   .nav-pill { display: none; }
+  .nav-inner { grid-template-columns: auto 0 1fr; }
 }
 @media (max-width: 680px) {
   .grid-2, .grid-3, .grid-4 { grid-template-columns: minmax(0, 1fr); }
-  .nav-bar { height: 5.5rem; }
+  .nav-bar { height: 68px; }
   .wordmark { font-size: 22px; }
   /* Only one action survives the phone bar; Client login stays in the footer */
   .nav-actions .btn-ghost { display: none; }
@@ -415,7 +546,6 @@ body {
   .section { padding-block: 56px; }
   .card-lg { border-radius: 40px; padding: 28px; }
   .card-arc { border-radius: 40px 40px 0 0; padding: 32px 24px; }
-  .asset-slot { border-radius: 40px; }
   .record-line { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .step-num { font-size: 56px; }
 }
@@ -456,3 +586,367 @@ body {
 .tp-dashboard *::-webkit-scrollbar { width: 10px; height: 10px; }
 .tp-dashboard *::-webkit-scrollbar-thumb { background: #23232a; border-radius: 10px; }
 .tp-dashboard *::-webkit-scrollbar-track { background: transparent; }
+
+/* ═══════════════════════════════════════════════════════════
+   THE DAY — timeline structure, hero ledger and motion.
+   Motion is progressive enhancement: nothing is hidden unless
+   MotionRoot has added .motion-ready to <html>, so the page is
+   fully readable with JS off and before hydration.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── hero ledger — the product's own output ─────────────── */
+
+.ledger {
+  background: var(--bg-card);
+  color: var(--fg);
+  border-radius: 32px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ledger-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-ash);
+  color: var(--color-smoke);
+}
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-mint-chip);
+  flex: none;
+  animation: livePulse 2.4s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.ledger-list { display: flex; flex-direction: column; }
+.ledger-row {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--color-ash);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.42s ease, transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ledger-row:last-child { border-bottom: 0; }
+.ledger-row.is-in { opacity: 1; transform: none; }
+.ledger-time { color: var(--color-smoke); font-variant-numeric: tabular-nums; }
+.ledger-event { font-size: 15px; letter-spacing: -0.011em; }
+.ledger-tag { font-size: 10px; padding: 4px 10px; }
+.ledger-foot { color: var(--color-smoke); padding-top: 12px; text-transform: none; }
+
+/* ── timeline ───────────────────────────────────────────── */
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--color-ash);
+}
+.tl-item {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 40px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--color-ash);
+  align-items: start;
+}
+.tl-time { display: flex; flex-direction: column; gap: 8px; }
+.tl-clock {
+  font-family: var(--font-display);
+  font-weight: 400; /* Anton ships a single weight; it reads as 700 */
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.tl-when { color: var(--color-smoke); text-transform: none; }
+.tl-body { display: flex; flex-direction: column; gap: 12px; }
+
+/* ── call record ────────────────────────────────────────── */
+
+.record-head,
+.record-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.record-head {
+  justify-content: space-between;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line-on-inverted);
+}
+.record-foot {
+  padding-top: 24px;
+  border-top: 1px solid var(--line-on-inverted);
+}
+.record-line {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.record-line.is-in { opacity: 1; transform: none; }
+/* JS off: never leave the transcript blank */
+html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
+
+/* ── scroll reveal ──────────────────────────────────────── */
+
+/* Scroll reveals are driven by GSAP ScrollTrigger.batch — see MotionProvider.
+   Initial state is set in JS so the page stays readable with JS disabled. */
+
+/* ── misc ───────────────────────────────────────────────── */
+
+.portal-line { padding: 16px 0; border-bottom: 1px solid var(--color-ash); }
+.tp-site summary { cursor: pointer; list-style: none; }
+.tp-site summary::-webkit-details-marker { display: none; }
+
+@media (max-width: 1000px) {
+  .tl-item { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+@media (max-width: 680px) {
+  .ledger { border-radius: 24px; padding: 18px; }
+  .ledger-row { grid-template-columns: 48px minmax(0, 1fr); }
+  .ledger-tag { display: none; }
+  .tl-item { padding: 28px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready .hero-line,
+  .motion-ready [data-reveal],
+  .ledger-row,
+  .record-line {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .live-dot { animation: none; }
+}
+
+/* ── projects block ─────────────────────────────────────── */
+
+.beyond {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 40px;
+  border-radius: 32px;
+  background: var(--fg);
+  color: var(--on-fg);
+}
+.beyond .heading, .beyond .heading-sm { color: var(--on-fg); }
+.beyond .body, .beyond .prose { color: var(--muted-on-inverted); }
+.beyond-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.beyond-item { display: flex; flex-direction: column; gap: 12px; }
+.step-who { color: var(--muted-on-page); }
+.card-arc-dark .step-who { color: var(--muted-on-inverted); }
+.beyond-line,
+.web-line {
+  font-size: 18px;
+  line-height: 1.33;
+  letter-spacing: -0.01em;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line-on-inverted);
+}
+.web-line:last-child { border-bottom: 0; }
+
+@media (max-width: 1000px) {
+  .beyond-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+@media (max-width: 680px) {
+  .beyond { padding: 24px; border-radius: 24px; gap: 24px; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOTION PRIMITIVES
+   Only transform, opacity and clip-path are animated anywhere
+   below. No layout properties — that is what holds 60fps.
+   ═══════════════════════════════════════════════════════════ */
+
+/* SplitText mask:"lines" wraps each line in its own clipping box; the line
+   itself travels up through that box. will-change is scoped to the line, not
+   the heading, so we don't promote whole sections to their own layer. */
+.split-line { will-change: transform; }
+
+/* ── hover loop ─────────────────────────────────────────── */
+
+.hover-loop {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.hover-loop-line {
+  grid-area: 1 / 1;
+  display: block;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* ── cursor tilt ────────────────────────────────────────── */
+
+.tilt-root { perspective: 1000px; }
+.tilt-target {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.magnetic { display: inline-block; will-change: transform; }
+
+/* ── rounded section (the signature scrub) ──────────────── */
+
+.rounded-section { position: relative; }
+.rs-scale {
+  position: relative;
+  will-change: transform;
+}
+
+/* Reduced motion: everything at its end state, nothing hidden, nothing moving. */
+.motion-static [data-reveal],
+.motion-static .split-line,
+.motion-static .rs-scale {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Tilt used as a grid cell: root and target must fill it, or cards in the same
+   row stop matching heights. */
+.tilt-cell, .tilt-cell > .tilt-target, .tilt-cell > .tilt-target > * { height: 100%; }
+
+/* The loop is a video composited onto --bg-page at export time, so its edge
+   is invisible against the canvas — see HeroLoop.tsx. Nothing masks or crops
+   it: the render was framed by projecting every block corner across the whole
+   loop, so the silhouette is inside the frame on every frame, and the bottom
+   dissolve is in the pixels — each material's alpha is a function of world
+   height, so a block fades because IT is low, wherever it is in the frame.
+   If --bg-page ever changes, the loop has to be re-exported to match. */
+.hero-object {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* There is deliberately NO mask on the video. An edge feather was here as
+   insurance against a browser's video pipeline decoding the baked background
+   a level or two off --bg-page and drawing the frame as a faint rectangle —
+   but the object's own extremes live inside that band (1.2% from the sides,
+   2.8% from the top), so the feather was clipping petals. Checked instead:
+   the decoded corner pixel reads exactly 239,239,237, so there is no edge to
+   hide and nothing has to be sacrificed to hide it. */
+/* Motion off: the still replaces the video. HeroLoop.tsx also withholds the
+   video's sources under the same query, so nothing plays behind display:none. */
+.hero-still { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+  .hero-still { display: block; }
+}
+
+/* prefers-reduced-motion swaps to a still frame in the markup via <picture>;
+   this is the belt-and-braces stop for the drifting-object animation. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-media { transform: none !important; }
+}
+
+/* ── hero, narrower ─────────────────────────────────────────
+   Two columns hold while the object still has room to be a hero. Because
+   nothing may be cropped any more, the frame's width is whatever is left
+   after the copy's measure — and below about 1100 that leftover falls under
+   ~500px, at which point the object is better off under the copy at full
+   width than beside it as a thumbnail. So the single-column switch happens
+   at 1100 rather than 900. */
+
+@media (max-width: 1180px) {
+  .hero { column-gap: 24px; padding-block: 32px 72px; }
+  .hero-copy { grid-column: 1 / 8; }
+  /* No width override here: the rule above is already a function of the
+     viewport, so it shrinks correctly all the way down to the single-column
+     breakpoint. Overriding it with a fixed 640px is what used to push the
+     frame back over the copy and past the edge. */
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 24px 56px;
+    row-gap: 32px;
+  }
+  .hero-copy { grid-column: 1; grid-row: 1; gap: 22px; }
+  .hero-media {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+    align-self: auto;
+    /* Only --media-w is set: width and the overhang below both read from it
+       in the rule above, so they stay in step. One continuous curve from
+       760px down to 92vw — no second step at phone width, which used to drop
+       the object from 626px to 360px across a single pixel of viewport. */
+    --media-w: min(760px, 92vw);
+    margin-right: 0;
+  }
+  .hero-sub { max-width: 52ch; }
+}
+
+/* No phone-specific .hero-media rule: 92vw already carries it down, and a
+   second cap here is what created the step. */
+
+/* ── the cube, scroll-driven ─────────────────────────────
+   Directly under the hero and on the same canvas colour, so there is no seam
+   between the two: the hero simply ends and the cube's stage is already the
+   page. The section is tall (--cube-scroll) and the stage inside it is
+   sticky for one viewport, which is what holds the cube in place while the
+   reader scrolls the sequence through. Sticky rather than a JS pin: Lenis
+   runs in window mode precisely so sticky keeps working. */
+.cube-scroll {
+  --cube-scroll: 320svh;
+  position: relative;
+  height: var(--cube-scroll);
+  background: var(--bg-page);
+}
+.cube-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.cube-frame {
+  position: relative;
+  /* Square, and never larger than the frames were rendered at (--cube-size),
+     so nothing is upscaled past the pixels that exist. */
+  width: min(var(--cube-size), 88svh, 92vw);
+  aspect-ratio: 1 / 1;
+  will-change: transform, opacity;
+}
+.cube-poster,
+.cube-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* The canvas sits over the poster and only shows once it has drawn a frame,
+   so the hand-off from poster to live sequence is invisible. */
+.cube-canvas { opacity: 0; }
+.cube-canvas.is-live { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Poster only, no scrub, and no need for the scroll distance either. */
+  .cube-scroll { --cube-scroll: auto; height: auto; padding-block: 48px 96px; }
+  .cube-stage { position: static; height: auto; }
+  .cube-canvas { display: none; }
+  .cube-frame { transform: none !important; opacity: 1 !important; }
+}
+@media (max-width: 1100px) {
+  .cube-scroll { --cube-scroll: 260svh; }
+}

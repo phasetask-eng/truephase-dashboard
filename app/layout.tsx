@@ -3,7 +3,7 @@ import { Anton, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 /* Display — stands in for SuisseIntlCond 700. Single weight by design;
-   the condensed face is only ever used at 48px and above. */
+   the condensed face is only ever used at 28px and above. */
 const anton = Anton({
   variable: "--font-anton",
   weight: "400",

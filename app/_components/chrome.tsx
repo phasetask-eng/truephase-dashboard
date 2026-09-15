@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HoverLoop, Magnetic } from "./motion/index";
 
 const NAV = [
   { href: "/#what", label: "What it does" },
@@ -10,26 +11,28 @@ const NAV = [
 export function SiteNav() {
   return (
     <header className="nav-bar">
-      <div className="wrap nav-inner">
+      <div className="nav-inner">
         <Link href="/" className="wordmark" aria-label="Truephase — home">
-          Truephase
+          <span className="wm-t">T</span>ruephase
         </Link>
 
         <nav className="nav-pill" aria-label="Primary">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href}>
-              {item.label}
+              <HoverLoop>{item.label}</HoverLoop>
             </Link>
           ))}
         </nav>
 
         <div className="nav-actions">
           <Link href="/dashboard" className="btn btn-ghost">
-            Client login
+            <HoverLoop>Client login</HoverLoop>
           </Link>
-          <a href="#talk" className="btn btn-filled">
-            Book a call
-          </a>
+          <Magnetic>
+            <a href="#talk" className="btn btn-filled">
+              <HoverLoop>Book a call</HoverLoop>
+            </a>
+          </Magnetic>
         </div>
       </div>
     </header>
@@ -42,7 +45,7 @@ export function SiteFooter() {
       <div className="wrap stack-40">
         <div className="split" style={{ gap: 40 }}>
           <div className="stack-16">
-            <span className="wordmark">Truephase</span>
+            <span className="wordmark"><span className="wm-t">T</span>ruephase</span>
             <p className="body-sm quiet prose">
               Automation and AI voice agents for UK clinics, care homes and salons.
               Built and run in the United Kingdom.
