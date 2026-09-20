@@ -85,8 +85,8 @@ export function SiteFooter() {
 
         <div className="row" style={{ justifyContent: "space-between" }}>
           <span className="mono quiet">© {new Date().getFullYear()} Truephase AI</span>
-          <a href="mailto:support@truephase.co.uk" className="mono">
-            support@truephase.co.uk
+          <a href="mailto:info@truephaseai.co.uk" className="mono">
+            info@truephaseai.co.uk
           </a>
         </div>
       </div>

@@ -950,3 +950,115 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
 @media (max-width: 1100px) {
   .cube-scroll { --cube-scroll: 260svh; }
 }
+
+/* ── service cards & service detail pages ───────────────── */
+
+/* The whole card is the link, so it needs a state for the keyboard as well as
+   the pointer — a card that only answers a mouse reads as decoration to
+   anyone tabbing through. `height: 100%` keeps a short card level with a tall
+   one in the same row. */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.service-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(10, 10, 10, 0.07);
+}
+.service-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
+/* pushed to the bottom so the cue sits on the same line across a row of cards
+   whose copy runs to different lengths */
+.svc-more {
+  margin-top: auto;
+  padding-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.service-card:hover .svc-more { text-decoration: underline; text-underline-offset: 4px; }
+
+/* A standalone back link at mono 12px is a 16px-tall tap target. The padding
+   brings the hit area to 44px; the negative margin cancels the visual space it
+   would otherwise add, so the layout rhythm is unchanged. */
+.svc-back {
+  display: inline-flex;
+  width: fit-content;
+  padding-block: 14px;
+  margin-block: -14px;
+}
+.svc-back:hover { color: var(--fg); }
+.svc-back:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
+
+/* Anton with tabular figures, the same treatment the timeline clock gets. */
+.svc-figure {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-mint-chip);
+}
+.svc-stat { align-items: flex-start; }
+
+.svc-steps { list-style: none; margin: 0; padding: 0; }
+.svc-step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  padding-block: 24px;
+  border-bottom: 1px solid var(--color-ash);
+}
+.svc-step:last-child { border-bottom: 0; }
+/* .step-num is sized for the 80px numbered section on the home page; in a
+   list of four it needs to sit under the heading, not over it */
+/* Ash on white is 1.2:1 — the ordinal may be secondary, but it should not be
+   invisible, or numbering the steps achieves nothing. Smoke clears 4.5:1 and
+   still reads as quieter than the heading beside it. */
+.svc-step .step-num { font-size: 48px; color: var(--color-smoke); }
+
+.svc-fit { padding-block: 16px; border-bottom: 1px solid var(--color-ash); }
+.svc-fit:last-child { border-bottom: 0; }
+
+.svc-others { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.svc-other {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1.5px solid var(--color-ash);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.svc-other:hover { border-color: var(--fg); transform: translateY(-2px); }
+.svc-other:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
+
+@media (max-width: 900px) {
+  .svc-others { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .svc-others { grid-template-columns: minmax(0, 1fr); }
+  .svc-step { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .svc-step .step-num { font-size: 36px; }
+}
+
+/* Tilt sets height:100% the whole way down its chain. Against an auto-height
+   parent that resolves to a height smaller than the content, and the card
+   spills out of its own wrapper by the height of the "more" cue. Making the
+   chain flex lets the card state its height honestly and still stretch to the
+   grid row, so cards in a row share their top and bottom edges. */
+.service-grid .tilt-cell { display: flex; }
+.service-grid .tilt-cell > .tilt-target {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+.service-grid .tilt-cell > .tilt-target > .service-card {
+  height: auto;
+  width: 100%;
+}

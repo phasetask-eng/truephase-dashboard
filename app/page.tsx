@@ -3,6 +3,7 @@ import { SiteNav, SiteFooter } from "./_components/chrome";
 import { Transcript } from "./_components/motion";
 import { MotionProvider, HeroSequence, HoverLoop, Tilt, Magnetic } from "./_components/motion/index";
 import { HeroLoop } from "./_components/motion/HeroLoop";
+import { SERVICES } from "./_data/services";
 
 /* ── content ─────────────────────────────────────────────── */
 
@@ -60,42 +61,6 @@ const DAY_LATE = [
     title: "The day is already written up",
     body: "Calls taken, appointments made, what needed a human and what didn’t. In your inbox and in your portal, every morning, without anyone compiling it.",
     tag: "Reports",
-  },
-];
-
-const SERVICES = [
-  {
-    tag: "Voice",
-    title: "AI Receptionist",
-    body: "Answers on the first ring, day or night. Takes the name and number, understands what they want, books them or passes them to you.",
-  },
-  {
-    tag: "Booking",
-    title: "Appointment Scheduler",
-    body: "Turns a phone call into a booking without anyone typing it in. Confirmations and reminders go out on their own.",
-  },
-  {
-    tag: "Reputation",
-    title: "Review Management",
-    body: "Sends the request at the right moment, tracks who opened it, drafts a reply to every review that lands.",
-  },
-  {
-    tag: "Back office",
-    title: "Task Automation",
-    body: "The repetitive work behind the front desk — chasing, filing, following up, writing the day up — handled without you.",
-  },
-];
-
-const BEYOND = [
-  {
-    title: "Web design & brand identity",
-    body: "We design and build the site people land on after they hang up, and the brand it carries \u2014 worth having when the calls are being answered but the website is quietly undoing the work.",
-    lines: ["Website design and build", "Brand identity and logo", "Copy that sounds like you"],
-  },
-  {
-    title: "AI video for social",
-    body: "Short-form video for your socials, made from your own footage and brand. Reels that keep you visible between appointments, without booking a videographer every month.",
-    lines: ["Reels and short-form video", "Made from your own clips", "A steady run, not a one-off"],
   },
 ];
 
@@ -325,58 +290,33 @@ export default function Home() {
           <div className="stack-40">
             <div className="split" style={{ alignItems: "end" }} data-reveal>
               <h2 className="heading-lg">
-                Four things
+                Six things
                 <br />
-                running behind
+                we run
                 <br />
-                that day
+                for you
               </h2>
               <p className="subheading muted prose">
-                Take one or take all four. Most practices start with the phone, because
-                that is where the money is being lost, and add the rest once they trust it.
+                Take one or take all six. Four run every day in the background; web and
+                video are projects — booked in, built, handed over. Most practices start
+                with the phone, because that is where the money is being lost, and add
+                the rest once they trust it.
               </p>
             </div>
 
-            <div className="grid-2">
+            <div className="grid-2 service-grid">
               {SERVICES.map((s) => (
-                <Tilt key={s.title} amount={5} className="tilt-cell" data-reveal>
-                  <article className="card stack-16">
+                <Tilt key={s.slug} amount={5} className="tilt-cell" data-reveal>
+                  <Link href={`/services/${s.slug}`} className="card service-card">
                     <span className="tag">{s.tag}</span>
                     <h3 className="heading-sm">{s.title}</h3>
                     <p className="body muted">{s.body}</p>
-                  </article>
+                    <span className="svc-more">
+                      {s.project ? "See the project" : "See how it works"} →
+                    </span>
+                  </Link>
                 </Tilt>
               ))}
-            </div>
-
-            {/* Projects, not daily automations — grouped away from the four above. */}
-            <div className="beyond" data-reveal>
-              <div className="stack-16">
-                <span className="tag">Beyond the phone</span>
-                <h3 className="heading">Things we make for you</h3>
-                <p className="body prose">
-                  The phone is only half of it. These are projects rather than
-                  automations — booked in, built, handed over.
-                </p>
-              </div>
-
-              <div className="beyond-grid">
-                {BEYOND.map((b) => (
-                  <Tilt key={b.title} amount={4} className="tilt-cell">
-                  <article className="beyond-item">
-                    <h4 className="heading-sm">{b.title}</h4>
-                    <p className="body">{b.body}</p>
-                    <ul>
-                      {b.lines.map((line) => (
-                        <li key={line} className="beyond-line">
-                          {line}
-                        </li>
-                      ))}
-                    </ul>
-                  </article>
-                  </Tilt>
-                ))}
-              </div>
             </div>
           </div>
         </section>
