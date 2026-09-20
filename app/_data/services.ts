@@ -25,6 +25,9 @@ export type Service = {
   included: { title: string; body: string }[];
   how: { step: string; body: string }[];
   fit: string[];
+  /** Things the service genuinely cannot do. Present where platform rules or
+      regulation constrain what may honestly be promised. */
+  limits?: string[];
   /** true for the two that are projects rather than daily automations */
   project?: boolean;
 };
@@ -34,20 +37,25 @@ export const SERVICES: Service[] = [
     slug: "ai-receptionist",
     tag: "Voice",
     title: "AI Receptionist",
-    body: "Answers on the first ring, day or night. Takes the name and number, understands what they want, books them or passes them to you.",
-    lede: "A voice that answers every call, so the ones you are missing stop going to whoever picks up next.",
+    body: "Answers on the first ring, day or night. Understands what they want, takes the details, and books them into your diary while they are still on the phone.",
+    lede: "A voice that answers every call and finishes the job \u2014 the booking is in your diary before they hang up.",
     problem:
-      "The calls you miss are not spread evenly. They land while you are with a client, on the other line, or closed — exactly when someone has decided to book and wants it done now. Voicemail does not hold them.",
+      "The calls you miss are not spread evenly. They land while you are with a client, on the other line, or closed \u2014 exactly when someone has decided to book and wants it done now. And a call that ends in \u201cwe will ring you back to confirm\u201d is a call you can still lose. Voicemail holds nobody.",
     stats: [
       {
-        figure: "Under 3%",
-        note: "of callers who reach voicemail leave a message. The rest hang up.",
-        source: "Missed-call industry research, 2026",
+        figure: "42 hours",
+        note: "was the average time businesses took to make first contact with an enquiry, across an audit of 2,241 firms.",
+        source: "Harvard Business Review, Oldroyd, McElheran & Elkington",
       },
       {
-        figure: "82%",
-        note: "say they would simply call a competitor when a business does not pick up.",
-        source: "Missed-call industry research, 2026",
+        figure: "70%",
+        note: "of people go with whoever replies first. Only 23% would try a business again after no response \u2014 though 77% of owners assume they would.",
+        source: "Moneypenny survey of 5,001 UK consumers, 2026 \u2014 run by a company selling call answering",
+      },
+      {
+        figure: "~34%",
+        note: "average fall in missed appointments when reminders are sent, across peer-reviewed studies of outpatient clinics.",
+        source: "Systematic reviews, clinical settings \u2014 not salons or trades",
       },
     ],
     included: [
@@ -61,7 +69,23 @@ export const SERVICES: Service[] = [
       },
       {
         title: "Takes the details properly",
-        body: "Name, number, what they are calling about, spelled and confirmed back — so the note you read afterwards is one you can act on.",
+        body: "Name, number, what they are calling about, spelled and confirmed back \u2014 so the note you read afterwards is one you can act on.",
+      },
+      {
+        title: "Books them on the call",
+        body: "Availability checked and the slot held while they are still on the phone. No callback, no \u201clet me check and get back to you\u201d, and no gap in which they ring somebody else.",
+      },
+      {
+        title: "Into the diary you already use",
+        body: "It writes to your existing calendar or practice software. You do not move systems and your team does not learn a new one.",
+      },
+      {
+        title: "Confirmations and reminders",
+        body: "Sent automatically, at the intervals you choose, by text or email. Reminders are the best-evidenced part of this whole page \u2014 though in one review a staff member phoning still edged out the automated version, so this buys you consistency rather than a better result.",
+      },
+      {
+        title: "Reschedules and cancellations",
+        body: "Handled on the phone, and the freed slot goes back into availability straight away rather than sitting empty for a fortnight.",
       },
       {
         title: "Knows when to pass it over",
@@ -71,87 +95,119 @@ export const SERVICES: Service[] = [
     how: [
       {
         step: "We listen to how you answer now",
-        body: "Your greeting, your services, your prices, the questions you get every week, and the things you never want an AI to answer.",
+        body: "Your greeting, your services, your prices, the questions you get every week, and the things you never want an AI to answer. We map your real availability at the same time \u2014 room, chair, practitioner, appointment length, the slots you keep back.",
       },
       {
         step: "We build the agent on your number",
-        body: "It uses your words, not a script we wrote for someone else. You hear it and change anything that does not sound like you.",
+        body: "It uses your words, not a script we wrote for someone else, and it connects to the diary you already keep. You hear it and change anything that does not sound like you.",
       },
       {
         step: "It goes live behind your existing phone",
-        body: "It picks up when you cannot — after a set number of rings, out of hours, or every call. Your number does not change.",
+        body: "It picks up when you cannot \u2014 after a set number of rings, out of hours, or every call. Your number does not change, and from that point a call can become a booking without anyone typing it in.",
       },
       {
         step: "You read the day back in the portal",
-        body: "Every call with a transcript, an outcome and a recording. Nothing disappears into a black box.",
+        body: "Every call with a transcript, an outcome and a recording, and every booking it made. Nothing disappears into a black box.",
       },
     ],
     fit: [
       "Practices where the phone rings while you are hands-on with a client",
       "Anyone closing at 5pm whose callers are deciding at 8pm",
       "Front desks that are one person, and that person takes lunch",
+      "Diaries where an empty slot cannot be resold at short notice",
     ],
   },
   {
-    slug: "appointment-scheduler",
-    tag: "Booking",
-    title: "Appointment Scheduler",
-    body: "Turns a phone call into a booking without anyone typing it in. Confirmations and reminders go out on their own.",
-    lede: "The call becomes a booking in your diary while it is still happening, with nobody rekeying anything afterwards.",
+    slug: "ai-chatbot",
+    tag: "Chat",
+    title: "AI Chatbot",
+    body: "Website, WhatsApp, Instagram and Facebook answered from one inbox, in seconds, at any hour \u2014 booked into your diary, and handed to a person the moment it should be.",
+    lede: "Four inboxes, one brain. Every typed enquiry answered in seconds and written down, wherever it came from.",
     problem:
-      "A call that ends in “we will ring you back to confirm” is a call you can still lose. The gap between the conversation and the diary entry is where bookings quietly evaporate.",
+      "Enquiries stopped arriving by phone alone. They come through the website at 9pm, as an Instagram DM on Sunday, as a WhatsApp while you are on a job. Four apps, four notification badges, and the one you miss is the one that was ready to book. Most people do not chase you \u2014 they just go quiet, and you never learn it happened.",
     stats: [
       {
-        figure: "45%",
-        note: "of the few who do leave a voicemail have already booked elsewhere before you ring back.",
-        source: "Missed-call industry research, 2026",
+        figure: "23% vs 77%",
+        note: "Only 23% of people would try a business again after no response. 77% of business owners think they would.",
+        source: "Moneypenny, 5,001 UK consumers, 2026 \u2014 vendor-run",
       },
       {
-        figure: "78%",
-        note: "say they have abandoned a business after one unanswered call.",
-        source: "Missed-call industry research, 2026",
+        figure: "90%",
+        note: "of UK online adults used WhatsApp last year \u2014 the highest daily reach of any app in the country.",
+        source: "Ofcom Online Nation 2025, the UK regulator",
+      },
+      {
+        figure: "1%",
+        note: "of Britons name a chatbot as their preferred way to contact a business. That is exactly why a person is one tap away \u2014 people do not want to talk to AI, they want to not be ignored.",
+        source: "YouGov",
       },
     ],
     included: [
       {
-        title: "Booked during the call",
-        body: "Availability checked and the slot held while they are still on the phone. No callback, no “let me check and get back to you”.",
+        title: "Four doorways, one inbox",
+        body: "Your website chat, WhatsApp, Instagram DMs and Facebook Messenger all land in the same place. You stop checking four apps and nothing falls between them.",
       },
       {
-        title: "Into the diary you already use",
-        body: "It writes to your existing calendar or practice software. You do not move systems and your team does not learn a new one.",
+        title: "Answered in seconds, at any hour",
+        body: "Sunday evening, bank holiday, the middle of a job. When someone messages you they get a real answer straight away, not a read receipt.",
       },
       {
-        title: "Confirmations and reminders",
-        body: "Sent automatically, at the intervals you choose, by text or email — the two messages that do most of the work against no-shows.",
+        title: "Books into the same diary",
+        body: "The same booking engine the phone uses. A message at 11pm becomes an appointment at 11pm, not a note to ring them back.",
       },
       {
-        title: "Reschedules and cancellations",
-        body: "Handled on the phone or by reply, and the freed slot goes back into availability straight away rather than sitting empty.",
+        title: "Asks what you would ask",
+        body: "What is it, how urgent, have they been before, which practitioner. The answers arrive with the enquiry, so whoever picks it up is not starting cold.",
+      },
+      {
+        title: "A person, one tap away",
+        body: "It hands over the moment a conversation needs judgement, with the whole thread attached. This is a feature, not a fallback \u2014 most people want to know a human is reachable.",
+      },
+      {
+        title: "Instagram comments become conversations",
+        body: "Someone comments on a post asking what you charge; it answers once, privately, and moves them into DMs where a booking can happen. One automated reply per comment is all Meta permits, so it opens the door rather than chasing anyone through it.",
+      },
+      {
+        title: "One thread per customer",
+        body: "They message on Instagram in March and WhatsApp in June, and it is the same conversation with the same history \u2014 not two strangers.",
+      },
+      {
+        title: "Says it is AI, and stays out of clinical detail",
+        body: "It tells people what it is, refuses to take symptoms or medical detail, and routes anything sensitive to your team. For clinics and care homes that is a requirement, not a nicety.",
       },
     ],
     how: [
       {
-        step: "We map your real availability",
-        body: "Room, chair, practitioner, appointment length, buffers, the slots you keep back. The rules you already work to, written down.",
+        step: "We connect the channels you actually use",
+        body: "Website widget, WhatsApp Business, Facebook Page and Instagram. You do not need all four \u2014 most practices start with the website and WhatsApp, because that is where the volume is.",
       },
       {
-        step: "We connect your calendar",
-        body: "Your existing diary stays the source of truth. Nothing is migrated and nothing is duplicated.",
+        step: "We teach it your business, and only your business",
+        body: "Your services, prices, opening hours, the questions you get weekly, and the subjects it must never touch. It answers about you, not about anything and everything \u2014 that is both better for you and required by WhatsApp\u2019s own rules.",
       },
       {
-        step: "Booking goes live on the phone",
-        body: "The receptionist can now finish the job rather than take a message about it.",
+        step: "It goes live with a human always reachable",
+        body: "You set what it handles alone, what it hands over, and who it hands over to. Nothing client-facing goes live before you have read it.",
       },
       {
-        step: "Reminders run on their own",
-        body: "You set the timings once. After that it is a thing that happens, not a thing someone remembers to do.",
+        step: "Every conversation lands in the portal",
+        body: "Searchable, attributable, exportable. You can see what was asked, what was answered, and what it turned into.",
       },
     ],
+    limits: [
+      "It replies to people who message you. Neither WhatsApp nor Instagram lets a business start a conversation with someone who has not contacted it first, and no software changes that.",
+      "On WhatsApp there is a 24-hour window after someone messages in which it can answer freely. After that, only a pre-approved template may be sent \u2014 or a person can reply. On Instagram and Messenger, follow-up outside that window has to come from a human.",
+      "Google Business Profile chat is not a channel. Google retired it in July 2024, so nobody can offer it.",
+      "It is not a triage tool. It will not assess symptoms, advise on medication, or decide urgency \u2014 for a clinic that is both a safety line and a regulatory one.",
+      "Reminders cannot run on Instagram at all \u2014 Meta provides no compliant route. They go by WhatsApp template, text or email instead.",
+      "It cannot take a card number in the chat. Card rules forbid it, so it sends a secure payment link instead.",
+      "Meta charges per message on WhatsApp from October 2026. Volume is part of the pricing conversation rather than something we pretend is free.",
+    ],
     fit: [
-      "Diaries where an empty slot cannot be resold at short notice",
-      "Practices losing chair time to no-shows",
-      "Anyone still writing bookings down to enter later",
+      "Practices getting Instagram enquiries they see two days later",
+      "Anyone juggling four apps and a phone",
+      "Businesses whose enquiries arrive at 9pm and on Sundays",
+      "Teams who want messages answered without answering them",
     ],
   },
   {

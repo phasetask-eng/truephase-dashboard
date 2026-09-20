@@ -34,6 +34,10 @@ export default async function ServicePage({
   if (!service) notFound();
 
   const others = SERVICES.filter((s) => s.slug !== service.slug);
+  /* Written out rather than a digit — "Four steps" reads as prose, "4 steps"
+     reads as a spec sheet, and services do not all have the same number. */
+  const WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"];
+  const stepCount = WORDS[service.how.length] ?? String(service.how.length);
 
   return (
     <div className="tp-site">
@@ -124,7 +128,7 @@ export default async function ServicePage({
           <div className="stack-40">
             <div className="stack-16" style={{ maxWidth: 680 }}>
               <span className="mono muted">How it works</span>
-              <h2 className="heading">Four steps, in order</h2>
+              <h2 className="heading">{stepCount} steps, in order</h2>
             </div>
             <ol className="stack-24 svc-steps">
               {service.how.map((h, i) => (
@@ -139,6 +143,29 @@ export default async function ServicePage({
             </ol>
           </div>
         </section>
+
+        {/* ── the honest limits, where there are any ──────── */}
+        {service.limits && service.limits.length > 0 && (
+          <section className="wrap section">
+            <div className="svc-limits stack-24">
+              <div className="stack-16" style={{ maxWidth: 680 }}>
+                <span className="mono muted">Straight answers</span>
+                <h2 className="heading">What it will not do</h2>
+                <p className="body muted prose">
+                  Platform rules and regulation put real edges on this. Better you read them
+                  here than find them after signing.
+                </p>
+              </div>
+              <ul className="stack-16">
+                {service.limits.map((line) => (
+                  <li key={line} className="body svc-limit">
+                    {line}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
 
         {/* ── who this suits ──────────────────────────────── */}
         <section className="wrap section">
@@ -157,7 +184,7 @@ export default async function ServicePage({
         {/* ── the rest of the range ───────────────────────── */}
         <section className="wrap section">
           <div className="stack-24">
-            <span className="mono muted">The other five</span>
+            <span className="mono muted">The other {others.length}</span>
             <div className="svc-others">
               {others.map((o) => (
                 <Link key={o.slug} href={`/services/${o.slug}`} className="svc-other">
