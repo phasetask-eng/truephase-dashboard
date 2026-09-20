@@ -479,7 +479,7 @@ export default function TruephaseDashboard() {
           {/* Change the src if your file is not this name */}
           <img src="/truephase-logo.jpg" alt="Truephase Logo" className="h-8" />
           <h1 className="text-lg font-semibold hidden sm:block" style={{ color: TEXT }}>
-            Truephase Ai Dashboard
+            Truephase AI Dashboard
           </h1>
         </div>
 

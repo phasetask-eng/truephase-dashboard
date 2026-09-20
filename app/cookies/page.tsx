@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LegalPage } from "../_components/legal-page";
 
-export const metadata: Metadata = { title: "Cookies — Truephase" };
+export const metadata: Metadata = { title: "Cookies — Truephase AI" };
 
 export default function Cookies() {
   return (

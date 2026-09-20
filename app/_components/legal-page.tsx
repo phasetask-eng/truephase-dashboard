@@ -38,7 +38,7 @@ export function LegalPage({
               have not had checked.
             </p>
             <p className="body muted prose">
-              If you need to know how Truephase handles your information before this is
+              If you need to know how Truephase AI handles your information before this is
               published, email us and we will answer in writing.
             </p>
             <a

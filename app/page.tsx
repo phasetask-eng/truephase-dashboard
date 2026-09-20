@@ -110,7 +110,7 @@ const STEPS = [
     n: "02",
     title: "We build and test it",
     body: "We configure the agent, connect it to your number and your diary, and test it against real situations until it handles them the way you would.",
-    who: "Truephase does this, not you",
+    who: "Truephase AI does this, not you",
   },
   {
     n: "03",
@@ -154,11 +154,11 @@ const QUESTIONS = [
   },
   {
     q: "Who can see the call transcripts?",
-    a: "You and the people you give logins to. Truephase staff can access your account to support and configure it. Calls involve other people’s personal information, so if you want the detail of how that is handled, ask and we will put it in writing.",
+    a: "You and the people you give logins to. Truephase AI staff can access your account to support and configure it. Calls involve other people’s personal information, so if you want the detail of how that is handled, ask and we will put it in writing.",
   },
   {
     q: "What do I get on day one?",
-    a: "A working agent on your number, a login to the portal, and a named person at Truephase. Not a trial you configure yourself.",
+    a: "A working agent on your number, a login to the portal, and a named person at Truephase AI. Not a trial you configure yourself.",
   },
 ];
 
@@ -200,7 +200,7 @@ export default function Home() {
             </h1>
 
             <p className="hero-sub muted" data-hero-copy>
-              Truephase answers your phone, books the appointment and writes the day up.
+              Truephase AI answers your phone, books the appointment and writes the day up.
               Below is one Tuesday, hour by hour.
             </p>
 
@@ -225,7 +225,7 @@ export default function Home() {
               still="/hero-tower-still.webp"
               width={1000}
               height={1000}
-              label="A tower of cast blocks, one layer per Truephase service, each layer a different colour with a label set into its blocks: VOICE AI for the AI receptionist, BOOKING for the appointment scheduler, REVIEW MANAGEMENT, AUTOMATION for task automation, WEB DESIGN, AI VIDEO for video for social, and CHATBOT. In turn a layer slides out of the base, tips open like petals, rises up the outside of the stack and closes onto the top, while the layers above settle down one place."
+              label="A tower of cast blocks, one layer per Truephase AI service, each layer a different colour with a label set into its blocks: VOICE AI for the AI receptionist, BOOKING for the appointment scheduler, REVIEW MANAGEMENT, AUTOMATION for task automation, WEB DESIGN, AI VIDEO for video for social, and CHATBOT. In turn a layer slides out of the base, tips open like petals, rises up the outside of the stack and closes onto the top, while the layers above settle down one place."
             />
           </div>
         </section>

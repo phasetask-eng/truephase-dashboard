@@ -19,8 +19,8 @@ export function SiteNav() {
   return (
     <header className="nav-bar">
       <div className="nav-inner">
-        <Link href="/" className="wordmark" aria-label="Truephase — home">
-          <span className="wm-t">T</span>ruephase
+        <Link href="/" className="wordmark" aria-label="Truephase AI — home">
+          <span className="wm-t">T</span>ruephase AI
         </Link>
 
         <nav className="nav-pill" aria-label="Primary">
@@ -52,7 +52,7 @@ export function SiteFooter() {
       <div className="wrap stack-40">
         <div className="split" style={{ gap: 40 }}>
           <div className="stack-16">
-            <span className="wordmark"><span className="wm-t">T</span>ruephase</span>
+            <span className="wordmark"><span className="wm-t">T</span>ruephase AI</span>
             <p className="body-sm quiet prose">
               Automation and AI voice agents for UK clinics, care homes and salons.
               Built and run in the United Kingdom.
@@ -84,7 +84,7 @@ export function SiteFooter() {
         <hr className="rule-dark" />
 
         <div className="row" style={{ justifyContent: "space-between" }}>
-          <span className="mono quiet">© {new Date().getFullYear()} Truephase</span>
+          <span className="mono quiet">© {new Date().getFullYear()} Truephase AI</span>
           <a href="mailto:support@truephase.co.uk" className="mono">
             support@truephase.co.uk
           </a>
