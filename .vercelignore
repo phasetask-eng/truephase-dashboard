@@ -1,0 +1,4 @@
+# Render-time sources, not runtime assets. The encoded videos they produce
+# live in public/ and DO ship.
+blender
+tools
