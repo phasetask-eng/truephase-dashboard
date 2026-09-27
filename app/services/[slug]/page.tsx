@@ -62,9 +62,9 @@ export default async function ServicePage({
             </div>
 
             <div className="row">
-              <a href="/#talk" className="btn btn-filled">
+              <Link href="/#talk" className="btn btn-filled">
                 Book a call
-              </a>
+              </Link>
               {service.project ? (
                 <span className="mono quiet">
                   A project — booked in, built, handed over
@@ -204,9 +204,9 @@ export default async function ServicePage({
               Most practices start with the phone, because that is where the money is
               being lost, and add the rest once they trust it.
             </p>
-            <a href="/#talk" className="btn btn-inverted" style={{ width: "fit-content" }}>
+            <Link href="/#talk" className="btn btn-inverted" style={{ width: "fit-content" }}>
               Book a call
-            </a>
+            </Link>
           </div>
         </section>
       </main>

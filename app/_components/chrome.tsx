@@ -20,6 +20,8 @@ const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://localhost:4173"
    drift apart again. */
 export const CONTACT_EMAIL = "info@truephase.co.uk";
 
+export { PORTAL_URL };
+
 export function SiteNav() {
   return (
     <header className="nav-bar">
@@ -41,9 +43,9 @@ export function SiteNav() {
             <HoverLoop>Client login</HoverLoop>
           </a>
           <Magnetic>
-            <a href="#talk" className="btn btn-filled">
+            <Link href="/#talk" className="btn btn-filled">
               <HoverLoop>Book a call</HoverLoop>
-            </a>
+            </Link>
           </Magnetic>
         </div>
       </div>
@@ -73,7 +75,7 @@ export function SiteFooter() {
             </div>
             <div className="stack-8">
               <span className="mono quiet">Company</span>
-              <a href="#talk">Contact</a>
+              <Link href="/#talk">Contact</Link>
               <Link href="/#who">Who it’s for</Link>
               <Link href="/#questions">Questions</Link>
             </div>

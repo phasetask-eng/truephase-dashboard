@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SiteNav, SiteFooter, CONTACT_EMAIL } from "./_components/chrome";
+import { SiteNav, SiteFooter, CONTACT_EMAIL, PORTAL_URL } from "./_components/chrome";
 import { Transcript } from "./_components/motion";
 import { MotionProvider, HeroSequence, HoverLoop, Tilt, Magnetic } from "./_components/motion/index";
 import { HeroLoop } from "./_components/motion/HeroLoop";
@@ -394,9 +394,9 @@ export default function Home() {
               </p>
               <div className="row" style={{ gap: 8, paddingTop: 8 }}>
                 <Magnetic>
-                  <Link href="/dashboard" className="btn btn-filled">
-                    <HoverLoop>Look inside the portal</HoverLoop>
-                  </Link>
+                  <a href={PORTAL_URL} className="btn btn-filled">
+                    <HoverLoop>Go to the client portal</HoverLoop>
+                  </a>
                 </Magnetic>
               </div>
             </div>
