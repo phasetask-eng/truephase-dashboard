@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SiteNav, SiteFooter } from "./_components/chrome";
+import { SiteNav, SiteFooter, CONTACT_EMAIL } from "./_components/chrome";
 import { Transcript } from "./_components/motion";
 import { MotionProvider, HeroSequence, HoverLoop, Tilt, Magnetic } from "./_components/motion/index";
 import { HeroLoop } from "./_components/motion/HeroLoop";
@@ -463,15 +463,15 @@ export default function Home() {
               <div className="stack-16">
                 <span className="mono quiet">Email us directly</span>
                 <a
-                  href="mailto:support@truephase.co.uk"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="heading email-link"
                   style={{ width: "fit-content" }}
                 >
-                  <span className="voltage">support@truephase.co.uk</span>
+                  <span className="voltage">{CONTACT_EMAIL}</span>
                 </a>
                 <Magnetic>
                   <a
-                    href="mailto:support@truephase.co.uk"
+                    href={`mailto:${CONTACT_EMAIL}`}
                     className="btn btn-inverted"
                     style={{ width: "fit-content" }}
                   >

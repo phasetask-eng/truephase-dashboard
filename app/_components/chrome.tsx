@@ -15,6 +15,11 @@ const NAV = [
    public home. */
 const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://localhost:4173";
 
+/* One address for the whole site. Every mailto and every visible email reads
+   from here so the footer, the contact section and the legal pages can never
+   drift apart again. */
+export const CONTACT_EMAIL = "info@truephase.co.uk";
+
 export function SiteNav() {
   return (
     <header className="nav-bar">
@@ -85,8 +90,8 @@ export function SiteFooter() {
 
         <div className="row" style={{ justifyContent: "space-between" }}>
           <span className="mono quiet">© {new Date().getFullYear()} Truephase AI</span>
-          <a href="mailto:info@truephaseai.co.uk" className="mono">
-            info@truephaseai.co.uk
+          <a href={`mailto:${CONTACT_EMAIL}`} className="mono">
+            {CONTACT_EMAIL}
           </a>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { SiteNav, SiteFooter } from "./chrome";
+import { SiteNav, SiteFooter, CONTACT_EMAIL } from "./chrome";
 
 /**
  * Honest placeholder shell for the three legal documents.
@@ -42,7 +42,7 @@ export function LegalPage({
               published, email us and we will answer in writing.
             </p>
             <a
-              href="mailto:support@truephase.co.uk"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="btn btn-filled"
               style={{ width: "fit-content" }}
             >
