@@ -57,8 +57,12 @@ export function SiteNav() {
         </nav>
 
         <div className="nav-actions">
+          {/* Two labels, one shown at a time: the narrowest phones get "Log in"
+              because "Client login" and "Book a call" do not both fit there.
+              The hidden one is display:none, so it is not read out either. */}
           <a href={PORTAL_URL} className="btn btn-ghost">
-            <HoverLoop>Client login</HoverLoop>
+            <HoverLoop className="nav-login-full">Client login</HoverLoop>
+            <HoverLoop className="nav-login-short">Log in</HoverLoop>
           </a>
           <Magnetic>
             <Link href="/#talk" className="btn btn-filled">
