@@ -33,7 +33,9 @@ import { useEffect, useRef, useState } from "react";
  * An inner wrapper carries the text alternative (<video> may not take
  * role="img"), and the button sits beside it, not inside it: role="img" makes
  * its children presentational, so a button within it can drop out of the
- * accessibility tree altogether.
+ * accessibility tree altogether. The label names what a press will do, so the
+ * button is deliberately not aria-pressed as well: a label that changes plus a
+ * pressed state reads as "Play animation, pressed", which says the opposite.
  */
 
 export function HeroLoop({
@@ -117,7 +119,6 @@ export function HeroLoop({
         type="button"
         className="hero-pause"
         onClick={toggle}
-        aria-pressed={paused}
       >
         {paused ? "Play animation" : "Pause animation"}
       </button>
