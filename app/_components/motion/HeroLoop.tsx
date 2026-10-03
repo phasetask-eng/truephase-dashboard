@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * The hero object's loop.
@@ -30,7 +30,10 @@ import { useRef, useState } from "react";
  * Pause: WCAG 2.2.2 requires a control in the page for anything that moves
  * for more than five seconds, however gentle. The button is the only
  * JavaScript here, and the loop plays exactly as before if it never runs.
- * The wrapper carries the text alternative; <video> may not take role="img".
+ * An inner wrapper carries the text alternative (<video> may not take
+ * role="img"), and the button sits beside it, not inside it: role="img" makes
+ * its children presentational, so a button within it can drop out of the
+ * accessibility tree altogether.
  */
 
 export function HeroLoop({
@@ -53,11 +56,23 @@ export function HeroLoop({
   const video = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
 
+  // The label starts at "Pause" because autoplay normally works. When a browser
+  // declines it (iOS Low Power Mode, Data Saver) no event fires and the loop
+  // sits on its poster, so ask once after hydration: play() on a muted video is
+  // what autoplay does anyway, and it rejects at once when the browser will not
+  // allow it. From then on the play/pause events keep the label true.
+  useEffect(() => {
+    const v = video.current;
+    if (!v || !v.paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    v.play().catch(() => setPaused(v.paused));
+  }, []);
+
   const toggle = () => {
     const v = video.current;
     if (!v) return;
     if (v.paused) {
-      void v.play();
+      v.play().catch(() => setPaused(v.paused));
       setPaused(false);
     } else {
       v.pause();
@@ -66,36 +81,38 @@ export function HeroLoop({
   };
 
   return (
-    <div className="hero-figure" role="img" aria-label={label}>
-      <video
-        ref={video}
-        className={`hero-object hero-video ${className}`}
-        width={width}
-        height={height}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        poster={still}
-        disablePictureInPicture
-        disableRemotePlayback
-        aria-hidden="true"
-        onPlay={() => setPaused(false)}
-        onPause={() => setPaused(true)}
-      >
-        <source src={webm} type="video/webm" media="(prefers-reduced-motion: no-preference)" />
-        <source src={mp4} type="video/mp4" media="(prefers-reduced-motion: no-preference)" />
-      </video>
-      <img
-        className={`hero-object hero-still ${className}`}
-        src={still}
-        alt=""
-        aria-hidden="true"
-        width={width}
-        height={height}
-        decoding="async"
-      />
+    <div className="hero-figure">
+      <div role="img" aria-label={label}>
+        <video
+          ref={video}
+          className={`hero-object hero-video ${className}`}
+          width={width}
+          height={height}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={still}
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-hidden="true"
+          onPlay={() => setPaused(false)}
+          onPause={() => setPaused(true)}
+        >
+          <source src={webm} type="video/webm" media="(prefers-reduced-motion: no-preference)" />
+          <source src={mp4} type="video/mp4" media="(prefers-reduced-motion: no-preference)" />
+        </video>
+        <img
+          className={`hero-object hero-still ${className}`}
+          src={still}
+          alt=""
+          aria-hidden="true"
+          width={width}
+          height={height}
+          decoding="async"
+        />
+      </div>
       <button
         type="button"
         className="hero-pause"
