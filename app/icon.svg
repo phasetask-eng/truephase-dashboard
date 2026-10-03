@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Truephase AI">
+  <!-- The wordmark's highlighted T: voltage yellow behind a carbon letterform. -->
+  <rect width="64" height="64" rx="14" fill="#fff100"/>
+  <rect x="14" y="15" width="36" height="11" fill="#0a0a0a"/>
+  <rect x="26.5" y="15" width="11" height="35" fill="#0a0a0a"/>
+</svg>

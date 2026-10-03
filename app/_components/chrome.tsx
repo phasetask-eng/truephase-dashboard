@@ -22,6 +22,18 @@ export const CONTACT_EMAIL = "info@truephase.co.uk";
 
 export { PORTAL_URL };
 
+/* The company behind the brand, as it appears on the Companies House
+   register. Shown in the footer and on the legal pages. */
+export const COMPANY = {
+  legalName: "Truephase AI Limited",
+  number: "17469289",
+  registeredIn: "England and Wales",
+  registeredOffice: "11 St. Nicholas Road, Thorne, Doncaster, DN8 5BS",
+  tradingName: "Truephase AI",
+  /* Supervisory authority for data protection in the UK */
+  ico: { name: "Information Commissioner's Office", url: "https://ico.org.uk/make-a-complaint/" },
+};
+
 export function SiteNav() {
   return (
     <header className="nav-bar">
@@ -90,11 +102,19 @@ export function SiteFooter() {
 
         <hr className="rule-dark" />
 
-        <div className="row" style={{ justifyContent: "space-between" }}>
-          <span className="mono quiet">© {new Date().getFullYear()} Truephase AI</span>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="mono">
-            {CONTACT_EMAIL}
-          </a>
+        <div className="stack-16">
+          <div className="row" style={{ justifyContent: "space-between" }}>
+            <span className="mono quiet">© {new Date().getFullYear()} Truephase AI</span>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="mono">
+              {CONTACT_EMAIL}
+            </a>
+          </div>
+          {/* Companies Act 2006 s.82 and the Trading Disclosures Regulations 2008
+              require these four facts on the website of every UK company. */}
+          <p className="body-sm quiet prose">
+            {COMPANY.legalName} is registered in {COMPANY.registeredIn}, company
+            number {COMPANY.number}. Registered office: {COMPANY.registeredOffice}.
+          </p>
         </div>
       </div>
     </footer>
