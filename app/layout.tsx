@@ -28,13 +28,13 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://truephase.co.uk"),
-  title: "Truephase AI — AI that answers every call",
+  title: "Truephase AI — the AI receptionist that answers when you can’t",
   description:
-    "Truephase AI runs the phone, the follow-up and the reporting for UK clinics, care homes and salons. Every call answered, every review handled, every day written up.",
+    "Truephase AI answers your calls day and night, handles your reviews and writes the day up for UK clinics, care homes and salons.",
   openGraph: {
-    title: "Truephase AI — AI that answers every call",
+    title: "Truephase AI — the AI receptionist that answers when you can’t",
     description:
-      "Truephase AI runs the phone, the follow-up and the reporting for UK clinics, care homes and salons.",
+      "Truephase AI answers your calls day and night, handles your reviews and writes the day up for UK clinics, care homes and salons.",
     type: "website",
     locale: "en_GB",
   },

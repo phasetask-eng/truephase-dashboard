@@ -7,7 +7,9 @@ does not depend on a build directory that gets deleted.
 Blender's FreeType loads woff2 directly, so the 3D labels are set in the same
 font file the page is set in, rather than a lookalike.
 
-Anton is licensed under the SIL Open Font License 1.1.
+Anton is licensed under the SIL Open Font License 1.1. The licence text and
+copyright line are in OFL.txt beside this file, as the licence requires for
+any redistributed copy.
 
 Re-copy it if the font subset ever changes:
 

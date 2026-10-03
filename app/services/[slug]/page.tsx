@@ -8,6 +8,8 @@ import { SERVICES, getService } from "../../_data/services";
 export function generateStaticParams() {
   return SERVICES.map((s) => ({ slug: s.slug }));
 }
+/* Unknown slugs 404 at the edge instead of invoking a function. */
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -47,12 +49,12 @@ export default async function ServicePage({
 
       <SiteNav />
 
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         {/* ── the ask ─────────────────────────────────────── */}
         <section className="wrap section">
           <div className="stack-40">
             <Link href="/#what" className="mono muted svc-back">
-              ← All services
+              <span aria-hidden="true">←</span> All services
             </Link>
 
             <div className="stack-24" style={{ maxWidth: 940 }}>
@@ -130,7 +132,7 @@ export default async function ServicePage({
               <span className="mono muted">How it works</span>
               <h2 className="heading">{stepCount} steps, in order</h2>
             </div>
-            <ol className="stack-24 svc-steps">
+            <ol className="stack-24 svc-steps" role="list">
               {service.how.map((h, i) => (
                 <li key={h.step} className="svc-step">
                   <span className="step-num">{String(i + 1).padStart(2, "0")}</span>
@@ -156,7 +158,7 @@ export default async function ServicePage({
                   here than find them after signing.
                 </p>
               </div>
-              <ul className="stack-16">
+              <ul className="stack-16" role="list">
                 {service.limits.map((line) => (
                   <li key={line} className="body svc-limit">
                     {line}
@@ -170,8 +172,8 @@ export default async function ServicePage({
         {/* ── who this suits ──────────────────────────────── */}
         <section className="wrap section">
           <div className="card-lg stack-24">
-            <span className="mono muted">Who it’s for</span>
-            <ul className="stack-8">
+            <h2 className="mono muted">Who it’s for</h2>
+            <ul className="stack-8" role="list">
               {service.fit.map((line) => (
                 <li key={line} className="subheading svc-fit">
                   {line}
@@ -184,7 +186,7 @@ export default async function ServicePage({
         {/* ── the rest of the range ───────────────────────── */}
         <section className="wrap section">
           <div className="stack-24">
-            <span className="mono muted">The other {others.length}</span>
+            <h2 className="mono muted">The other {others.length}</h2>
             <div className="svc-others">
               {others.map((o) => (
                 <Link key={o.slug} href={`/services/${o.slug}`} className="svc-other">

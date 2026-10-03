@@ -9,6 +9,10 @@ import { SERVICES } from "./_data/services";
 
 const TRANSCRIPT = [
   {
+    who: "Agent",
+    said: "Hi, you’ve reached the practice. I’m their AI assistant, and this call is recorded. How can I help?",
+  },
+  {
     who: "Caller",
     said: "Hi — I know you’re shut, I just wanted to see about getting in this week. I’ve cracked a filling.",
   },
@@ -35,7 +39,7 @@ const DAY = [
     time: "09:58",
     when: "During the first surgery",
     title: "The enquiry that rings three practices",
-    body: "A new patient, shopping around, booking with whoever picks up. Answered on the first ring and booked in before they got to the next number.",
+    body: "A new patient, shopping around, booking with whoever picks up. Answered straight away and booked in before they got to the next number.",
     tag: "Appointment Scheduler",
   },
   {
@@ -107,7 +111,7 @@ const SECTORS = [
 const QUESTIONS = [
   {
     q: "Will callers know it’s not a person?",
-    a: "Most work it out, and they mind far less than you would expect — what they want is to be answered and dealt with. We tell you exactly what your agent says and you sign it off before it ever picks up.",
+    a: "Yes. Every call opens with a notice that it is recorded, and callers can ask for a person at any point and get one. We are adding ‘you’re speaking with the practice’s AI assistant’ to that opening line for every agent, in words you sign off, and it is never allowed to claim to be a person. Most callers do not mind at all — what they want is to be answered and dealt with.",
   },
   {
     q: "What happens when it can’t help?",
@@ -119,7 +123,7 @@ const QUESTIONS = [
   },
   {
     q: "Who can see the call transcripts?",
-    a: "You and the people you give logins to. Truephase AI staff can access your account to support and configure it. Calls involve other people’s personal information, so if you want the detail of how that is handled, ask and we will put it in writing.",
+    a: "You and the people you give logins to. Truephase AI staff can access your account to support and configure it. Calls involve other people’s personal information, so how it is stored, who processes it and for how long is written down in our privacy notice, linked in the footer.",
   },
   {
     q: "What do I get on day one?",
@@ -140,7 +144,7 @@ export default function Home() {
       <HeroSequence />
       <SiteNav />
 
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         {/* ── HERO ─────────────────────────────────────────
             Two columns: the headline holds the left half, the object sits in
             the right half with clear air between them. The object is not in a
@@ -155,11 +159,11 @@ export default function Home() {
             {/* Breaks are explicit so SplitText masks the lines we designed,
                 not whatever the viewport happens to wrap to. */}
             <h1 className="display-xl" data-hero-heading>
-              Nobody
+              Nobody{" "}
               <br />
-              puts your
+              puts your{" "}
               <br />
-              callers
+              callers{" "}
               <br />
               on hold
             </h1>
@@ -190,15 +194,16 @@ export default function Home() {
               still="/hero-tower-still.webp"
               width={1000}
               height={1000}
-              label="A tower of cast blocks, one layer per Truephase AI service, each layer a different colour with a label set into its blocks: VOICE AI for the AI receptionist, BOOKING for the appointment scheduler, REVIEW MANAGEMENT, AUTOMATION for task automation, WEB DESIGN, AI VIDEO for video for social, and CHATBOT. In turn a layer slides out of the base, tips open like petals, rises up the outside of the stack and closes onto the top, while the layers above settle down one place."
+              label="Animated tower of coloured blocks, one layer per Truephase AI service: voice AI, booking, review management, automation, web design, AI video and chatbot. Layers slide out, rise and settle back on top in a slow loop."
             />
           </div>
         </section>
 
-        {/* The scroll-driven cube section sat here and is out for now. Nothing
-            about it was deleted: motion/CubeScroll.tsx, its styles, the frames
-            in public/cube and the Blender source all remain, so putting it
-            back is this element on its own. */}
+        {/* A scroll-driven cube section once sat here. Its frames were derived
+            from third-party footage without a written licence, so the section,
+            the frames and the tooling were removed. The Blender source for an
+            original cube (blender/truephase_cube.blend) remains if it is ever
+            wanted back. */}
 
         {/* ── THE DAY ────────────────────────────────────── */}
         <section className="wrap section" id="day">
@@ -211,7 +216,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <ol className="timeline">
+          <ol className="timeline" role="list">
             {DAY.map((item) => (
               <li className="tl-item" key={item.time} data-reveal>
                 <div className="tl-time">
@@ -243,9 +248,9 @@ export default function Home() {
                 </h2>
               </div>
               <p className="subheading quiet prose">
-                Your practice shut at six. The agent picked up on the first ring. This is
-                every word of it, alongside the booking it made — exactly as it appeared in
-                the portal next morning.
+                Your practice shut at six. The agent picked up straight away. Here is what
+                one of those calls looks like — an illustrative transcript, alongside the
+                booking it made, as it would appear in the portal next morning.
               </p>
             </div>
 
@@ -267,8 +272,11 @@ export default function Home() {
         </section>
 
         {/* ── THE DAY, LATE ──────────────────────────────── */}
-        <section className="wrap section">
-          <ol className="timeline">
+        <section className="wrap section" aria-labelledby="later-heading">
+          <h2 id="later-heading" className="sr-only">
+            Later that day
+          </h2>
+          <ol className="timeline" role="list">
             {DAY_LATE.map((item) => (
               <li className="tl-item" key={item.time} data-reveal>
                 <div className="tl-time">
@@ -307,12 +315,19 @@ export default function Home() {
             <div className="grid-2 service-grid">
               {SERVICES.map((s) => (
                 <Tilt key={s.slug} amount={5} className="tilt-cell" data-reveal>
-                  <Link href={`/services/${s.slug}`} className="card service-card">
+                  <Link
+                    href={`/services/${s.slug}`}
+                    className="card service-card"
+                    aria-labelledby={`svc-${s.slug}`}
+                  >
                     <span className="tag">{s.tag}</span>
-                    <h3 className="heading-sm">{s.title}</h3>
+                    <h3 id={`svc-${s.slug}`} className="heading-sm">
+                      {s.title}
+                    </h3>
                     <p className="body muted">{s.body}</p>
                     <span className="svc-more">
-                      {s.project ? "See the project" : "See how it works"} →
+                      {s.project ? "See the project" : "See how it works"}{" "}
+                      <span aria-hidden="true">→</span>
                     </span>
                   </Link>
                 </Tilt>
@@ -401,7 +416,7 @@ export default function Home() {
               </div>
             </div>
 
-            <ul className="stack-8">
+            <ul className="stack-8" role="list">
               {[
                 "Every call, with the transcript",
                 "Bookings the agent made",
@@ -475,7 +490,7 @@ export default function Home() {
                     className="btn btn-inverted"
                     style={{ width: "fit-content" }}
                   >
-                    <HoverLoop>Book a call</HoverLoop>
+                    <HoverLoop>Email us to book a call</HoverLoop>
                   </a>
                 </Magnetic>
               </div>

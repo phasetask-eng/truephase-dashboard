@@ -37,15 +37,15 @@ export const SERVICES: Service[] = [
     slug: "ai-receptionist",
     tag: "Voice",
     title: "AI Receptionist",
-    body: "Answers on the first ring, day or night. Understands what they want, takes the details, and books them into your diary while they are still on the phone.",
-    lede: "A voice that answers every call and finishes the job \u2014 the booking is in your diary before they hang up.",
+    body: "Answers straight away, day or night. Understands what they want, takes the details, and books them into your diary while they are still on the phone.",
+    lede: "A voice that answers the calls you can\u2019t and finishes the job \u2014 the booking is in your diary before they hang up.",
     problem:
       "The calls you miss are not spread evenly. They land while you are with a client, on the other line, or closed \u2014 exactly when someone has decided to book and wants it done now. And a call that ends in \u201cwe will ring you back to confirm\u201d is a call you can still lose. Voicemail holds nobody.",
     stats: [
       {
         figure: "42 hours",
-        note: "was the average time businesses took to make first contact with an enquiry, across an audit of 2,241 firms.",
-        source: "Harvard Business Review, Oldroyd, McElheran & Elkington",
+        note: "was the average time it took the companies that responded at all to follow up a web enquiry, across an audit of 2,241 firms. 23% never did.",
+        source: "Harvard Business Review, Oldroyd, McElheran & Elkington, 2011 \u2014 web enquiries at US companies",
       },
       {
         figure: "70%",
@@ -55,12 +55,12 @@ export const SERVICES: Service[] = [
       {
         figure: "~34%",
         note: "average fall in missed appointments when reminders are sent, across peer-reviewed studies of outpatient clinics.",
-        source: "Systematic reviews, clinical settings \u2014 not salons or trades",
+        source: "Hasvold & Wootton, systematic review, Journal of Telemedicine and Telecare, 2011 \u2014 hospital outpatients, a relative reduction; not salons or trades",
       },
     ],
     included: [
       {
-        title: "Answers on the first ring",
+        title: "Answers straight away",
         body: "Day, night, weekends, bank holidays. There is no queue and no hold music, because there is no one waiting to become free.",
       },
       {
@@ -195,13 +195,13 @@ export const SERVICES: Service[] = [
       },
     ],
     limits: [
-      "It replies to people who message you. Neither WhatsApp nor Instagram lets a business start a conversation with someone who has not contacted it first, and no software changes that.",
+      "It replies to people who message you. On WhatsApp a business can only start a conversation with someone who has opted in, and only with a template Meta has approved. On Instagram and Messenger the person has to message first. No software changes that.",
       "On WhatsApp there is a 24-hour window after someone messages in which it can answer freely. After that, only a pre-approved template may be sent \u2014 or a person can reply. On Instagram and Messenger, follow-up outside that window has to come from a human.",
       "Google Business Profile chat is not a channel. Google retired it in July 2024, so nobody can offer it.",
       "It is not a triage tool. It will not assess symptoms, advise on medication, or decide urgency \u2014 for a clinic that is both a safety line and a regulatory one.",
       "Reminders cannot run on Instagram at all \u2014 Meta provides no compliant route. They go by WhatsApp template, text or email instead.",
       "It cannot take a card number in the chat. Card rules forbid it, so it sends a secure payment link instead.",
-      "Meta charges per message on WhatsApp from October 2026. Volume is part of the pricing conversation rather than something we pretend is free.",
+      "Meta charges per message on WhatsApp. Volume is part of the pricing conversation rather than something we pretend is free.",
     ],
     fit: [
       "Practices getting Instagram enquiries they see two days later",
@@ -215,7 +215,7 @@ export const SERVICES: Service[] = [
     tag: "Reputation",
     title: "Review Management",
     body: "Sends the request at the right moment, tracks who opened it, drafts a reply to every review that lands.",
-    lede: "Asking every happy client, at the moment they are happiest, instead of whenever someone remembers.",
+    lede: "Asking every client, at the moment they are most likely to answer, instead of whenever someone remembers.",
     problem:
       "Most practices have a handful of reviews and a lot of satisfied clients. The gap is not the service — it is that nobody asks, and when they do it is three days late and by memory.",
     stats: [
@@ -275,6 +275,10 @@ export const SERVICES: Service[] = [
       "Practices with good service and thin review counts",
       "Anyone below the 4.5 star line where filtering starts",
       "Teams who mean to reply to reviews and never get to it",
+    ],
+    limits: [
+      "Everyone gets asked. Google\u2019s rules, and ours, do not allow choosing who is invited \u2014 the honest average is what buyers trust.",
+      "Review requests and any follow-up messages only go to people who have agreed to hear from you, and every one carries a way to opt out.",
     ],
   },
   {
@@ -341,23 +345,23 @@ export const SERVICES: Service[] = [
       {
         figure: "Under 50ms",
         note: "is all it takes for a visitor to form a credibility judgement about a site.",
-        source: "Web credibility research, cited 2026",
+        source: "Lindgaard et al., Behaviour & Information Technology, 2006",
       },
       {
         figure: "75%",
-        note: "of patients judge a clinic's credibility on its website design.",
-        source: "Healthcare web design research, 2026",
+        note: "of people say they judge a company\u2019s credibility by the design of its website.",
+        source: "Stanford Web Credibility Research, Fogg et al., 2002 \u2014 general consumers, not patients specifically",
       },
       {
         figure: "3 seconds",
-        note: "is roughly how long a high-value enquiry gives a cluttered or slow site before leaving.",
-        source: "Private clinic web design research, 2026",
+        note: "is the load time at which more than half of mobile visitors give up on a page.",
+        source: "Google/SOASTA mobile speed research, 2017",
       },
     ],
     included: [
       {
         title: "Website design and build",
-        body: "Designed around the one thing the visitor came to do — book, ring, or find out whether you treat what they have. Fast, readable on a phone, and built to meet accessibility standards rather than to win an award.",
+        body: "Designed around the one thing the visitor came to do — book, ring, or find out whether you treat what they have. Fast, readable on a phone, and built to WCAG 2.2 AA accessibility standards rather than to win an award.",
       },
       {
         title: "Brand identity and logo",

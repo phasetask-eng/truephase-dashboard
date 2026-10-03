@@ -13,7 +13,13 @@ const NAV = [
    to wherever it is hosted; it falls back to the local dev server, so the link
    works today and does not ship a localhost address once the portal has a
    public home. */
-const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL ?? "http://localhost:4173";
+const PORTAL_URL =
+  process.env.NEXT_PUBLIC_PORTAL_URL ??
+  (process.env.NODE_ENV === "production"
+    ? (() => {
+        throw new Error("NEXT_PUBLIC_PORTAL_URL must be set for production builds");
+      })()
+    : "http://localhost:4174");
 
 /* One address for the whole site. Every mailto and every visible email reads
    from here so the footer, the contact section and the legal pages can never
@@ -73,31 +79,38 @@ export function SiteFooter() {
           <div className="stack-16">
             <span className="wordmark"><span className="wm-t">T</span>ruephase AI</span>
             <p className="body-sm quiet prose">
-              Automation and AI voice agents for UK clinics, care homes and salons.
-              Built and run in the United Kingdom.
+              Automation and AI voice agents for UK clinics, care homes and salons. A UK
+              company; where your data is processed is set out in our privacy notice.
             </p>
           </div>
 
-          <div className="grid-3" style={{ gap: 24 }}>
-            <div className="stack-8">
-              <span className="mono quiet">Product</span>
-              <Link href="/#what">What it does</Link>
-              <Link href="/#how">How it works</Link>
-              <a href={PORTAL_URL}>Client portal</a>
+          <nav className="grid-3" style={{ gap: 24 }} aria-label="Footer">
+            <div className="stack-8 footer-group">
+              <h2 className="mono quiet">Product</h2>
+              <ul className="stack-8" role="list">
+                <li><Link href="/#what">What it does</Link></li>
+                <li><Link href="/#how">How it works</Link></li>
+                <li><a href={PORTAL_URL}>Client portal</a></li>
+              </ul>
             </div>
-            <div className="stack-8">
-              <span className="mono quiet">Company</span>
-              <Link href="/#talk">Contact</Link>
-              <Link href="/#who">Who it’s for</Link>
-              <Link href="/#questions">Questions</Link>
+            <div className="stack-8 footer-group">
+              <h2 className="mono quiet">Company</h2>
+              <ul className="stack-8" role="list">
+                <li><Link href="/#talk">Contact</Link></li>
+                <li><Link href="/#who">Who it’s for</Link></li>
+                <li><Link href="/#questions">Questions</Link></li>
+              </ul>
             </div>
-            <div className="stack-8">
-              <span className="mono quiet">Legal</span>
-              <Link href="/privacy">Privacy</Link>
-              <Link href="/terms">Terms</Link>
-              <Link href="/cookies">Cookies</Link>
+            <div className="stack-8 footer-group">
+              <h2 className="mono quiet">Legal</h2>
+              <ul className="stack-8" role="list">
+                <li><Link href="/privacy">Privacy</Link></li>
+                <li><Link href="/terms">Terms</Link></li>
+                <li><Link href="/cookies">Cookies</Link></li>
+                <li><Link href="/accessibility">Accessibility</Link></li>
+              </ul>
             </div>
-          </div>
+          </nav>
         </div>
 
         <hr className="rule-dark" />

@@ -38,6 +38,9 @@ export function HeroSequence() {
           type: "lines",
           linesClass: "split-line",
           mask: "lines",
+          // Keep the heading's own text for assistive tech: the default writes
+          // an aria-label from textContent, which runs the lines together.
+          aria: "none",
         });
         lines = split.lines;
         gsap.set(heading, { opacity: 1 });

@@ -1,3 +1,7 @@
+"use client";
+
+import { useRef, useState } from "react";
+
 /**
  * The hero object's loop.
  *
@@ -13,7 +17,7 @@
  * pixels frame to frame - so the same frames arrive sharper for a fraction of
  * the bytes, and the browser can start playing before the whole file lands.
  *
- * No JavaScript in the path: autoplay + muted + loop + playsinline is what
+ * Playback needs no JavaScript: autoplay + muted + loop + playsinline is what
  * every browser honours without a script, so it renders before hydration and
  * with scripting off. The poster is frame one of the loop itself, so the
  * hand-off from poster to playback is invisible.
@@ -22,6 +26,11 @@
  * honours it hands the video no source at all and shows the poster; the
  * stylesheet also swaps the video for the still, which covers browsers that
  * ignore media on video sources. Decided at load, no flash of motion first.
+ *
+ * Pause: WCAG 2.2.2 requires a control in the page for anything that moves
+ * for more than five seconds, however gentle. The button is the only
+ * JavaScript here, and the loop plays exactly as before if it never runs.
+ * The wrapper carries the text alternative; <video> may not take role="img".
  */
 
 export function HeroLoop({
@@ -41,9 +50,25 @@ export function HeroLoop({
   height: number;
   className?: string;
 }) {
+  const video = useRef<HTMLVideoElement>(null);
+  const [paused, setPaused] = useState(false);
+
+  const toggle = () => {
+    const v = video.current;
+    if (!v) return;
+    if (v.paused) {
+      void v.play();
+      setPaused(false);
+    } else {
+      v.pause();
+      setPaused(true);
+    }
+  };
+
   return (
-    <>
+    <div className="hero-figure" role="img" aria-label={label}>
       <video
+        ref={video}
         className={`hero-object hero-video ${className}`}
         width={width}
         height={height}
@@ -55,8 +80,9 @@ export function HeroLoop({
         poster={still}
         disablePictureInPicture
         disableRemotePlayback
-        role="img"
-        aria-label={label}
+        aria-hidden="true"
+        onPlay={() => setPaused(false)}
+        onPause={() => setPaused(true)}
       >
         <source src={webm} type="video/webm" media="(prefers-reduced-motion: no-preference)" />
         <source src={mp4} type="video/mp4" media="(prefers-reduced-motion: no-preference)" />
@@ -64,11 +90,20 @@ export function HeroLoop({
       <img
         className={`hero-object hero-still ${className}`}
         src={still}
-        alt={label}
+        alt=""
+        aria-hidden="true"
         width={width}
         height={height}
         decoding="async"
       />
-    </>
+      <button
+        type="button"
+        className="hero-pause"
+        onClick={toggle}
+        aria-pressed={paused}
+      >
+        {paused ? "Play animation" : "Pause animation"}
+      </button>
+    </div>
   );
 }

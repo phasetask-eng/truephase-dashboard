@@ -898,59 +898,6 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
 /* No phone-specific .hero-media rule: 92vw already carries it down, and a
    second cap here is what created the step. */
 
-/* ── the cube, scroll-driven ─────────────────────────────
-   Directly under the hero and on the same canvas colour, so there is no seam
-   between the two: the hero simply ends and the cube's stage is already the
-   page. The section is tall (--cube-scroll) and the stage inside it is
-   sticky for one viewport, which is what holds the cube in place while the
-   reader scrolls the sequence through. Sticky rather than a JS pin: Lenis
-   runs in window mode precisely so sticky keeps working. */
-.cube-scroll {
-  --cube-scroll: 320svh;
-  position: relative;
-  height: var(--cube-scroll);
-  background: var(--bg-page);
-}
-.cube-stage {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-.cube-frame {
-  position: relative;
-  /* Square, and never larger than the frames were rendered at (--cube-size),
-     so nothing is upscaled past the pixels that exist. */
-  width: min(var(--cube-size), 88svh, 92vw);
-  aspect-ratio: 1 / 1;
-  will-change: transform, opacity;
-}
-.cube-poster,
-.cube-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-/* The canvas sits over the poster and only shows once it has drawn a frame,
-   so the hand-off from poster to live sequence is invisible. */
-.cube-canvas { opacity: 0; }
-.cube-canvas.is-live { opacity: 1; }
-
-@media (prefers-reduced-motion: reduce) {
-  /* Poster only, no scrub, and no need for the scroll distance either. */
-  .cube-scroll { --cube-scroll: auto; height: auto; padding-block: 48px 96px; }
-  .cube-stage { position: static; height: auto; }
-  .cube-canvas { display: none; }
-  .cube-frame { transform: none !important; opacity: 1 !important; }
-}
-@media (max-width: 1100px) {
-  .cube-scroll { --cube-scroll: 260svh; }
-}
-
 /* ── service cards & service detail pages ───────────────── */
 
 /* The whole card is the link, so it needs a state for the keyboard as well as
@@ -1184,4 +1131,84 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
 }
 @media (max-width: 680px) {
   .legal-toc { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── launch audit: accessibility ────────────────────────── */
+
+/* The skip link lands here; the ring would be noise on a landmark. */
+.tp-site main:focus { outline: none; }
+
+/* FAQ disclosures: a visible open/closed cue and a focus ring of their own.
+   Padding adds hit area without moving the layout. */
+.tp-site summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding-block: 10px;
+  margin-block: -10px;
+  border-radius: 8px;
+}
+.tp-site summary::after {
+  content: "+";
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-smoke);
+  flex: none;
+}
+.tp-site details[open] summary::after { content: "–"; }
+.tp-site summary:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+/* 12px small caps on the canvas: smoke clears 4.5:1 by a hair; page-muted
+   gives it room. */
+.tl-when { color: var(--muted-on-page); }
+
+/* Cards that are links say so without a pointer: the cue stays underlined,
+   and the "other services" tiles underline their title, since their ash
+   border is 1.2:1 against the canvas. */
+.svc-more { text-decoration: underline; text-underline-offset: 4px; }
+.svc-other .heading-sm {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: var(--color-slate);
+}
+
+/* Footer: list headings in the eyebrow style, links with a 24px+ hit area. */
+.footer-group h2, h2.mono { font-weight: 400; }
+.footer-group ul { padding: 0; }
+.footer a { display: inline-block; padding-block: 4px; }
+.nav-actions .btn-ghost { padding: 12px 0; }
+@media (max-width: 1000px) {
+  .nav-inner { gap: 0; }
+}
+
+/* Hero pause control. The media frame is pointer-events:none so the loop
+   never catches a click; the button opts back in. It sits above the dissolve
+   so it never covers a block. */
+.hero-figure { position: relative; }
+.hero-pause {
+  position: absolute;
+  left: 12px;
+  bottom: calc(var(--media-w, 60vw) * 0.2 + 12px);
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 40px;
+  background: var(--bg-card);
+  color: var(--color-slate);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.hero-pause:hover { color: var(--fg); }
+.hero-pause:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-pause { display: none; }
 }

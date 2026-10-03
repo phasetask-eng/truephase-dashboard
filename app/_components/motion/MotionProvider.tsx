@@ -17,10 +17,16 @@ export function MotionProvider() {
   useIsomorphicLayoutEffect(() => {
     const root = document.documentElement;
 
+    // If the OS motion setting changes mid-session, reload: unwinding Lenis,
+    // SplitText and ScrollTrigger in place is not worth the fragility.
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onMotionChange = () => window.location.reload();
+    motionQuery.addEventListener("change", onMotionChange);
+
     if (prefersReducedMotion()) {
       // Everything visible, nothing hidden. Reduced motion is not no content.
       root.classList.add("motion-static");
-      return;
+      return () => motionQuery.removeEventListener("change", onMotionChange);
     }
 
     root.classList.add("motion-ready");
@@ -74,6 +80,7 @@ export function MotionProvider() {
       cancelled = true;
       ctx.revert();
       root.classList.remove("motion-ready");
+      motionQuery.removeEventListener("change", onMotionChange);
     };
   }, []);
 
