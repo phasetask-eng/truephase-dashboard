@@ -11,7 +11,16 @@ Every step runs headless through Blender's own Python (`/Applications/Blender.ap
 | 5 | `05_render_frames.py FILE.blend OUTDIR N` | Renders N evenly spaced RGBA PNGs across the loop. ~3.5 s/frame at 1000². |
 | 6 | `06_encode_video.py` | `composite` (python3): frames onto `--bg-page` `#efefed`. `encode` (Blender): PNGs → WebM (VP9) + MP4 (H.264). |
 
-Outputs: `public/hero-tower.webm`, `public/hero-tower.mp4`, `public/hero-tower-still.webp` (frame 1 — poster and reduced-motion still).
+Outputs: `public/hero-tower-v2.webm`, `public/hero-tower-v2.mp4`, `public/hero-tower-v2-still.webp` (frame 1 — poster and reduced-motion still), plus the phone cut `public/hero-tower-v2-720.mp4`.
+
+After encoding, make every MP4 fast-start and cut the phone version (system ffmpeg):
+
+```
+ffmpeg -i hero-tower.mp4 -c copy -movflags +faststart hero-tower-vN.mp4
+ffmpeg -i hero-tower.mp4 -vf scale=720:720:flags=lanczos -c:v libx264 -profile:v main -level 3.1 -pix_fmt yuv420p -crf 28 -preset veryslow -tune animation -an -movflags +faststart hero-tower-vN-720.mp4
+```
+
+File names carry a version (`-v2`) because they are served with a one-year immutable cache (see `next.config.ts`): a re-render must get a new name, never overwrite.
 
 ## Two things that will bite
 

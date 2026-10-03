@@ -189,9 +189,10 @@ export default function Home() {
 
           <div className="hero-media" data-hero-media>
             <HeroLoop
-              webm="/hero-tower.webm"
-              mp4="/hero-tower.mp4"
-              still="/hero-tower-still.webp"
+              webm="/hero-tower-v2.webm"
+              mp4="/hero-tower-v2.mp4"
+              mobileMp4="/hero-tower-v2-720.mp4"
+              still="/hero-tower-v2-still.webp"
               width={1000}
               height={1000}
               label="Animated tower of coloured blocks, one layer per Truephase AI service: voice AI, booking, review management, automation, web design, AI video and chatbot. Layers slide out, rise and settle back on top in a slow loop."

@@ -41,7 +41,15 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders }];
+    return [
+      { source: "/(.*)", headers: securityHeaders },
+      // The hero video/still are versioned by file name (hero-tower-v2*), so they
+      // can be cached for a year. Re-encode to a new name rather than overwrite.
+      {
+        source: "/:file(hero-tower-v[0-9]+.*)",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+    ];
   },
 };
 

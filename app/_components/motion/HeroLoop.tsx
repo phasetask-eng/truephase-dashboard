@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { HeroVideoKick } from "./HeroVideoKick";
 
 /**
  * The hero object's loop.
@@ -33,9 +34,19 @@ import { useRef, useState } from "react";
  * The wrapper carries the text alternative; <video> may not take role="img".
  */
 
+/*
+ * Phones: a 720px H.264 cut (~0.5MB, Main profile, fast-start) is listed FIRST
+ * for narrow screens. H.264 is hardware-decoded on every phone, whereas VP9 is
+ * not on many iPhones and older Androids, and the 1000px file is twice the
+ * bytes for pixels a phone never shows. Every MP4 is fast-start (moov atom at
+ * the front) so playback can begin before the whole file has downloaded.
+ * Codec strings on each type let a browser skip a source it cannot decode
+ * instead of picking it and stalling on the poster.
+ */
 export function HeroLoop({
   webm,
   mp4,
+  mobileMp4,
   still,
   label,
   width,
@@ -44,6 +55,7 @@ export function HeroLoop({
 }: {
   webm: string;
   mp4: string;
+  mobileMp4: string;
   still: string;
   label: string;
   width: number;
@@ -57,9 +69,12 @@ export function HeroLoop({
     const v = video.current;
     if (!v) return;
     if (v.paused) {
+      delete v.dataset.userPaused;
       void v.play();
       setPaused(false);
     } else {
+      // Tells HeroVideoKick this pause was chosen, so it never restarts the loop.
+      v.dataset.userPaused = "true";
       v.pause();
       setPaused(true);
     }
@@ -76,6 +91,7 @@ export function HeroLoop({
         muted
         loop
         playsInline
+        data-hero-video
         preload="auto"
         poster={still}
         disablePictureInPicture
@@ -84,9 +100,23 @@ export function HeroLoop({
         onPlay={() => setPaused(false)}
         onPause={() => setPaused(true)}
       >
-        <source src={webm} type="video/webm" media="(prefers-reduced-motion: no-preference)" />
-        <source src={mp4} type="video/mp4" media="(prefers-reduced-motion: no-preference)" />
+        <source
+          src={mobileMp4}
+          type='video/mp4; codecs="avc1.4D401F"'
+          media="(max-width: 700px) and (prefers-reduced-motion: no-preference)"
+        />
+        <source
+          src={webm}
+          type='video/webm; codecs="vp9"'
+          media="(prefers-reduced-motion: no-preference)"
+        />
+        <source
+          src={mp4}
+          type='video/mp4; codecs="avc1.640028"'
+          media="(prefers-reduced-motion: no-preference)"
+        />
       </video>
+      <HeroVideoKick />
       <img
         className={`hero-object hero-still ${className}`}
         src={still}

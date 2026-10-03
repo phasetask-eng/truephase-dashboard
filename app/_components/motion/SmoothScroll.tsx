@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
-import { gsap, ScrollTrigger, prefersReducedMotion } from "./gsap";
+import { gsap, ScrollTrigger, prefersReducedMotion, isFinePointer } from "./gsap";
 
 /**
  * Lenis in window mode rather than wrapper mode.
@@ -15,10 +15,14 @@ import { gsap, ScrollTrigger, prefersReducedMotion } from "./gsap";
  * GSAP's ticker drives Lenis so tweens and smooth scroll share one frame;
  * lagSmoothing(0) stops GSAP fast-forwarding after a stall, which would
  * otherwise desync the two.
+ *
+ * Mouse/trackpad only. On touch screens Lenis leaves native scrolling alone
+ * anyway, so running it there only costs a per-frame loop on the phone's main
+ * thread; native momentum scroll is already smooth.
  */
 export function SmoothScroll() {
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    if (prefersReducedMotion() || !isFinePointer()) return;
 
     const lenis = new Lenis({ autoRaf: false });
 
