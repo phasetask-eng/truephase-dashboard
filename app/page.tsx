@@ -175,9 +175,9 @@ export default function Home() {
 
             <div className="row hero-cta" style={{ gap: 8 }} data-hero-copy>
               <Magnetic>
-                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn-filled">
+                <Link href={BOOKING_URL} className="btn btn-filled">
                   <HoverLoop>Book a call</HoverLoop>
-                </a>
+                </Link>
               </Magnetic>
               <Magnetic>
                 <a href="#day" className="btn btn-ghost">
@@ -485,15 +485,13 @@ export default function Home() {
                   <span className="voltage">{CONTACT_EMAIL}</span>
                 </a>
                 <Magnetic>
-                  <a
+                  <Link
                     href={BOOKING_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="btn btn-inverted"
                     style={{ width: "fit-content" }}
                   >
                     <HoverLoop>Pick a time for a call</HoverLoop>
-                  </a>
+                  </Link>
                 </Magnetic>
               </div>
             </div>
