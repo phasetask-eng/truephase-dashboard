@@ -1334,7 +1334,7 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
 .bk-form { display: flex; flex-direction: column; gap: 16px; }
 .bk-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .bk-field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500; }
-.bk-field input, .bk-field textarea {
+.bk-field input, .bk-field textarea, .bk-field select {
   font: inherit;
   font-size: 16px;
   font-weight: 400;
@@ -1346,7 +1346,17 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
   width: 100%;
 }
 .bk-field textarea { resize: vertical; min-height: 88px; }
-.bk-field input:focus, .bk-field textarea:focus { outline: none; border-color: var(--fg); }
+.bk-field input:focus, .bk-field textarea:focus, .bk-field select:focus { outline: none; border-color: var(--fg); }
+.bk-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230a0a0a' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+.bk-field select:invalid { color: var(--color-smoke); }
 .bk-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .bk-error {
   background: #ffe9e6;

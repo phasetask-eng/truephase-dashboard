@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteNav, SiteFooter, CONTACT_EMAIL } from "../_components/chrome";
+import { SERVICES } from "../_data/services";
 import { BookingWidget } from "./BookingWidget";
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export default function BookPage() {
             </p>
           </div>
 
-          <BookingWidget email={CONTACT_EMAIL} />
+          <BookingWidget email={CONTACT_EMAIL} services={SERVICES.map((s) => s.title)} />
         </section>
       </main>
 
