@@ -2,7 +2,7 @@ import { BOOKING_ENGINE } from "../../../_components/booking-api";
 
 export const dynamic = "force-dynamic";
 
-const FIELDS = ["name", "email", "business", "phone", "notes", "date", "time", "website"] as const;
+const FIELDS = ["name", "email", "business", "phone", "topic", "notes", "date", "time", "website"] as const;
 
 /* Books the chosen time. n8n checks everything again, re-checks the time is
    still free, adds the call to Google Calendar and emails the invite. */
