@@ -47,11 +47,13 @@ const PARTS = [
   { label: "Evening", test: (t: string) => Number(t.slice(0, 2)) >= 17 },
 ];
 
-export function BookingWidget({ email }: { email: string }) {
+/* `services` is every service title on the site; the dropdown adds "Other". */
+export function BookingWidget({ email, services }: { email: string; services: string[] }) {
   const [days, setDays] = useState<Day[] | null>(null);
   const [loadError, setLoadError] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [topic, setTopic] = useState("");
   const [sending, setSending] = useState(false);
   const [formError, setFormError] = useState("");
   const [booked, setBooked] = useState<Booked | null>(null);
@@ -105,6 +107,7 @@ export function BookingWidget({ email }: { email: string }) {
       email: String(f.get("email") ?? ""),
       business: String(f.get("business") ?? ""),
       phone: String(f.get("phone") ?? ""),
+      topic,
       notes: String(f.get("notes") ?? ""),
       website: String(f.get("website") ?? ""),
       date,
@@ -300,9 +303,30 @@ export function BookingWidget({ email }: { email: string }) {
                 </label>
               </div>
               <label className="bk-field">
-                <span>What would you like to talk about?</span>
-                <textarea name="notes" rows={3} maxLength={1000} />
+                <span>What would you like to talk about? *</span>
+                <select
+                  name="topic"
+                  required
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Choose a service
+                  </option>
+                  {services.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                  <option value="Other">Other</option>
+                </select>
               </label>
+              {topic === "Other" ? (
+                <label className="bk-field">
+                  <span>Tell us a little about it *</span>
+                  <textarea name="notes" rows={3} maxLength={1000} required />
+                </label>
+              ) : null}
               {/* left empty by people; filled in by spam bots */}
               <label className="bk-hp" aria-hidden="true">
                 Website
