@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SiteNav, SiteFooter } from "../../_components/chrome";
+import { SiteNav, SiteFooter, BOOKING_URL } from "../../_components/chrome";
 import { SERVICES, getService } from "../../_data/services";
 
 /* Six pages, all static at build time — nothing here needs a server. */
@@ -64,9 +64,9 @@ export default async function ServicePage({
             </div>
 
             <div className="row">
-              <Link href="/#talk" className="btn btn-filled">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn-filled">
                 Book a call
-              </Link>
+              </a>
               {service.project ? (
                 <span className="mono quiet">
                   A project — booked in, built, handed over
@@ -206,9 +206,9 @@ export default async function ServicePage({
               Most practices start with the phone, because that is where the money is
               being lost, and add the rest once they trust it.
             </p>
-            <Link href="/#talk" className="btn btn-inverted" style={{ width: "fit-content" }}>
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn-inverted" style={{ width: "fit-content" }}>
               Book a call
-            </Link>
+            </a>
           </div>
         </section>
       </main>
