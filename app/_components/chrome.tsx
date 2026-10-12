@@ -26,6 +26,9 @@ const PORTAL_URL =
    drift apart again. */
 export const CONTACT_EMAIL = "info@truephase.co.uk";
 
+/** The Book a call page: visitors pick a free 30-minute slot (see app/book). */
+export const BOOKING_URL = "/book";
+
 export { PORTAL_URL };
 
 /* The company behind the brand, as it appears on the Companies House
@@ -61,7 +64,7 @@ export function SiteNav() {
             <HoverLoop>Client login</HoverLoop>
           </a>
           <Magnetic>
-            <Link href="/#talk" className="btn btn-filled">
+            <Link href={BOOKING_URL} className="btn btn-filled">
               <HoverLoop>Book a call</HoverLoop>
             </Link>
           </Magnetic>

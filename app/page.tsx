@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SiteNav, SiteFooter, CONTACT_EMAIL, PORTAL_URL } from "./_components/chrome";
+import { SiteNav, SiteFooter, CONTACT_EMAIL, PORTAL_URL, BOOKING_URL } from "./_components/chrome";
 import { Transcript } from "./_components/motion";
 import { MotionProvider, HeroSequence, HoverLoop, Tilt, Magnetic } from "./_components/motion/index";
 import { HeroLoop } from "./_components/motion/HeroLoop";
@@ -175,9 +175,9 @@ export default function Home() {
 
             <div className="row hero-cta" style={{ gap: 8 }} data-hero-copy>
               <Magnetic>
-                <a href="#talk" className="btn btn-filled">
+                <Link href={BOOKING_URL} className="btn btn-filled">
                   <HoverLoop>Book a call</HoverLoop>
-                </a>
+                </Link>
               </Magnetic>
               <Magnetic>
                 <a href="#day" className="btn btn-ghost">
@@ -485,13 +485,13 @@ export default function Home() {
                   <span className="voltage">{CONTACT_EMAIL}</span>
                 </a>
                 <Magnetic>
-                  <a
-                    href={`mailto:${CONTACT_EMAIL}`}
+                  <Link
+                    href={BOOKING_URL}
                     className="btn btn-inverted"
                     style={{ width: "fit-content" }}
                   >
-                    <HoverLoop>Email us to book a call</HoverLoop>
-                  </a>
+                    <HoverLoop>Pick a time for a call</HoverLoop>
+                  </Link>
                 </Magnetic>
               </div>
             </div>

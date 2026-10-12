@@ -132,8 +132,13 @@ export default function Privacy() {
                 them to identify you.
               </p>
               <p>
-                There are no forms on this site. The only way to contact us from it is by email.
-                See our <Link href="/cookies">cookie policy</Link> for the detail.
+                The only form on this site is the <Link href="/book">book a call</Link> page. When
+                you book, we receive your name, email address and anything else you choose to add
+                (business name, phone number, what you would like to talk about). We use it only
+                to arrange and hold the call: it goes into our Google Calendar, which emails you
+                the invitation. It is handled as an enquiry, as described in the next section.
+                Neither the booking page nor anything else on the site sets cookies. See our{" "}
+                <Link href="/cookies">cookie policy</Link> for the detail.
               </p>
             </>
           ),
