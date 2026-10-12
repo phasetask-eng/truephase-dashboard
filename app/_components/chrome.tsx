@@ -26,9 +26,8 @@ const PORTAL_URL =
    drift apart again. */
 export const CONTACT_EMAIL = "info@truephase.co.uk";
 
-/** Google Calendar booking page: visitors pick a free 30-minute slot. */
-export const BOOKING_URL =
-  "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3wOisnSDxWmL24P0nTwdbUYqqFWaMBex2nkJeAzRjKsdjMqxi4zbYmJZB2Zr1IhBfNJspWe2R_";
+/** The Book a call page: visitors pick a free 30-minute slot (see app/book). */
+export const BOOKING_URL = "/book";
 
 export { PORTAL_URL };
 
@@ -65,9 +64,9 @@ export function SiteNav() {
             <HoverLoop>Client login</HoverLoop>
           </a>
           <Magnetic>
-            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn-filled">
+            <Link href={BOOKING_URL} className="btn btn-filled">
               <HoverLoop>Book a call</HoverLoop>
-            </a>
+            </Link>
           </Magnetic>
         </div>
       </div>
