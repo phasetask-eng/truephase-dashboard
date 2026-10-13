@@ -80,6 +80,10 @@ body {
   letter-spacing: -0.011em;
   -webkit-font-smoothing: antialiased;
 }
+/* Paint the page itself grey too, not only the .tp-site wrapper. Otherwise the
+   browser's default white canvas can flash through below the hero video while
+   the page is being scrolled, drawing a hard edge under the animation. */
+html:has(.tp-site) { background: var(--bg-page); }
 .tp-site *,
 .tp-site *::before,
 .tp-site *::after { box-sizing: border-box; }
