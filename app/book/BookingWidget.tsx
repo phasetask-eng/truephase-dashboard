@@ -60,10 +60,13 @@ export function BookingWidget({ email, services }: { email: string; services: st
   const formRef = useRef<HTMLDivElement>(null);
   const timesRef = useRef<HTMLDivElement>(null);
 
-  async function load(keepChoice = false) {
+  async function load(keepChoice = false, fresh = false) {
     setLoadError("");
     try {
-      const res = await fetch("/api/booking/slots", { cache: "no-store" });
+      /* The free times are cached for a minute at the edge so the calendar
+         shows at once. "fresh" skips that copy, for after a time was taken. */
+      const url = fresh ? `/api/booking/slots?fresh=${Date.now()}` : "/api/booking/slots";
+      const res = await fetch(url, { cache: "no-store" });
       const data = await res.json();
       if (!data.ok) throw new Error(data.error);
       const list: Day[] = data.days ?? [];
@@ -129,7 +132,7 @@ export function BookingWidget({ email, services }: { email: string; services: st
         setFormError(data.error || "Sorry, something went wrong. Please try again.");
         if (data.taken) {
           setTime("");
-          load(true);
+          load(true, true);
           timesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }
