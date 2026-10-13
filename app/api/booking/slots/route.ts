@@ -9,7 +9,7 @@ export const preferredRegion = "lhr1";
 
    Speed: asking n8n, which asks Google, takes 0.7s warm and ~3s when n8n has
    been idle, and every visitor used to wait for it. A good answer is now kept
-   at Vercel's edge for 60 seconds and served stale for up to 5 minutes while a
+   at Vercel's edge for 60 seconds and served stale for up to 30 minutes while a
    fresh copy is fetched in the background, so the calendar appears at once.
    That is safe: the booking step in n8n re-checks the calendar before it
    books, and replies "just been taken" if the time has gone. After that reply
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
       status: res.ok ? 200 : 502,
       headers: {
         "Cache-Control": cacheable
-          ? "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+          ? "public, max-age=0, s-maxage=60, stale-while-revalidate=1800"
           : "no-store",
       },
     });
