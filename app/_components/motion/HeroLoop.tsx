@@ -1,7 +1,3 @@
-"use client";
-
-import { useRef, useState } from "react";
-
 /**
  * The hero object's loop.
  *
@@ -27,9 +23,6 @@ import { useRef, useState } from "react";
  * stylesheet also swaps the video for the still, which covers browsers that
  * ignore media on video sources. Decided at load, no flash of motion first.
  *
- * Pause: WCAG 2.2.2 requires a control in the page for anything that moves
- * for more than five seconds, however gentle. The button is the only
- * JavaScript here, and the loop plays exactly as before if it never runs.
  * The wrapper carries the text alternative; <video> may not take role="img".
  */
 
@@ -50,25 +43,9 @@ export function HeroLoop({
   height: number;
   className?: string;
 }) {
-  const video = useRef<HTMLVideoElement>(null);
-  const [paused, setPaused] = useState(false);
-
-  const toggle = () => {
-    const v = video.current;
-    if (!v) return;
-    if (v.paused) {
-      void v.play();
-      setPaused(false);
-    } else {
-      v.pause();
-      setPaused(true);
-    }
-  };
-
   return (
     <div className="hero-figure" role="img" aria-label={label}>
       <video
-        ref={video}
         className={`hero-object hero-video ${className}`}
         width={width}
         height={height}
@@ -81,8 +58,6 @@ export function HeroLoop({
         disablePictureInPicture
         disableRemotePlayback
         aria-hidden="true"
-        onPlay={() => setPaused(false)}
-        onPause={() => setPaused(true)}
       >
         <source src={webm} type="video/webm" media="(prefers-reduced-motion: no-preference)" />
         <source src={mp4} type="video/mp4" media="(prefers-reduced-motion: no-preference)" />
@@ -96,14 +71,6 @@ export function HeroLoop({
         height={height}
         decoding="async"
       />
-      <button
-        type="button"
-        className="hero-pause"
-        onClick={toggle}
-        aria-pressed={paused}
-      >
-        {paused ? "Play animation" : "Pause animation"}
-      </button>
     </div>
   );
 }
