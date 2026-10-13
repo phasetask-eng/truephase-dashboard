@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     "How Truephase AI Limited handles personal information: for callers to businesses that use our AI receptionist, for website visitors, and for our clients.",
 };
 
-const UPDATED = "3 October 2026";
-const VERSION = "1.0";
+const UPDATED = "13 October 2026";
+const VERSION = "1.1";
 
 export default function Privacy() {
   return (
@@ -23,7 +23,7 @@ export default function Privacy() {
       inShort={[
         "If you rang a business and an AI answered, that business is responsible for your information. We handle it on their behalf and under their instructions.",
         "Calls are recorded and transcribed so the booking is right and the business can see what was said. You are told this at the start of the call.",
-        "This website sets no cookies, runs no analytics and sends nothing to advertisers.",
+        "This website sets no cookies and sends nothing to advertisers. It counts visits and measures page speed with our host’s privacy-friendly tools, which do not identify you.",
         "We do not sell personal information, and we do not use callers’ conversations to train AI models.",
         "You can ask for a copy of your information or ask for it to be deleted. Email us and a person will reply within one month.",
       ]}
@@ -124,12 +124,21 @@ export default function Privacy() {
           body: (
             <>
               <p>
-                This website sets no cookies and uses no analytics, advertising pixels or
-                third-party scripts. The typefaces, images and video are served from our own
-                domain. Our hosting provider, Vercel, handles each request and keeps standard
-                server logs (your IP address, the page requested and the time) for security and
-                to keep the site running. We do not combine those logs with anything else or use
-                them to identify you.
+                This website sets no cookies and uses no advertising pixels or third-party
+                scripts. The typefaces, images and video are served from our own domain. Our
+                hosting provider, Vercel, handles each request and keeps standard server logs
+                (your IP address, the page requested and the time) for security and to keep the
+                site running. We do not combine those logs with anything else or use them to
+                identify you.
+              </p>
+              <p>
+                We also use two tools from Vercel to see how the site is used and how fast it
+                loads: Web Analytics and Speed Insights. They run from our own domain and set no
+                cookies. They record things like the page you viewed, the site you came from, your
+                country, your browser and device type, and how quickly the page loaded. Vercel
+                records this without tying it to you or your IP address, and we only see totals.
+                Our legal basis is our legitimate interest in understanding and improving the
+                website.
               </p>
               <p>
                 The only form on this site is the <Link href="/book">book a call</Link> page. When
@@ -208,7 +217,7 @@ export default function Privacy() {
                   ["OpenAI", "Short written insights for clients from aggregate figures", "Call counts, ratings and short review excerpts, not recordings", "United States"],
                   ["Google", "Calendar availability, Google Business Profile reviews and replies", "Appointment free/busy times, public review text", "United States"],
                   ["Wix", "Bookings and payments, for clients who use Wix", "Booking name, email, phone, service, payment status", "United States and Israel"],
-                  ["Vercel", "Hosting this website and the client portal", "Web request logs", "United States"],
+                  ["Vercel", "Hosting this website and the client portal; anonymous visit counts and page-speed measurement", "Web request logs; anonymous page-view and page-speed data", "United States"],
                 ]}
               />
               <p>
