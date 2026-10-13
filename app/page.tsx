@@ -243,8 +243,10 @@ export default function Home() {
         </section>
 
         {/* ── WHO IT'S FOR ───────────────────────────────── */}
-        <section className="wrap section" id="who">
-          <div className="stack-40">
+        {/* A dark band: it sits straight after the white service cards, so the
+            contrast is what separates the two grids. */}
+        <section className="band-inverted" id="who" data-scrub>
+          <div className="wrap stack-40">
             <div className="split" style={{ alignItems: "end" }} data-reveal>
               <h2 className="heading-lg">
                 Built for places
@@ -253,16 +255,17 @@ export default function Home() {
                 <br />
                 is the business
               </h2>
-              <p className="subheading muted prose">
+              <p className="subheading quiet prose">
                 We work with a small number of UK practices at a time, because setting one
                 up properly takes us longer than selling one does.
               </p>
             </div>
 
             <div className="grid-4">
-              {SECTORS.map((s) => (
+              {SECTORS.map((s, i) => (
                 <Tilt key={s.name} amount={6} className="tilt-cell" data-reveal>
-                  <article className="card stack-16" style={{ borderRadius: 24 }}>
+                  <article className="sector-card stack-16">
+                    <span className="sector-index">{String(i + 1).padStart(2, "0")}</span>
                     <h3 className="subheading-lg">{s.name}</h3>
                     <p className="body-sm muted">{s.note}</p>
                   </article>
