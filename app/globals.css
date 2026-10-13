@@ -221,6 +221,24 @@ html:has(.tp-site) { background: var(--bg-page); }
 }
 .tag-dark { background: var(--color-graphite); color: var(--on-fg); }
 
+/* Sector cards: white cards on the dark "Built for places" band */
+.sector-card {
+  height: 100%;
+  background: var(--bg-card);
+  color: var(--fg);
+  border-radius: 24px;
+  padding: 28px 24px;
+}
+/* The band turns .muted light for dark ground; on a white card it must be the
+   page's muted grey again or the note disappears. */
+.band-inverted .sector-card .muted { color: var(--muted-on-page); }
+.sector-index {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 1;
+  color: var(--fg);
+}
+
 /* An email address is one unbreakable token — at display size it will push the
    page sideways on a phone unless it is allowed to size down and break. */
 .email-link {
