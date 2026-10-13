@@ -838,6 +838,12 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
   width: 100%;
   height: auto;
   display: block;
+  /* Chrome can draw a 1px dark seam along a video's edge while the page is
+     smooth-scrolled (the frame lands on half pixels). The outer edges of the
+     loop are plain background, so trim 2px off every side and back the box
+     with the page colour: nothing of the object is lost and no seam can show. */
+  clip-path: inset(2px);
+  background: var(--bg-page);
 }
 /* There is deliberately NO mask on the video. An edge feather was here as
    insurance against a browser's video pipeline decoding the baked background
