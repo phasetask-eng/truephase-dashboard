@@ -242,6 +242,36 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── WHO IT'S FOR ───────────────────────────────── */}
+        <section className="wrap section" id="who">
+          <div className="stack-40">
+            <div className="split" style={{ alignItems: "end" }} data-reveal>
+              <h2 className="heading-lg">
+                Built for places
+                <br />
+                where the phone
+                <br />
+                is the business
+              </h2>
+              <p className="subheading muted prose">
+                We work with a small number of UK practices at a time, because setting one
+                up properly takes us longer than selling one does.
+              </p>
+            </div>
+
+            <div className="grid-4">
+              {SECTORS.map((s) => (
+                <Tilt key={s.name} amount={6} className="tilt-cell" data-reveal>
+                  <article className="card stack-16" style={{ borderRadius: 24 }}>
+                    <h3 className="subheading-lg">{s.name}</h3>
+                    <p className="body-sm muted">{s.note}</p>
+                  </article>
+                </Tilt>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* A scroll-driven cube section once sat here. Its frames were derived
             from third-party footage without a written licence, so the section,
             the frames and the tooling were removed. The Blender source for an
@@ -359,36 +389,6 @@ export default function Home() {
                   <p className="body muted">{s.body}</p>
                   <span className="mono step-who">{s.who}</span>
                 </article>
-                </Tilt>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── WHO IT'S FOR ───────────────────────────────── */}
-        <section className="wrap section" id="who">
-          <div className="stack-40">
-            <div className="split" style={{ alignItems: "end" }} data-reveal>
-              <h2 className="heading-lg">
-                Built for places
-                <br />
-                where the phone
-                <br />
-                is the business
-              </h2>
-              <p className="subheading muted prose">
-                We work with a small number of UK practices at a time, because setting one
-                up properly takes us longer than selling one does.
-              </p>
-            </div>
-
-            <div className="grid-4">
-              {SECTORS.map((s) => (
-                <Tilt key={s.name} amount={6} className="tilt-cell" data-reveal>
-                  <article className="card stack-16" style={{ borderRadius: 24 }}>
-                    <h3 className="subheading-lg">{s.name}</h3>
-                    <p className="body-sm muted">{s.note}</p>
-                  </article>
                 </Tilt>
               ))}
             </div>
