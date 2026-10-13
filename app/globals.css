@@ -838,12 +838,17 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
   width: 100%;
   height: auto;
   display: block;
-  /* Chrome can draw a 1px dark seam along a video's edge while the page is
-     smooth-scrolled (the frame lands on half pixels). The outer edges of the
-     loop are plain background, so trim 2px off every side and back the box
-     with the page colour: nothing of the object is lost and no seam can show. */
-  clip-path: inset(2px);
   background: var(--bg-page);
+}
+/* Chrome on Windows hands an opaque video to a hardware overlay plane: it cuts
+   a hole in the page and shows the video through it from behind. While the
+   page scrolls, the hole and the overlay can be a frame apart, and the gap
+   flickers as a black line along the video's bottom edge (screenshots never
+   catch it). A video that is not fully opaque is not eligible for the overlay,
+   so it is drawn with the page and moves with it. 0.99 against the matching
+   page colour is invisible. */
+.hero-video {
+  opacity: 0.99;
 }
 /* There is deliberately NO mask on the video. An edge feather was here as
    insurance against a browser's video pipeline decoding the baked background
