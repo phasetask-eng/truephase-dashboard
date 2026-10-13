@@ -1,4 +1,6 @@
+import { after } from "next/server";
 import { BOOKING_ENGINE } from "../../../_components/booking-api";
+import { refreshSlots } from "../../../_components/booking-slots";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +31,17 @@ export async function POST(request: Request) {
       signal: AbortSignal.timeout(25000),
     });
     const data = await res.json();
+    /* A time was booked: fetch a new list of free times once
+       the visitor has their answer, so the next visitor sees it gone. */
+    if (data?.ok) {
+      after(async () => {
+        try {
+          await refreshSlots();
+        } catch {
+          /* the next refresh will catch up */
+        }
+      });
+    }
     return Response.json(data, { status: res.status, headers: { "Cache-Control": "no-store" } });
   } catch {
     return Response.json(
