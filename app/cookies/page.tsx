@@ -6,11 +6,11 @@ import { CONTACT_EMAIL } from "../_components/chrome";
 export const metadata: Metadata = {
   title: "Cookie policy — Truephase AI",
   description:
-    "This website sets no cookies and runs no analytics. What the client portal stores in your browser, and why no consent banner is needed.",
+    "This website sets no cookies. How we measure visits without them, what the client portal stores in your browser, and why no consent banner is needed.",
 };
 
-const UPDATED = "3 October 2026";
-const VERSION = "1.0";
+const UPDATED = "13 October 2026";
+const VERSION = "1.1";
 
 export default function Cookies() {
   return (
@@ -22,9 +22,9 @@ export default function Cookies() {
       currentPath="/cookies"
       inShort={[
         "This website sets no cookies at all.",
-        "There is no analytics, no advertising pixel and no third-party script on it.",
+        "We count visits and measure page speed with our host Vercel’s cookie-free tools. They do not identify you. There is no advertising pixel and no third-party script.",
         "The client portal stores one thing: the entry that keeps you signed in. It is strictly necessary, so no banner is required.",
-        "If we ever add measurement, we will update this page first and ask for consent where the law requires it.",
+        "If we ever add anything that needs your consent, we will update this page first and ask you.",
       ]}
       sections={[
         {
@@ -46,9 +46,12 @@ export default function Cookies() {
           body: (
             <>
               <p>
-                truephase.co.uk sets no cookies and stores nothing in your browser. It uses no
-                analytics, advertising or social-media scripts, and it loads no fonts, images or
-                video from anyone else’s servers. Our hosting provider, Vercel, serves the pages
+                truephase.co.uk sets no cookies. It uses no advertising or social-media scripts,
+                and it loads no fonts, images or video from anyone else’s servers. To see how the
+                site is used and how fast it loads, we use Vercel Web Analytics and Speed
+                Insights. They run from our own domain, set no cookies and record visits without
+                identifying you; our <Link href="/privacy">privacy notice</Link> lists what they
+                record. Our hosting provider, Vercel, serves the pages
                 and keeps standard server logs for security, as described in our{" "}
                 <Link href="/privacy">privacy notice</Link>.
               </p>
@@ -96,8 +99,9 @@ export default function Cookies() {
           body: (
             <p>
               A banner is required when a site wants to store or read something that is not
-              strictly necessary, such as analytics or advertising cookies. This website stores
-              nothing, and the portal stores only what it needs to keep you signed in. There is
+              strictly necessary, such as tracking or advertising cookies. This website sets no
+              cookies, its visit counting identifies no one, and the portal stores only what it
+              needs to keep you signed in. There is
               nothing to consent to, so we do not ask.
             </p>
           ),
