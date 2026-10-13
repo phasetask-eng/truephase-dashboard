@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Inter, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 /* Display — stands in for SuisseIntlCond 700. Single weight by design;
@@ -49,6 +51,8 @@ export default function RootLayout({
     <html lang="en-GB">
       <body className={`${anton.variable} ${inter.variable} ${jetbrains.variable}`}>
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
