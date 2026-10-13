@@ -199,6 +199,82 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── WHAT WE RUN ─────────────────────────────────── */}
+        <section className="wrap section" id="what">
+          <div className="stack-40">
+            <div className="split" style={{ alignItems: "end" }} data-reveal>
+              <h2 className="heading-lg">
+                Six things
+                <br />
+                we run
+                <br />
+                for you
+              </h2>
+              <p className="subheading muted prose">
+                Take one or take all six. Four run every day in the background; web and
+                video are projects — booked in, built, handed over. Most practices start
+                with the phone, because that is where the money is being lost, and add
+                the rest once they trust it.
+              </p>
+            </div>
+
+            <div className="grid-2 service-grid">
+              {SERVICES.map((s) => (
+                <Tilt key={s.slug} amount={5} className="tilt-cell" data-reveal>
+                  <Link
+                    href={`/services/${s.slug}`}
+                    className="card service-card"
+                    aria-labelledby={`svc-${s.slug}`}
+                  >
+                    <span className="tag">{s.tag}</span>
+                    <h3 id={`svc-${s.slug}`} className="heading-sm">
+                      {s.title}
+                    </h3>
+                    <p className="body muted">{s.body}</p>
+                    <span className="svc-more">
+                      {s.project ? "See the project" : "See how it works"}{" "}
+                      <span aria-hidden="true">→</span>
+                    </span>
+                  </Link>
+                </Tilt>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── WHO IT'S FOR ───────────────────────────────── */}
+        {/* A dark band: it sits straight after the white service cards, so the
+            contrast is what separates the two grids. */}
+        <section className="band-inverted" id="who" data-scrub>
+          <div className="wrap stack-40">
+            <div className="split" style={{ alignItems: "end" }} data-reveal>
+              <h2 className="heading-lg">
+                Built for places
+                <br />
+                where the phone
+                <br />
+                is the business
+              </h2>
+              <p className="subheading quiet prose">
+                We work with a small number of UK practices at a time, because setting one
+                up properly takes us longer than selling one does.
+              </p>
+            </div>
+
+            <div className="grid-4">
+              {SECTORS.map((s, i) => (
+                <Tilt key={s.name} amount={6} className="tilt-cell" data-reveal>
+                  <article className="sector-card stack-16">
+                    <span className="sector-index">{String(i + 1).padStart(2, "0")}</span>
+                    <h3 className="subheading-lg">{s.name}</h3>
+                    <p className="body-sm muted">{s.note}</p>
+                  </article>
+                </Tilt>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* A scroll-driven cube section once sat here. Its frames were derived
             from third-party footage without a written licence, so the section,
             the frames and the tooling were removed. The Blender source for an
@@ -293,49 +369,6 @@ export default function Home() {
           </ol>
         </section>
 
-        {/* ── WHAT RAN THAT DAY ──────────────────────────── */}
-        <section className="wrap section" id="what">
-          <div className="stack-40">
-            <div className="split" style={{ alignItems: "end" }} data-reveal>
-              <h2 className="heading-lg">
-                Six things
-                <br />
-                we run
-                <br />
-                for you
-              </h2>
-              <p className="subheading muted prose">
-                Take one or take all six. Four run every day in the background; web and
-                video are projects — booked in, built, handed over. Most practices start
-                with the phone, because that is where the money is being lost, and add
-                the rest once they trust it.
-              </p>
-            </div>
-
-            <div className="grid-2 service-grid">
-              {SERVICES.map((s) => (
-                <Tilt key={s.slug} amount={5} className="tilt-cell" data-reveal>
-                  <Link
-                    href={`/services/${s.slug}`}
-                    className="card service-card"
-                    aria-labelledby={`svc-${s.slug}`}
-                  >
-                    <span className="tag">{s.tag}</span>
-                    <h3 id={`svc-${s.slug}`} className="heading-sm">
-                      {s.title}
-                    </h3>
-                    <p className="body muted">{s.body}</p>
-                    <span className="svc-more">
-                      {s.project ? "See the project" : "See how it works"}{" "}
-                      <span aria-hidden="true">→</span>
-                    </span>
-                  </Link>
-                </Tilt>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── SETUP ──────────────────────────────────────── */}
         <section className="wrap section" id="how">
           <div className="stack-40">
@@ -359,36 +392,6 @@ export default function Home() {
                   <p className="body muted">{s.body}</p>
                   <span className="mono step-who">{s.who}</span>
                 </article>
-                </Tilt>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── WHO IT'S FOR ───────────────────────────────── */}
-        <section className="wrap section" id="who">
-          <div className="stack-40">
-            <div className="split" style={{ alignItems: "end" }} data-reveal>
-              <h2 className="heading-lg">
-                Built for places
-                <br />
-                where the phone
-                <br />
-                is the business
-              </h2>
-              <p className="subheading muted prose">
-                We work with a small number of UK practices at a time, because setting one
-                up properly takes us longer than selling one does.
-              </p>
-            </div>
-
-            <div className="grid-4">
-              {SECTORS.map((s) => (
-                <Tilt key={s.name} amount={6} className="tilt-cell" data-reveal>
-                  <article className="card stack-16" style={{ borderRadius: 24 }}>
-                    <h3 className="subheading-lg">{s.name}</h3>
-                    <p className="body-sm muted">{s.note}</p>
-                  </article>
                 </Tilt>
               ))}
             </div>
