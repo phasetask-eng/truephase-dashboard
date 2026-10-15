@@ -366,16 +366,6 @@ html:has(.tp-site) { background: var(--bg-page); }
 }
 .nav-actions .btn-ghost:hover { color: var(--fg); }
 
-/* On the light canvas voltage yellow as ink would be all but invisible, so
-   the accent moves behind the letter instead of into it. Same brand note,
-   and the letterform keeps full contrast. */
-.wm-t {
-  background: var(--color-voltage-yellow);
-  color: var(--ink-on-accent);
-  padding: 0 0.08em;
-  border-radius: 3px;
-}
-
 .wordmark {
   grid-column: 1;
   justify-self: start;
@@ -385,6 +375,16 @@ html:has(.tp-site) { background: var(--bg-page); }
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  /* gap between mark and name, as in the lockup (about 0.45 x mark height) */
+  gap: 0.4em;
+}
+/* The mark is a touch taller than the capitals, as in the master lockup. */
+.wm-mark {
+  height: 1.12em;
+  width: auto;
+  flex: none;
 }
 
 /* ── hero ───────────────────────────────────────────────── */
@@ -430,7 +430,9 @@ html:has(.tp-site) { background: var(--bg-page); }
      floating mid-page. -36px leaves ~43px of viewport beyond it: shifted, not
      clipped. */
   justify-self: end;
-  align-self: end;
+  /* Centred on the copy (was `end`, which dropped the object below the
+     headline so it read as sitting too low). */
+  align-self: center;
   /* THE WHOLE FRAME STAYS ON SCREEN.
      The loop throws blocks right out to the edges of its square: measured
      across all 252 frames, the painted content reaches 1.2% from the left
@@ -445,7 +447,8 @@ html:has(.tp-site) { background: var(--bg-page); }
   margin-right: calc(-1 * var(--edge));
   /* The base dissolves INSIDE the frame, so the overhang below the hero is a
      share of the frame rather than a fixed drop — it has to rescale with it. */
-  margin-bottom: calc(var(--media-w) * -0.2);
+  margin-top: calc(var(--media-w) * -0.06);
+  margin-bottom: calc(var(--media-w) * -0.14);
   position: relative;
   /* purely decorative, and it now overlaps the section beneath */
   pointer-events: none;
@@ -924,6 +927,8 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
        the object from 626px to 360px across a single pixel of viewport. */
     --media-w: min(760px, 92vw);
     margin-right: 0;
+    /* the desktop lift does not apply when the object sits under the copy */
+    margin-top: 0;
   }
   .hero-sub { max-width: 52ch; }
 }
