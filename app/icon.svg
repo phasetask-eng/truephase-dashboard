@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Truephase AI">
+  <!-- Truephase "split phase" mark (2b), exact master paths, on a Paper tile so it reads on light and dark tabs and in Google results. -->
+  <rect width="64" height="64" rx="14" fill="#efefed"/>
+  <path fill="#0a0a0a" d="M29 7A20 20 0 0 0 29 47Z"/>
+  <path fill="#0a0a0a" d="M35 17A20 20 0 0 1 35 57Z"/>
+  <path fill="#fff100" d="M41 24.351A14 14 0 0 1 41 49.649Z"/>
+</svg>
