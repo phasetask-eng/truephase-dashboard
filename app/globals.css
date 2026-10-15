@@ -1426,3 +1426,51 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
   .bk-day { min-width: 60px; min-height: 80px; padding: 8px 4px; }
   .bk-day-num { font-size: 26px; }
 }
+
+/* ── blog ───────────────────────────────────────────────── */
+
+/* Posts are written by the daily n8n workflow and stored in Supabase; these
+   rules only dress the Markdown it produces. The reading measure and leading
+   come from .legal-body; this adds the pieces a blog has and a legal page
+   does not: card links, the two call-to-action boxes and the FAQ list. */
+.blog-feature, .blog-card {
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+}
+.tp-site a.blog-feature, .tp-site a.blog-card { color: inherit; }
+.blog-feature:hover .heading-lg, .blog-card:hover .heading-sm { text-decoration: underline; text-underline-offset: 4px; }
+.blog-feature .mono, .blog-card .mono { color: var(--muted-on-page); }
+.blog-body h2 {
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  padding-top: 16px;
+}
+.blog-body h3 { padding-top: 8px; }
+.blog-body blockquote {
+  border-left: 3px solid var(--color-ash);
+  padding-left: 16px;
+  color: var(--color-slate);
+}
+.blog-body table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.blog-body th, .blog-body td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 12px 10px 0;
+  border-bottom: 1px solid var(--color-ash);
+}
+.blog-body th { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; font-weight: 400; color: var(--muted-on-page); }
+.blog-cta { padding: 32px; }
+.blog-cta .body { max-width: 56ch; }
+.card-inverted.blog-cta .body { color: var(--muted-on-inverted); }
+.blog-faq { padding: 16px 0; border-bottom: 1px solid var(--color-ash); }
+.blog-faq:last-child { border-bottom: 0; }
+.blog-faq dd { margin: 0; }
+@media (max-width: 680px) {
+  .blog-cta { padding: 24px 20px; }
+}
+.blog-faq-q { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; color: var(--fg); }
+.card-inverted.blog-cta .btn-ghost { color: var(--on-fg); border-color: var(--on-fg); }
+.card-inverted.blog-cta .btn-ghost:hover { background: rgba(255,255,255,.08); }
