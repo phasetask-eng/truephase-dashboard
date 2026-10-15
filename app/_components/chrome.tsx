@@ -6,6 +6,7 @@ const NAV = [
   { href: "/#how", label: "How it works" },
   { href: "/#who", label: "Who it’s for" },
   { href: "/#questions", label: "Questions" },
+  { href: "/blog", label: "Blog" },
 ];
 
 /* The client portal is its own application, not a route in this site, so this
@@ -102,6 +103,7 @@ export function SiteFooter() {
                 <li><Link href="/#talk">Contact</Link></li>
                 <li><Link href="/#who">Who it’s for</Link></li>
                 <li><Link href="/#questions">Questions</Link></li>
+                <li><Link href="/blog">Blog</Link></li>
               </ul>
             </div>
             <div className="stack-8 footer-group">
