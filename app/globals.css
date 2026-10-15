@@ -430,7 +430,9 @@ html:has(.tp-site) { background: var(--bg-page); }
      floating mid-page. -36px leaves ~43px of viewport beyond it: shifted, not
      clipped. */
   justify-self: end;
-  align-self: end;
+  /* Centred on the copy (was `end`, which dropped the object below the
+     headline so it read as sitting too low). */
+  align-self: center;
   /* THE WHOLE FRAME STAYS ON SCREEN.
      The loop throws blocks right out to the edges of its square: measured
      across all 252 frames, the painted content reaches 1.2% from the left
@@ -445,7 +447,8 @@ html:has(.tp-site) { background: var(--bg-page); }
   margin-right: calc(-1 * var(--edge));
   /* The base dissolves INSIDE the frame, so the overhang below the hero is a
      share of the frame rather than a fixed drop — it has to rescale with it. */
-  margin-bottom: calc(var(--media-w) * -0.2);
+  margin-top: calc(var(--media-w) * -0.06);
+  margin-bottom: calc(var(--media-w) * -0.14);
   position: relative;
   /* purely decorative, and it now overlaps the section beneath */
   pointer-events: none;
@@ -924,6 +927,8 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
        the object from 626px to 360px across a single pixel of viewport. */
     --media-w: min(760px, 92vw);
     margin-right: 0;
+    /* the desktop lift does not apply when the object sits under the copy */
+    margin-top: 0;
   }
   .hero-sub { max-width: 52ch; }
 }
