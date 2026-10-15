@@ -48,7 +48,7 @@ export function SiteNav() {
     <header className="nav-bar">
       <div className="nav-inner">
         <Link href="/" className="wordmark" aria-label="Truephase AI — home">
-          <span className="wm-t">T</span>ruephase AI
+          <Logo />
         </Link>
 
         <nav className="nav-pill" aria-label="Primary">
@@ -74,13 +74,40 @@ export function SiteNav() {
   );
 }
 
+/* Truephase "split phase" logo (direction 2b, Claude Design, Oct 2026).
+   The mark paths are copied exactly from the handoff's master files; the
+   viewBox is cropped tight to them so the mark lines up with the lettering.
+   The name is set in Anton, the same face the outlined lockup uses. */
+function Logo({ tone = "paper" }: { tone?: "paper" | "carbon" }) {
+  const onCarbon = tone === "carbon";
+  return (
+    <>
+      <svg className="wm-mark" viewBox="9 7 46 50" aria-hidden="true" focusable="false">
+        {onCarbon ? (
+          <>
+            <path fill="#efefed" d="M29 7A20 20 0 0 0 29 47Z" />
+            <path fill="#fff100" d="M35 17A20 20 0 0 1 35 57Z" />
+          </>
+        ) : (
+          <>
+            <path fill="#0a0a0a" d="M29 7A20 20 0 0 0 29 47Z" />
+            <path fill="#0a0a0a" d="M35 17A20 20 0 0 1 35 57Z" />
+            <path fill="#fff100" d="M41 24.351A14 14 0 0 1 41 49.649Z" />
+          </>
+        )}
+      </svg>
+      <span className="wm-name">Truephase AI</span>
+    </>
+  );
+}
+
 export function SiteFooter() {
   return (
     <footer className="footer">
       <div className="wrap stack-40">
         <div className="split" style={{ gap: 40 }}>
           <div className="stack-16">
-            <span className="wordmark"><span className="wm-t">T</span>ruephase AI</span>
+            <span className="wordmark"><Logo tone="carbon" /></span>
             <p className="body-sm quiet prose">
               Automation and AI voice agents for UK clinics, care homes and salons. A UK
               company; where your data is processed is set out in our privacy notice.

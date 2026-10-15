@@ -366,16 +366,6 @@ html:has(.tp-site) { background: var(--bg-page); }
 }
 .nav-actions .btn-ghost:hover { color: var(--fg); }
 
-/* On the light canvas voltage yellow as ink would be all but invisible, so
-   the accent moves behind the letter instead of into it. Same brand note,
-   and the letterform keeps full contrast. */
-.wm-t {
-  background: var(--color-voltage-yellow);
-  color: var(--ink-on-accent);
-  padding: 0 0.08em;
-  border-radius: 3px;
-}
-
 .wordmark {
   grid-column: 1;
   justify-self: start;
@@ -385,6 +375,16 @@ html:has(.tp-site) { background: var(--bg-page); }
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  /* gap between mark and name, as in the lockup (about 0.45 x mark height) */
+  gap: 0.4em;
+}
+/* The mark is a touch taller than the capitals, as in the master lockup. */
+.wm-mark {
+  height: 1.12em;
+  width: auto;
+  flex: none;
 }
 
 /* ── hero ───────────────────────────────────────────────── */
