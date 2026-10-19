@@ -1053,6 +1053,13 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
    spills out of its own wrapper by the height of the "more" cue. Making the
    chain flex lets the card state its height honestly and still stretch to the
    grid row, so cards in a row share their top and bottom edges. */
+/* Three service cards a row on wide screens, two on tablets, one on phones. */
+@media (max-width: 1000px) {
+  .service-grid.grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .service-grid.grid-3 { grid-template-columns: minmax(0, 1fr); }
+}
 .service-grid .tilt-cell { display: flex; }
 .service-grid .tilt-cell > .tilt-target {
   display: flex;
