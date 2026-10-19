@@ -30,6 +30,9 @@ export type Service = {
   limits?: string[];
   /** true for the two that are projects rather than daily automations */
   project?: boolean;
+  /** A looping animation shown on the home-page card in place of the body
+      text (the text stays in the page for screen readers and search). */
+  cardMedia?: { gif: string; label: string };
 };
 
 export const SERVICES: Service[] = [
@@ -37,6 +40,11 @@ export const SERVICES: Service[] = [
     slug: "ai-receptionist",
     tag: "Voice",
     title: "AI Receptionist",
+    cardMedia: {
+      gif: "/services/ai-receptionist/image.gif",
+      label:
+        "Animation: a caller phones to book an appointment, the AI receptionist checks the diary and confirms the booking.",
+    },
     body: "Answers straight away, day or night. Understands what they want, takes the details, and books them into your diary while they are still on the phone.",
     lede: "A voice that answers the calls you can\u2019t and finishes the job \u2014 the booking is in your diary before they hang up.",
     problem:
@@ -121,6 +129,11 @@ export const SERVICES: Service[] = [
     slug: "ai-chatbot",
     tag: "Chat",
     title: "AI Chatbot",
+    cardMedia: {
+      gif: "/services/ai-chatbot/image.gif",
+      label:
+        "Animation: a customer messages asking for a haircut tomorrow afternoon, the AI chatbot offers two times and books the one she picks.",
+    },
     body: "Website, WhatsApp, Instagram and Facebook answered from one inbox, in seconds, at any hour \u2014 booked into your diary, and handed to a person the moment it should be.",
     lede: "Four inboxes, one brain. Every typed enquiry answered in seconds and written down, wherever it came from.",
     problem:
