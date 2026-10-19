@@ -959,16 +959,23 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
    it pure white, the same as the card, so no box shows around the clip. */
 .svc-media {
   width: 100%;
-  max-width: 220px;
-  margin-inline: auto;
-  aspect-ratio: 1 / 1;
+  padding: 20px;
+  border-radius: 24px;
+  background: #f4f4f1;
+  border: 1px solid var(--color-ash);
 }
+/* The GIFs have a white background. Multiply blends that white into the
+   panel colour so the animation sits straight on the light panel. */
 .svc-media-img {
   display: block;
   width: 100%;
-  height: 100%;
+  max-width: 220px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
   object-fit: contain;
   filter: brightness(1.03);
+  mix-blend-mode: multiply;
 }
 /* Cards with an animation: tag, then the animation, then the title and the
    link, both centred. Visual order only; the title stays first in the markup. */
