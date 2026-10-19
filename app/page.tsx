@@ -223,7 +223,7 @@ export default function Home() {
                 <Tilt key={s.slug} amount={5} className="tilt-cell" data-reveal>
                   <Link
                     href={`/services/${s.slug}`}
-                    className="card service-card"
+                    className={`card service-card${s.cardMedia ? " service-card-media" : ""}`}
                     aria-labelledby={`svc-${s.slug}`}
                   >
                     <span className="tag">{s.tag}</span>
