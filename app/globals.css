@@ -970,6 +970,11 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
   object-fit: contain;
   filter: brightness(1.03);
 }
+/* Cards with an animation: tag, then the animation, then the title and the
+   link, both centred. Visual order only; the title stays first in the markup. */
+.service-card-media .svc-media { order: 1; }
+.service-card-media h3 { order: 2; text-align: center; }
+.service-card-media .svc-more { order: 3; align-self: center; }
 /* pushed to the bottom so the cue sits on the same line across a row of cards
    whose copy runs to different lengths */
 .svc-more {
