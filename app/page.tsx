@@ -230,7 +230,25 @@ export default function Home() {
                     <h3 id={`svc-${s.slug}`} className="heading-sm">
                       {s.title}
                     </h3>
-                    <p className="body muted">{s.body}</p>
+                    {s.cardMedia ? (
+                      <>
+                        <div className="svc-media" role="img" aria-label={s.cardMedia.label}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            className="svc-media-img"
+                            src={s.cardMedia.gif}
+                            alt=""
+                            width={864}
+                            height={864}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                        <p className="sr-only">{s.body}</p>
+                      </>
+                    ) : (
+                      <p className="body muted">{s.body}</p>
+                    )}
                     <span className="svc-more">
                       {s.project ? "See the project" : "See how it works"}{" "}
                       <span aria-hidden="true">→</span>
