@@ -959,7 +959,7 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
    it pure white, the same as the card, so no box shows around the clip. */
 .svc-media {
   width: 100%;
-  max-width: 440px;
+  max-width: 300px;
   margin-inline: auto;
   aspect-ratio: 1 / 1;
 }
