@@ -218,7 +218,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid-2 service-grid">
+            <div className="grid-3 service-grid">
               {SERVICES.map((s) => (
                 <Tilt key={s.slug} amount={5} className="tilt-cell" data-reveal>
                   <Link
