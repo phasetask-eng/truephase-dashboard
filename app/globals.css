@@ -959,7 +959,7 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
    it pure white, the same as the card, so no box shows around the clip. */
 .svc-media {
   width: 100%;
-  padding: 12px;
+  padding: 20px;
   border-radius: 24px;
   background: #f4f4f1;
   border: 1px solid var(--color-ash);
@@ -969,9 +969,10 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
 .svc-media-img {
   display: block;
   width: 100%;
+  max-width: 220px;
   height: auto;
-  /* the GIFs are trimmed to 764x592 so the drawing fills the panel */
-  aspect-ratio: 764 / 592;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
   object-fit: contain;
   filter: brightness(1.03);
   mix-blend-mode: multiply;
