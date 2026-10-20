@@ -227,6 +227,11 @@ export const SERVICES: Service[] = [
     slug: "review-management",
     tag: "Reputation",
     title: "Review Management",
+    cardMedia: {
+      gif: "/services/review-management/image.gif",
+      label:
+        "Animation: after a visit, Sarah gives five stars and says she loved it; the AI thanks her and the review is replied to.",
+    },
     body: "Sends the request at the right moment, tracks who opened it, drafts a reply to every review that lands.",
     lede: "Asking every client, at the moment they are most likely to answer, instead of whenever someone remembers.",
     problem:
@@ -298,6 +303,11 @@ export const SERVICES: Service[] = [
     slug: "task-automation",
     tag: "Back office",
     title: "Task Automation",
+    cardMedia: {
+      gif: "/services/task-automation/image.gif",
+      label:
+        "Animation: a to-do list of chasing an invoice, filing notes, follow-ups and a daily report is ticked off one by one by the AI.",
+    },
     body: "The repetitive work behind the front desk — chasing, filing, following up, writing the day up — handled without you.",
     lede: "The admin that fills the gaps between clients, done in the background instead of at the end of the day.",
     problem:
@@ -349,6 +359,11 @@ export const SERVICES: Service[] = [
     slug: "web-design-brand-identity",
     tag: "Brand",
     title: "Web design & brand identity",
+    cardMedia: {
+      gif: "/services/web-design-brand-identity/image.gif",
+      label:
+        "Animation: a new website builds piece by piece, a visitor clicks Book now and the booking comes through.",
+    },
     body: "We design and build the site people land on after they hang up, and the brand it carries — worth having when the calls are being answered but the website is quietly undoing the work.",
     project: true,
     lede: "The site people check before they ring, and the one they land on afterwards to make sure they were right.",
@@ -417,6 +432,11 @@ export const SERVICES: Service[] = [
     slug: "ai-video-for-social",
     tag: "Social",
     title: "AI video for social",
+    cardMedia: {
+      gif: "/services/ai-video-for-social/image.gif",
+      label:
+        "Animation: clips become a short reel on a phone, it is posted and the likes and hearts start coming in.",
+    },
     body: "Short-form video for your socials, made from your own footage and brand. Reels that keep you visible between appointments, without booking a videographer every month.",
     project: true,
     lede: "A steady run of short video from footage you already have, so the feed keeps working when you are busy.",
