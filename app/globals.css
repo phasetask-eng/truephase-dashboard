@@ -1509,3 +1509,119 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
 .blog-faq-q { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; color: var(--fg); }
 .card-inverted.blog-cta .btn-ghost { color: var(--on-fg); border-color: var(--on-fg); }
 .card-inverted.blog-cta .btn-ghost:hover { background: rgba(255,255,255,.08); }
+
+/* ── Code-drawn service demos (app/_components/ServiceDemos.tsx) ──────────
+   Sit inside .svc-media in place of a GIF: same panel, same height as the
+   GIF cards (220px), built from the site's own type and colours. */
+.sd {
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+.sd-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.sd-call { display: inline-flex; align-items: center; gap: 8px; }
+.sd-call .mono { font-size: 11px; }
+.sd-ring {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-smoke);
+  transition: background 0.3s ease;
+}
+.sd-ring.is-live { background: var(--fg); }
+.sd-ring.is-live::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--fg);
+  animation: sdRing 1.2s ease-out infinite;
+}
+@keyframes sdRing {
+  from { transform: scale(0.6); opacity: 0.9; }
+  to { transform: scale(1.8); opacity: 0; }
+}
+.sd-chip-yellow {
+  font-size: 10px;
+  background: var(--color-voltage-yellow);
+  color: var(--ink-on-accent);
+  border-radius: 64px;
+  padding: 4px 8px;
+}
+.sd-thread { display: flex; flex-direction: column; gap: 6px; }
+.sd-msg,
+.sd-result,
+.sd-foot {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.sd-msg.is-in,
+.sd-result.is-in,
+.sd-foot.is-in { opacity: 1; transform: none; }
+.sd-msg {
+  margin: 0;
+  max-width: 84%;
+  padding: 7px 11px;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.sd-them {
+  align-self: flex-start;
+  background: var(--bg-card);
+  border: 1px solid var(--color-ash);
+  border-bottom-left-radius: 4px;
+  color: var(--fg);
+}
+.sd-us {
+  align-self: flex-end;
+  background: var(--color-graphite);
+  border-bottom-right-radius: 4px;
+  color: var(--on-fg);
+}
+.sd-result {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--color-mint-chip);
+  color: var(--ink-on-accent);
+}
+.sd-result .mono { font-size: 12px; font-weight: 600; }
+.sd-tick {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--fg);
+  flex: none;
+}
+.sd-tick::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 3px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--color-mint-chip);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.sd-foot { margin: -4px 0 0; font-size: 10px; color: var(--muted-on-page); }
+@media (prefers-reduced-motion: reduce) {
+  .sd-msg, .sd-result, .sd-foot { transition: none; }
+  .sd-ring.is-live::after { animation: none; }
+}
