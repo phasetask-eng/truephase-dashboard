@@ -242,13 +242,14 @@ export default function Home() {
                             className="svc-media-img"
                             src={s.cardMedia.gif}
                             alt=""
-                            width={864}
-                            height={864}
+                            width={764}
+                            height={592}
                             loading="lazy"
                             decoding="async"
                           />
                           )}
                         </div>
+                        <p className="body-sm muted svc-line">{s.cardMedia.line}</p>
                         <p className="sr-only">{s.body}</p>
                       </>
                     ) : (
