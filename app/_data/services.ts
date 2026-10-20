@@ -131,7 +131,7 @@ export const SERVICES: Service[] = [
     tag: "Chat",
     title: "AI Chatbot",
     cardMedia: {
-      line: "Website, WhatsApp and Instagram, answered in seconds.",
+      line: "Replies on your website, WhatsApp and socials.",
       gif: "/services/ai-chatbot/image.gif",
       label:
         "Animation: messages arrive from the website, WhatsApp and Instagram into one inbox, and each one is answered within seconds.",
@@ -364,7 +364,7 @@ export const SERVICES: Service[] = [
     tag: "Brand",
     title: "Web design & brand identity",
     cardMedia: {
-      line: "A brand and website that turn visitors into bookings.",
+      line: "A brand and website that bring in new bookings.",
       gif: "/services/web-design-brand-identity/image.gif",
       label:
         "Animation: a brand kit of logo, colours and font appears, a website is built from it, and a visitor clicks Book now and is booked.",
@@ -438,7 +438,7 @@ export const SERVICES: Service[] = [
     tag: "Social",
     title: "AI video for social",
     cardMedia: {
-      line: "Short videos for your socials, made from your own clips.",
+      line: "Short social videos, edited from your own clips.",
       gif: "/services/ai-video-for-social/image.gif",
       label:
         "Animation: three raw clips go into a phone, are edited into a captioned reel, and the likes and comments start coming in.",
