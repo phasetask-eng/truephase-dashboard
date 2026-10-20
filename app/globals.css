@@ -982,14 +982,6 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
 .service-card-media .svc-media { order: 1; }
 .service-card-media h3 { order: 2; text-align: center; }
 .service-card-media .svc-more { order: 3; align-self: center; }
-/* Trial: all six service cards dark. The light animation panels stay light,
-   so each animation reads as a bright window in a black card. */
-.service-grid .service-card {
-  background: var(--fg);
-  color: var(--on-fg);
-}
-.service-grid .service-card .svc-media { border-color: transparent; }
-.service-grid .service-card:focus-visible { outline-color: var(--color-mint-chip); }
 /* pushed to the bottom so the cue sits on the same line across a row of cards
    whose copy runs to different lengths */
 .svc-more {
