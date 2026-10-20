@@ -32,7 +32,7 @@ export type Service = {
   project?: boolean;
   /** A looping animation shown on the home-page card in place of the body
       text (the text stays in the page for screen readers and search). */
-  cardMedia?: { gif: string; label: string };
+  cardMedia?: { gif?: string; demo?: "receptionist"; label: string };
 };
 
 export const SERVICES: Service[] = [
@@ -41,9 +41,9 @@ export const SERVICES: Service[] = [
     tag: "Voice",
     title: "AI Receptionist",
     cardMedia: {
-      gif: "/services/ai-receptionist/image.gif",
+      demo: "receptionist",
       label:
-        "Animation: a caller phones to book an appointment, the AI receptionist checks the diary and confirms the booking.",
+        "Animation: an after-hours call. The caller asks for a scalp check tomorrow, the AI offers 10:00 or 14:15, the caller picks 10:00, and it is booked with a text confirmation sent.",
     },
     body: "Answers straight away, day or night. Understands what they want, takes the details, and books them into your diary while they are still on the phone.",
     lede: "A voice that answers the calls you can\u2019t and finishes the job \u2014 the booking is in your diary before they hang up.",
