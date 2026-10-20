@@ -980,8 +980,15 @@ html:not(.motion-ready) .record-line { opacity: 1; transform: none; }
    link, left-aligned like the rest of the card. Visual order only; the title
    stays first in the markup. */
 .service-card-media .svc-media { order: 1; }
-.service-card-media h3 { order: 2; }
-.service-card-media .svc-line { order: 3; margin: -8px 0 0; }
+/* The card is a size container so the title can scale with the card's width.
+   6.3% of the card's inner width fits the longest title ("Web design & brand
+   identity") on one line; every card uses the same rule, so all six titles
+   stay the same size and never exceed the normal 28px. */
+.service-card-media { container-type: inline-size; }
+.service-card-media h3 { order: 2; font-size: min(28px, 6.3cqi); white-space: nowrap; }
+/* The six lines are written to almost the same width (307-313px at 14px), so
+   they all wrap at the same card width and stay the same number of lines. */
+.service-card-media .svc-line { order: 3; margin: -8px 0 0; text-wrap: balance; }
 .service-card-media .svc-more { order: 4; }
 /* pushed to the bottom so the cue sits on the same line across a row of cards
    whose copy runs to different lengths */
