@@ -4,6 +4,7 @@ import { Transcript } from "./_components/motion";
 import { MotionProvider, HeroSequence, HoverLoop, Tilt, Magnetic } from "./_components/motion/index";
 import { HeroLoop } from "./_components/motion/HeroLoop";
 import { SERVICES } from "./_data/services";
+import { ReceptionistDemo } from "./_components/ServiceDemos";
 
 /* ── content ─────────────────────────────────────────────── */
 
@@ -233,7 +234,10 @@ export default function Home() {
                     {s.cardMedia ? (
                       <>
                         <div className="svc-media" role="img" aria-label={s.cardMedia.label}>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          {s.cardMedia.demo === "receptionist" ? (
+                            <ReceptionistDemo />
+                          ) : (
+                          /* eslint-disable-next-line @next/next/no-img-element */
                           <img
                             className="svc-media-img"
                             src={s.cardMedia.gif}
@@ -243,6 +247,7 @@ export default function Home() {
                             loading="lazy"
                             decoding="async"
                           />
+                          )}
                         </div>
                         <p className="sr-only">{s.body}</p>
                       </>
