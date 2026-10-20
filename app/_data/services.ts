@@ -32,7 +32,7 @@ export type Service = {
   project?: boolean;
   /** A looping animation shown on the home-page card in place of the body
       text (the text stays in the page for screen readers and search). */
-  cardMedia?: { gif?: string; demo?: "receptionist"; label: string };
+  cardMedia?: { gif?: string; demo?: "receptionist"; label: string; /** one short line shown under the title */ line: string };
 };
 
 export const SERVICES: Service[] = [
@@ -41,6 +41,7 @@ export const SERVICES: Service[] = [
     tag: "Voice",
     title: "AI Receptionist",
     cardMedia: {
+      line: "Answers every call and books it in, day or night.",
       gif: "/services/ai-receptionist/image.gif",
       label:
         "Animation: a caller phones to book a scalp analysis for tomorrow at 10am, the AI receptionist checks the diary and confirms the booking.",
@@ -130,6 +131,7 @@ export const SERVICES: Service[] = [
     tag: "Chat",
     title: "AI Chatbot",
     cardMedia: {
+      line: "Website, WhatsApp and Instagram, answered in seconds.",
       gif: "/services/ai-chatbot/image.gif",
       label:
         "Animation: messages arrive from the website, WhatsApp and Instagram into one inbox, and each one is answered within seconds.",
@@ -228,6 +230,7 @@ export const SERVICES: Service[] = [
     tag: "Reputation",
     title: "Review Management",
     cardMedia: {
+      line: "More five-star reviews, and a reply to every one.",
       gif: "/services/review-management/image.gif",
       label:
         "Animation: after a visit, Sarah gives five stars and says she loved it; the AI thanks her and the review is replied to.",
@@ -304,6 +307,7 @@ export const SERVICES: Service[] = [
     tag: "Back office",
     title: "Task Automation",
     cardMedia: {
+      line: "The chasing, filing and follow-ups, done for you.",
       gif: "/services/task-automation/image.gif",
       label:
         "Animation: a to-do list of chasing an invoice, filing notes, follow-ups and a daily report is ticked off one by one by the AI.",
@@ -360,6 +364,7 @@ export const SERVICES: Service[] = [
     tag: "Brand",
     title: "Web design & brand identity",
     cardMedia: {
+      line: "A brand and website that turn visitors into bookings.",
       gif: "/services/web-design-brand-identity/image.gif",
       label:
         "Animation: a brand kit of logo, colours and font appears, a website is built from it, and a visitor clicks Book now and is booked.",
@@ -433,6 +438,7 @@ export const SERVICES: Service[] = [
     tag: "Social",
     title: "AI video for social",
     cardMedia: {
+      line: "Short videos for your socials, made from your own clips.",
       gif: "/services/ai-video-for-social/image.gif",
       label:
         "Animation: three raw clips go into a phone, are edited into a captioned reel, and the likes and comments start coming in.",
