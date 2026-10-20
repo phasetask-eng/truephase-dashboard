@@ -132,7 +132,7 @@ export const SERVICES: Service[] = [
     cardMedia: {
       gif: "/services/ai-chatbot/image.gif",
       label:
-        "Animation: a customer messages asking for a haircut tomorrow afternoon, the AI chatbot offers two times and books the one she picks.",
+        "Animation: messages arrive from the website, WhatsApp and Instagram into one inbox, and each one is answered within seconds.",
     },
     body: "Website, WhatsApp, Instagram and Facebook answered from one inbox, in seconds, at any hour \u2014 booked into your diary, and handed to a person the moment it should be.",
     lede: "Four inboxes, one brain. Every typed enquiry answered in seconds and written down, wherever it came from.",
@@ -362,7 +362,7 @@ export const SERVICES: Service[] = [
     cardMedia: {
       gif: "/services/web-design-brand-identity/image.gif",
       label:
-        "Animation: a new website builds piece by piece, a visitor clicks Book now and the booking comes through.",
+        "Animation: a brand kit of logo, colours and font appears, a website is built from it, and a visitor clicks Book now and is booked.",
     },
     body: "We design and build the site people land on after they hang up, and the brand it carries — worth having when the calls are being answered but the website is quietly undoing the work.",
     project: true,
@@ -435,7 +435,7 @@ export const SERVICES: Service[] = [
     cardMedia: {
       gif: "/services/ai-video-for-social/image.gif",
       label:
-        "Animation: clips become a short reel on a phone, it is posted and the likes and hearts start coming in.",
+        "Animation: three raw clips go into a phone, are edited into a captioned reel, and the likes and comments start coming in.",
     },
     body: "Short-form video for your socials, made from your own footage and brand. Reels that keep you visible between appointments, without booking a videographer every month.",
     project: true,
