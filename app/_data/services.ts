@@ -30,11 +30,21 @@ export type Service = {
   limits?: string[];
   /** true for the two that are projects rather than daily automations */
   project?: boolean;
+  /** The looping animation on the home page card. `base` is the file path
+      without an extension (see TileLoop); `label` is its text alternative.
+      `inlineCue` is true when the "See how it works" cue is drawn inside the
+      video, so the card does not print it a second time. */
+  video?: { base: string; label: string; inlineCue?: boolean };
 };
 
 export const SERVICES: Service[] = [
   {
     slug: "ai-receptionist",
+    video: {
+      base: "/tiles/ai-receptionist",
+      label:
+        "AI Receptionist. Making sure every customer gets attended day or night. A robot answers the phone, checks the calendar, confirms the booking and takes payment.",
+    },
     tag: "Voice",
     title: "AI Receptionist",
     body: "Answers straight away, day or night. Understands what they want, takes the details, and books them into your diary while they are still on the phone.",
@@ -119,6 +129,12 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "ai-chatbot",
+    video: {
+      base: "/tiles/ai-chatbot",
+      label:
+        "AI Chatbot. A robot picks up the TikTok, Instagram and Facebook phones in turn, chats with a customer, books them in, confirms payment, then smiles.",
+      inlineCue: true,
+    },
     tag: "Chat",
     title: "AI Chatbot",
     body: "Website, WhatsApp, Instagram and Facebook answered from one inbox, in seconds, at any hour \u2014 booked into your diary, and handed to a person the moment it should be.",
@@ -212,6 +228,11 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "review-management",
+    video: {
+      base: "/tiles/review-management",
+      label:
+        "Review Management. A robot pushes a business\u2019s star rating from 3.0 up to 4.9 while the review count keeps rising, then replies to John\u2019s and Lorraine\u2019s reviews with short, personal messages.",
+    },
     tag: "Reputation",
     title: "Review Management",
     body: "Sends the request at the right moment, tracks who opened it, drafts a reply to every review that lands.",
@@ -283,6 +304,11 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "task-automation",
+    video: {
+      base: "/tiles/task-automation",
+      label:
+        "Task Automation. A robot flies in carrying a pile of paper, sits at a laptop, and soap bubbles float up and pop one by one: an application processed, a spreadsheet emailed, a report completed, pending responses done. The pile shrinks into a single folder, and the robot closes the laptop and flies off with it.",
+    },
     tag: "Back office",
     title: "Task Automation",
     body: "The repetitive work behind the front desk — chasing, filing, following up, writing the day up — handled without you.",
@@ -334,6 +360,11 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "web-design-brand-identity",
+    video: {
+      base: "/tiles/web-design",
+      label:
+        "Web design and brand identity. A robot flies in with a paint roller and rolls a clean new website over a cluttered grey one, flicks three brand colours onto the page, drops the logo into place, and the same site appears on a phone before a LIVE badge pops up.",
+    },
     tag: "Brand",
     title: "Web design & brand identity",
     body: "We design and build the site people land on after they hang up, and the brand it carries — worth having when the calls are being answered but the website is quietly undoing the work.",
@@ -402,6 +433,11 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "ai-video-for-social",
+    video: {
+      base: "/tiles/ai-video",
+      label:
+        "AI Video for businesses. On a white studio set, a robot claps the clapperboard, swings the studio light onto the title, switches the camera to record and pans it across the set, then picks the board up to go again.",
+    },
     tag: "Social",
     title: "AI video for social",
     body: "Short-form video for your socials, made from your own footage and brand. Reels that keep you visible between appointments, without booking a videographer every month.",
