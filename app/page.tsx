@@ -3,6 +3,7 @@ import { SiteNav, SiteFooter, CONTACT_EMAIL, PORTAL_URL, BOOKING_URL } from "./_
 import { Transcript } from "./_components/motion";
 import { MotionProvider, HeroSequence, HoverLoop, Tilt, Magnetic } from "./_components/motion/index";
 import { HeroLoop } from "./_components/motion/HeroLoop";
+import { TileLoop } from "./_components/motion/TileLoop";
 import { SERVICES } from "./_data/services";
 
 /* ── content ─────────────────────────────────────────────── */
@@ -223,18 +224,24 @@ export default function Home() {
                 <Tilt key={s.slug} amount={5} className="tilt-cell" data-reveal>
                   <Link
                     href={`/services/${s.slug}`}
-                    className="card service-card"
+                    className={`card service-card${s.video ? " service-card-video" : ""}`}
                     aria-labelledby={`svc-${s.slug}`}
                   >
                     <span className="tag">{s.tag}</span>
-                    <h3 id={`svc-${s.slug}`} className="heading-sm">
+                    {/* The animation draws the title (and sometimes the cue) in
+                        its own frame, so on a card with one the printed copy is
+                        kept for screen readers only. */}
+                    {s.video && <TileLoop base={s.video.base} label={s.video.label} />}
+                    <h3 id={`svc-${s.slug}`} className={s.video ? "sr-only" : "heading-sm"}>
                       {s.title}
                     </h3>
-                    <p className="body muted">{s.body}</p>
-                    <span className="svc-more">
-                      {s.project ? "See the project" : "See how it works"}{" "}
-                      <span aria-hidden="true">→</span>
-                    </span>
+                    <p className={s.video ? "sr-only" : "body muted"}>{s.body}</p>
+                    {!s.video?.inlineCue && (
+                      <span className="svc-more">
+                        {s.project ? "See the project" : "See how it works"}{" "}
+                        <span aria-hidden="true">→</span>
+                      </span>
+                    )}
                   </Link>
                 </Tilt>
               ))}
