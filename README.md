@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Truephase AI — website
 
-## Getting Started
+The public site at https://truephase.co.uk. Next.js 16 (App Router), React 19,
+GSAP and Lenis for motion, no backend, no cookies, no analytics.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+NEXT_PUBLIC_PORTAL_URL=https://truephase-portal-app.vercel.app npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Production builds fail on purpose if `NEXT_PUBLIC_PORTAL_URL` is unset, so a
+localhost link can never ship.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Where things are
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/page.tsx` — the home page; `app/_data/services.ts` — the six services
+  (cards and detail pages read from it).
+- `app/privacy`, `app/terms`, `app/cookies`, `app/accessibility` — legal
+  pages, built on `app/_components/legal-doc.tsx`. Each carries a version and
+  date; change both when the wording changes.
+- `app/_components/chrome.tsx` — nav, footer, `CONTACT_EMAIL` and the
+  `COMPANY` details the footer and legal pages print.
+- `next.config.ts` — security headers (CSP and friends).
+- `blender/` — the Blender scenes and pipelines that render the hero loop in
+  `public/`. Excluded from deployment by `.vercelignore`.
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+Vercel project `truephase-demo`, scope `truephases-projects`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx vercel@latest --prod --yes --scope truephases-projects --build-env NEXT_PUBLIC_PORTAL_URL=https://truephase-portal-app.vercel.app
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Rights
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `COPYRIGHT` and `THIRD-PARTY-NOTICES.md`.
