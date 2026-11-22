@@ -9,6 +9,10 @@ const NAV = [
   { href: "/blog", label: "Blog" },
 ];
 
+/* Truephase Notes is a separate product on its own host, so it is a plain
+   link out, like the client portal below, not a route in this site. */
+const NOTES_URL = "https://notes.truephase.co.uk/sign-in";
+
 /* The client portal is its own application, not a route in this site, so this
    is a real link out rather than a next/link route. Set NEXT_PUBLIC_PORTAL_URL
    to wherever it is hosted; it falls back to the local dev server, so the link
@@ -58,6 +62,9 @@ export function SiteNav() {
               <HoverLoop>{item.label}</HoverLoop>
             </Link>
           ))}
+          <a href={NOTES_URL}>
+            <HoverLoop>Truephase Notes</HoverLoop>
+          </a>
         </nav>
 
         <div className="nav-actions">
