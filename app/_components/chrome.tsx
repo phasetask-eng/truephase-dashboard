@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HoverLoop, Magnetic } from "./motion/index";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
   { href: "/#what", label: "What it does" },
@@ -68,6 +69,7 @@ export function SiteNav() {
         </nav>
 
         <div className="nav-actions">
+          <ThemeToggle />
           <a href={PORTAL_URL} className="btn btn-ghost">
             <HoverLoop>Client login</HoverLoop>
           </a>
@@ -98,8 +100,9 @@ function Logo({ tone = "paper" }: { tone?: "paper" | "carbon" }) {
           </>
         ) : (
           <>
-            <path fill="#0a0a0a" d="M29 7A20 20 0 0 0 29 47Z" />
-            <path fill="#0a0a0a" d="M35 17A20 20 0 0 1 35 57Z" />
+            {/* currentColor = --fg via .wm-mark, so the mark flips with the theme */}
+            <path fill="currentColor" d="M29 7A20 20 0 0 0 29 47Z" />
+            <path fill="currentColor" d="M35 17A20 20 0 0 1 35 57Z" />
             <path fill="#fff100" d="M41 24.351A14 14 0 0 1 41 49.649Z" />
           </>
         )}

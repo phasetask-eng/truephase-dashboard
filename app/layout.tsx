@@ -42,13 +42,22 @@ export const metadata: Metadata = {
   },
 };
 
+/* Saved choice wins; otherwise follow the operating system. Kept in sync
+   with THEME_KEY in app/_components/ThemeToggle.tsx. */
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem("tp-theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB">
+    <html lang="en-GB" suppressHydrationWarning>
+      <head>
+        {/* Runs while the HTML is parsed, before first paint, so a saved or
+            system dark preference never flashes the light theme first. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className={`${anton.variable} ${inter.variable} ${jetbrains.variable}`}>
         {children}
         <Analytics />
